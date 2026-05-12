@@ -10,12 +10,6 @@ export default function Hero() {
         className="w-full h-[60vh] md:h-[80vh] relative"
       >
         <div className="w-full h-full overflow-hidden shadow-2xl relative group bg-[#121212]">
-          <img 
-            src="/input_file_0.png" 
-            alt="Crafted from user insight"
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover transition-all duration-1000"
-          />
           <div className="absolute inset-0 bg-black/20 pointer-events-none" />
           
           <div className="absolute inset-0 flex items-center justify-center p-8 md:p-24 text-center">

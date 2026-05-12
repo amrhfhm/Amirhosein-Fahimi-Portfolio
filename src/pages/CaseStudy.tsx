@@ -85,9 +85,8 @@ export default function CaseStudy() {
 
   return (
     <div className="bg-[#EBEDE9] min-h-screen">
-      {/* Background Noise & Gradients */}
+      {/* Background Noise */}
       <div className="noise-bg" />
-      <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/[0.03] blur-[120px] rounded-full pointer-events-none -z-10" />
 
       {/* Header / Intro */}
       <header className="pt-32 md:pt-48 pb-16 md:pb-32 px-6 max-w-7xl mx-auto">
@@ -334,8 +333,7 @@ export default function CaseStudy() {
               {project.solution}
             </p>
           </div>
-          {/* Subtle accent glow */}
-          <div className="absolute -bottom-1/2 -right-1/4 w-full h-full bg-[#25A9B3]/20 blur-[150px] rounded-full group-hover:bg-[#25A9B3]/30 transition-colors duration-1000" />
+          {/* Subtle accent glow removed */}
         </div>
       </div>
 

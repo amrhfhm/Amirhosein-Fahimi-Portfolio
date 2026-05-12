@@ -7,7 +7,11 @@ export default function Meta() {
     const unsub = onSnapshot(doc(db, "settings", "site"), (snap) => {
       if (snap.exists()) {
         const data = snap.data();
-        if (data.siteTitle) document.title = data.siteTitle;
+        if (data.siteTitle) {
+          document.title = data.siteTitle;
+        } else {
+          document.title = "Amirhosein Fahimi Portfolio";
+        }
         
         // Update description meta tag
         let metaDesc = document.querySelector('meta[name="description"]');
@@ -18,7 +22,8 @@ export default function Meta() {
         }
         if (data.metaDescription) metaDesc.setAttribute('content', data.metaDescription);
 
-        // Update favicon if provided
+        // Favicon override disabled per user request
+        /*
         if (data.favicon) {
            let link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']");
            if (!link) {
@@ -28,6 +33,7 @@ export default function Meta() {
            }
            link.href = data.favicon;
         }
+        */
       }
     });
 

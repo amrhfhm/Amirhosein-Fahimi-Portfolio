@@ -38,9 +38,7 @@ export default function App() {
         <div className="noise-bg" />
         <div className="fixed inset-0 bg-[#EBEDE9] -z-50" />
         
-        {/* Mesh Gradients for atmosphere - much softer for light mode */}
-        <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/[0.03] blur-[120px] rounded-full pointer-events-none -z-40" />
-        <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-500/[0.03] blur-[120px] rounded-full pointer-events-none -z-40" />
+        {/* Removed circular background decorators */}
 
         <Routes>
           <Route path="/admin/login" element={<Login />} />
