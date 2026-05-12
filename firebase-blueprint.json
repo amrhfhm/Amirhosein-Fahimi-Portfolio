@@ -2,7 +2,7 @@
   "entities": {
     "Project": {
       "title": "Portfolio Project",
-      "description": "A detailed portfolio project and its case study content.",
+      "description": "A detailed portfolio project and its case study content following the new template.",
       "type": "object",
       "properties": {
         "id": { "type": "string" },
@@ -10,69 +10,47 @@
         "category": { "type": "string" },
         "description": { "type": "string" },
         "image": { "type": "string" },
-        "client": { "type": "string" },
-        "role": { "type": "string" },
-        "timeline": { "type": "string" },
-        "collaborators": { 
+        "heroSubtitle": { "type": "string" },
+        "heroMockup": { "type": "string" },
+        "roleResponsibilities": { "type": "string" },
+        "outcome": { "type": "string" },
+        "backgroundTitle": { "type": "string" },
+        "backgroundText": { "type": "string" },
+        "backgroundImage": { "type": "string" },
+        "problemTitle": { "type": "string" },
+        "problemText": { "type": "string" },
+        "problemImages": { 
           "type": "array",
           "items": { "type": "string" }
         },
-        "link": { "type": "string" },
-        "overview": { "type": "string" },
-        "problem": { "type": "string" },
-        "solution": { "type": "string" },
-        "thinking": {
+        "approachSteps": {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
               "title": { "type": "string" },
-              "content": { "type": "string" }
+              "body": { "type": "string" },
+              "image": { "type": "string" }
             }
           }
         },
-        "comparisons": {
+        "impactStats": {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
-              "title": { "type": "string" },
-              "before": {
-                "type": "object",
-                "properties": {
-                  "image": { "type": "string" },
-                  "caption": { "type": "string" }
-                }
-              },
-              "after": {
-                "type": "object",
-                "properties": {
-                  "image": { "type": "string" },
-                  "caption": { "type": "string" }
-                }
-              },
-              "reasoning": { "type": "string" }
+              "label": { "type": "string" },
+              "value": { "type": "string" }
             }
           }
         },
-        "sections": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "title": { "type": "string" },
-              "content": { "type": "string" },
-              "image": { "type": "string" },
-              "isDark": { "type": "boolean" },
-              "layout": { "type": "string", "enum": ["stacked", "split", "grid"] }
-            }
-          }
-        },
+        "takeawayTitle": { "type": "string" },
+        "takeawayText": { "type": "string" },
         "status": { "type": "string", "enum": ["Published", "Draft"] },
         "order": { "type": "number" },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
-      "required": ["id", "title", "category", "description", "image", "role", "timeline", "overview", "problem", "solution"]
+      "required": ["id", "title", "category"]
     },
     "Testimonial": {
       "title": "Client Testimonial",

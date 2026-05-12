@@ -428,18 +428,24 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
   const [project, setProject] = useState<any>({
     title: "",
     category: "",
-    description: "",
-    role: "",
-    timeline: "",
-    image: "",
-    overview: "",
-    problem: "",
-    solution: "",
-    accent: "",
+    description: "", // Still used for cards
+    heroSubtitle: "",
+    heroMockup: "",
+    roleResponsibilities: "",
+    outcome: "",
+    backgroundTitle: "",
+    backgroundText: "",
+    backgroundImage: "",
+    problemTitle: "",
+    problemText: "",
+    problemImages: [],
+    approachSteps: [],
+    impactStats: [],
+    takeawayTitle: "",
+    takeawayText: "",
+    status: "Draft",
     order: 0,
-    thinking: [],
-    comparisons: [],
-    sections: []
+    updatedAt: new Date().toISOString()
   });
   const [loading, setLoading] = useState(id ? true : false);
   const [saving, setSaving] = useState(false);
@@ -450,7 +456,7 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
       try {
         const docRef = doc(db, "projects", id);
         const snap = await getDoc(docRef);
-        if (snap.exists()) setProject(snap.data());
+        if (snap.exists()) setProject({ ...project, ...snap.data() });
       } catch (error) {
         handleFirestoreError(error, OperationType.GET, `projects/${id}`);
       } finally {
@@ -461,20 +467,26 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
   }, [id]);
 
   const handleUpdate = async (field: string, value: any) => {
-    const updated = { ...project, [field]: value };
-    setProject(updated);
+    setProject(prev => ({ ...prev, [field]: value }));
   };
 
   const save = async () => {
+    if (!project.title) {
+      alert("Project title is required.");
+      return;
+    }
     setSaving(true);
     try {
+      const data = {
+        ...project,
+        updatedAt: new Date().toISOString()
+      };
       if (id) {
-        await updateDoc(doc(db, "projects", id), project);
+        await updateDoc(doc(db, "projects", id), data);
       } else {
         await addDoc(collection(db, "projects"), {
-          ...project,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+          ...data,
+          createdAt: new Date().toISOString()
         });
       }
       alert("Project saved successfully.");
@@ -487,7 +499,6 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
   };
 
   if (loading) return <div className="h-64 flex items-center justify-center"><Loader2 className="animate-spin" /></div>;
-  if (!project) return <div>Project not found.</div>;
 
   return (
     <motion.div 
@@ -500,42 +511,192 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
         <div className="space-y-2">
           <button onClick={onBack} className="text-[10px] font-black uppercase text-black/30 hover:text-black transition-colors mb-2">← Back to Projects</button>
           <div className="flex items-center gap-3">
-            <span className="text-[10px] font-black uppercase text-[#25A9B3] tracking-[0.3em]">Editor</span>
+            <span className="text-[10px] font-black uppercase text-[#25A9B3] tracking-[0.3em]">Case Study Editor</span>
             {saving && <Loader2 className="animate-spin text-[#25A9B3]" size={14} />}
           </div>
-          <h2 className="text-4xl font-display font-medium tracking-tight leading-none">{project.title}</h2>
+          <h2 className="text-4xl font-display font-medium tracking-tight leading-none">{project.title || "Untitled Project"}</h2>
         </div>
-        <button 
-          onClick={save}
-          disabled={saving}
-          className="px-6 py-3 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-black/80 transition-colors disabled:opacity-50 flex items-center gap-2"
-        >
-          {saving ? <Loader2 className="animate-spin" size={14} /> : <Save size={14} />} Save Project
-        </button>
+        <div className="flex items-center gap-4">
+          <select 
+            value={project.status} 
+            onChange={(e) => handleUpdate('status', e.target.value)}
+            className="bg-white border border-black/5 rounded-xl px-4 py-2.5 text-xs font-bold uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-black/5 transition-all cursor-pointer"
+          >
+            <option value="Draft">Draft</option>
+            <option value="Published">Published</option>
+          </select>
+          <button 
+            onClick={save}
+            disabled={saving}
+            className="px-6 py-3 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-black/80 transition-colors disabled:opacity-50 flex items-center gap-2 shadow-xl shadow-black/10"
+          >
+            {saving ? <Loader2 className="animate-spin" size={14} /> : <Save size={14} />} Save Project
+          </button>
+        </div>
       </div>
 
-      <div className="space-y-10">
-        <Section title="Hero Details">
+      <div className="space-y-16">
+        <Section title="Hero Section">
           <div className="grid md:grid-cols-2 gap-6">
-            <Input label="Project Title" value={project.title} onChange={(v) => handleUpdate('title', v)} />
-            <Input label="Category" value={project.category} onChange={(v) => handleUpdate('category', v)} />
+            <Input label="Project Title (Required)" value={project.title} onChange={(v) => handleUpdate('title', v)} />
+            <Input label="Category (e.g. Fintech, UI Design)" value={project.category} onChange={(v) => handleUpdate('category', v)} />
             <div className="md:col-span-2">
-              <TextArea label="Description" value={project.description} onChange={(v) => handleUpdate('description', v)} />
+              <Input label="Hero Subtitle (Optional)" value={project.heroSubtitle} onChange={(v) => handleUpdate('heroSubtitle', v)} />
             </div>
-            <Input label="Role" value={project.role} onChange={(v) => handleUpdate('role', v)} />
-            <Input label="Timeline" value={project.timeline} onChange={(v) => handleUpdate('timeline', v)} />
             <div className="md:col-span-2">
-               <Input label="Hero Image URL" value={project.image} onChange={(v) => handleUpdate('image', v)} />
+              <TextArea label="Card Description (Used on Home)" value={project.description} onChange={(v) => handleUpdate('description', v)} />
+            </div>
+            <div className="md:col-span-2">
+               <Input label="Card Image URL (Home Page)" value={project.image} onChange={(v) => handleUpdate('image', v)} />
+            </div>
+            <div className="md:col-span-2">
+               <Input label="Case Study Mockup URL (Inside Case Study)" value={project.heroMockup} onChange={(v) => handleUpdate('heroMockup', v)} />
             </div>
           </div>
         </Section>
 
-        <Section title="Overview Content">
-           <div className="grid gap-6">
-              <TextArea label="Project Overview" value={project.overview} onChange={(v) => handleUpdate('overview', v)} />
-              <TextArea label="The Problem" value={project.problem} onChange={(v) => handleUpdate('problem', v)} />
-              <TextArea label="The Solution" value={project.solution} onChange={(v) => handleUpdate('solution', v)} />
+        <Section title="Section 2: Context">
+           <div className="grid md:grid-cols-2 gap-6">
+              <TextArea label="Role & Responsibilities (Markdown supported)" value={project.roleResponsibilities} onChange={(v) => handleUpdate('roleResponsibilities', v)} />
+              <TextArea label="Outcome (Markdown supported)" value={project.outcome} onChange={(v) => handleUpdate('outcome', v)} />
            </div>
+        </Section>
+
+        <Section title="Background Section">
+          <div className="grid gap-6">
+            <Input label="Section Title" value={project.backgroundTitle} onChange={(v) => handleUpdate('backgroundTitle', v)} />
+            <TextArea label="Body Text (Markdown supported)" value={project.backgroundText} onChange={(v) => handleUpdate('backgroundText', v)} />
+            <Input label="Large Image URL" value={project.backgroundImage} onChange={(v) => handleUpdate('backgroundImage', v)} />
+          </div>
+        </Section>
+
+        <Section title="Problem Section">
+          <div className="grid gap-6">
+            <Input label="Section Title" value={project.problemTitle} onChange={(v) => handleUpdate('problemTitle', v)} />
+            <TextArea label="Body Text (Markdown supported)" value={project.problemText} onChange={(v) => handleUpdate('problemText', v)} />
+            
+            <div className="space-y-4">
+              <label className="text-[10px] font-black text-black/40 uppercase tracking-widest block">Illustrative Images</label>
+              {(project.problemImages || []).map((img: string, idx: number) => (
+                <div key={idx} className="flex gap-2">
+                  <input 
+                    type="text" 
+                    value={img} 
+                    onChange={(e) => {
+                      const newImgs = [...(project.problemImages || [])];
+                      newImgs[idx] = e.target.value;
+                      handleUpdate('problemImages', newImgs);
+                    }}
+                    className="flex-grow bg-white border border-black/5 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-black/20"
+                    placeholder="Image URL"
+                  />
+                  <button 
+                    onClick={() => {
+                      const newImgs = (project.problemImages || []).filter((_: any, i: number) => i !== idx);
+                      handleUpdate('problemImages', newImgs);
+                    }}
+                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+              <button 
+                onClick={() => handleUpdate('problemImages', [...(project.problemImages || []), ""])}
+                className="text-[10px] font-black uppercase text-[#25A9B3] hover:underline"
+              >
+                + Add Image
+              </button>
+            </div>
+          </div>
+        </Section>
+
+        <Section title="Approach (Workflow)">
+          <div className="space-y-8">
+            {(project.approachSteps || []).map((step: any, idx: number) => (
+              <div key={idx} className="p-6 bg-white rounded-3xl border border-black/5 space-y-4 relative group">
+                <button 
+                  onClick={() => {
+                    const newSteps = (project.approachSteps || []).filter((_: any, i: number) => i !== idx);
+                    handleUpdate('approachSteps', newSteps);
+                  }}
+                  className="absolute top-4 right-4 text-black/20 hover:text-red-500 transition-colors"
+                >
+                  Remove Step
+                </button>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Input label={`Step 0${idx + 1} Title`} value={step.title} onChange={(v) => {
+                    const newSteps = [...project.approachSteps];
+                    newSteps[idx] = { ...step, title: v };
+                    handleUpdate('approachSteps', newSteps);
+                  }} />
+                  <Input label="Image URL" value={step.image} onChange={(v) => {
+                    const newSteps = [...project.approachSteps];
+                    newSteps[idx] = { ...step, image: v };
+                    handleUpdate('approachSteps', newSteps);
+                  }} />
+                </div>
+                <TextArea label="Body Text (Markdown supported)" value={step.body} onChange={(v) => {
+                  const newSteps = [...project.approachSteps];
+                  newSteps[idx] = { ...step, body: v };
+                  handleUpdate('approachSteps', newSteps);
+                }} />
+              </div>
+            ))}
+            <button 
+              onClick={() => handleUpdate('approachSteps', [...(project.approachSteps || []), { title: "", body: "", image: "" }])}
+              className="w-full py-4 border-2 border-dashed border-black/5 rounded-3xl text-black/30 hover:border-[#25A9B3]/40 hover:text-[#25A9B3] transition-all font-display text-xs font-black uppercase tracking-widest"
+            >
+              + Add Process Step
+            </button>
+          </div>
+        </Section>
+
+        <Section title="Impact (Metrics)">
+          <div className="grid md:grid-cols-2 gap-4">
+            {(project.impactStats || []).map((stat: any, idx: number) => (
+              <div key={idx} className="p-4 bg-white rounded-2xl border border-black/5 flex gap-4 items-end">
+                <Input label="Value (e.g. +30%)" value={stat.value} onChange={(v) => {
+                  const newStats = [...project.impactStats];
+                  newStats[idx] = { ...stat, value: v };
+                  handleUpdate('impactStats', newStats);
+                }} />
+                <Input label="Label" value={stat.label} onChange={(v) => {
+                  const newStats = [...project.impactStats];
+                  newStats[idx] = { ...stat, label: v };
+                  handleUpdate('impactStats', newStats);
+                }} />
+                <button 
+                  onClick={() => {
+                    const newStats = (project.impactStats || []).filter((_: any, i: number) => i !== idx);
+                    handleUpdate('impactStats', newStats);
+                  }}
+                  className="mb-1 p-2.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors leading-none"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+             <button 
+              onClick={() => handleUpdate('impactStats', [...(project.impactStats || []), { label: "", value: "" }])}
+              className="p-4 border-2 border-dashed border-black/5 rounded-2xl text-black/30 hover:border-[#25A9B3]/40 hover:text-[#25A9B3] transition-all font-display text-[10px] font-black uppercase tracking-widest h-full flex items-center justify-center"
+            >
+              + Add Metric
+            </button>
+          </div>
+        </Section>
+
+        <Section title="Takeaway">
+          <div className="grid gap-6">
+            <Input label="Section Title" value={project.takeawayTitle} onChange={(v) => handleUpdate('takeawayTitle', v)} />
+            <TextArea label="Body Text (Markdown supported)" value={project.takeawayText} onChange={(v) => handleUpdate('takeawayText', v)} />
+          </div>
+        </Section>
+
+        <Section title="Admin & Ordering">
+          <div className="grid md:grid-cols-3 gap-6">
+             <Input label="Display Order (priority)" value={project.order?.toString()} onChange={(v) => handleUpdate('order', parseInt(v) || 0)} />
+          </div>
         </Section>
       </div>
     </motion.div>
