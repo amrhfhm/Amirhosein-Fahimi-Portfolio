@@ -27,7 +27,8 @@ import {
   query, 
   orderBy, 
   onSnapshot,
-  getDoc
+  getDoc,
+  limit
 } from "firebase/firestore";
 import { db, auth } from "../lib/firebase";
 import { migrateData } from "../lib/migration";
@@ -200,7 +201,41 @@ function NavItem({ icon, label, active, onClick, collapsed }: { icon: React.Reac
 }
 
 function OverviewView({ onNewProject }: { onNewProject: () => void, key?: string }) {
-  const [stats, setStats] = useState({ visits: "2.4k", inquiries: "14", views: "842", success: "92%" });
+  const [stats, setStats] = useState({ projects: 0, testimonials: 0, updates: 0 });
+  const [recentActivity, setRecentActivity] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        // Fetch Projects
+        const projectsSnap = await getDocs(collection(db, "projects"));
+        const testimonialSnap = await getDocs(collection(db, "testimonials"));
+        
+        setStats({
+          projects: projectsSnap.size,
+          testimonials: testimonialSnap.size,
+          updates: projectsSnap.size, // Fallback for now
+        });
+
+        // Fetch Recent Activity (last 4 updated projects)
+        const q = query(collection(db, "projects"), orderBy("updatedAt", "desc"), limit(4));
+        const activitySnap = await getDocs(q);
+        const activities = activitySnap.docs.map(doc => ({
+          entry: `Updated '${doc.data().title}'`,
+          time: new Date(doc.data().updatedAt).toLocaleDateString(),
+          color: "blue"
+        }));
+        setRecentActivity(activities);
+
+      } catch (error) {
+        console.error("Error fetching overview stats:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, []);
 
   return (
     <motion.div 
@@ -212,15 +247,15 @@ function OverviewView({ onNewProject }: { onNewProject: () => void, key?: string
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-display font-medium tracking-tight mb-1">Welcome back, Amirhosein</h1>
-          <p className="text-sm text-black/40">Here's what's happening with your portfolio lately.</p>
+          <p className="text-sm text-black/40">Real-time summary of your portfolio content.</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard label="Total Visits" value={stats.visits} change="+12%" icon={<BarChart3 size={20} />} />
-        <StatCard label="Inquiries" value={stats.inquiries} change="+3" icon={<MessageSquareQuote size={20} />} />
-        <StatCard label="Case Study Views" value={stats.views} change="+18%" icon={<Eye size={20} />} />
-        <StatCard label="Form Success" value={stats.success} change="+2%" icon={<FolderKanban size={20} />} />
+        <StatCard label="Live Projects" value={stats.projects.toString()} change="Real-time" icon={<FolderKanban size={20} />} />
+        <StatCard label="Public Testimonials" value={stats.testimonials.toString()} change="Real-time" icon={<MessageSquareQuote size={20} />} />
+        <StatCard label="Site Visitors" value="0" change="Soon" icon={<BarChart3 size={20} />} />
+        <StatCard label="New Inquiries" value="0" change="Soon" icon={<FileText size={20} />} />
       </div>
 
       <div className="grid lg:grid-cols-[2fr_1fr] gap-8">
@@ -230,20 +265,21 @@ function OverviewView({ onNewProject }: { onNewProject: () => void, key?: string
             <button className="text-[10px] font-black uppercase tracking-widest text-[#25A9B3]">View History</button>
           </div>
           <div className="space-y-4">
-             {[
-               { entry: "Updated 'Bit24 KYC' Case Study", time: "2 hours ago", color: "blue" },
-               { entry: "Received new inquiry from Jane Cooper", time: "5 hours ago", color: "green" },
-               { entry: "Added new testimonial from David Smith", time: "1 day ago", color: "purple" },
-               { entry: "Modified SEO meta tags for Home", time: "2 days ago", color: "amber" },
-             ].map((action, i) => (
-               <div key={i} className="flex items-center justify-between py-3 border-b border-black/5 last:border-0 group">
-                  <div className="flex items-center gap-4">
-                     <div className={`w-2 h-2 rounded-full bg-${action.color}-600/40 opacity-0 group-hover:opacity-100 transition-opacity`} />
-                     <span className="text-sm text-black/70 group-hover:text-black transition-colors">{action.entry}</span>
-                  </div>
-                  <span className="text-xs text-black/30">{action.time}</span>
-               </div>
-             ))}
+             {loading ? (
+               <div className="py-12 flex justify-center"><Loader2 className="animate-spin text-black/10" /></div>
+             ) : recentActivity.length > 0 ? (
+               recentActivity.map((action, i) => (
+                 <div key={i} className="flex items-center justify-between py-3 border-b border-black/5 last:border-0 group">
+                    <div className="flex items-center gap-4">
+                       <div className={`w-2 h-2 rounded-full bg-blue-600/40 opacity-0 group-hover:opacity-100 transition-opacity`} />
+                       <span className="text-sm text-black/70 group-hover:text-black transition-colors">{action.entry}</span>
+                    </div>
+                    <span className="text-xs text-black/30">{action.time}</span>
+                 </div>
+               ))
+             ) : (
+               <p className="text-sm text-black/30 italic py-4">No recent activity detected.</p>
+             )}
           </div>
         </div>
 
