@@ -1,7 +1,12 @@
 import { motion } from "motion/react";
 import { ArrowUpRight, Linkedin, Mail } from "lucide-react";
+import { logEvent } from "../lib/analytics";
 
 export default function Footer() {
+  const handleContactClick = (platform: string) => {
+    logEvent("contact_click", { platform });
+  };
+
   return (
     <footer id="contact" className="px-6 py-32 max-w-7xl mx-auto">
       <div className="grid md:grid-cols-2 gap-20 mb-32">
@@ -16,6 +21,7 @@ export default function Footer() {
           </h2>
           <a 
             href="mailto:MiroFahimi@gmail.com"
+            onClick={() => handleContactClick("email")}
             className="text-2xl md:text-4xl font-sans font-medium text-black hover:opacity-70 transition-all border-b-2 border-black/10 pb-4 inline-flex items-center gap-4 group"
           >
             MiroFahimi@gmail.com
@@ -29,6 +35,7 @@ export default function Footer() {
               href="https://www.linkedin.com/in/mirofahimi/" 
               target="_blank" 
               rel="noopener noreferrer"
+              onClick={() => handleContactClick("linkedin")}
               className="w-14 h-14 rounded-full bg-black flex items-center justify-center text-white transition-all duration-300 hover:bg-[#0A66C2] hover:scale-110 active:scale-95 shadow-lg"
               aria-label="LinkedIn"
             >
@@ -36,6 +43,7 @@ export default function Footer() {
             </a>
             <a 
               href="mailto:MiroFahimi@gmail.com"
+              onClick={() => handleContactClick("gmail_icon")}
               className="w-14 h-14 rounded-full bg-black flex items-center justify-center text-white transition-all duration-300 hover:bg-[#EA4335] hover:scale-110 active:scale-95 shadow-lg"
               aria-label="Gmail"
             >

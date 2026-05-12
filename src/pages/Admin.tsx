@@ -65,7 +65,7 @@ function handleFirestoreError(error: unknown, operationType: OperationType, path
   throw new Error(JSON.stringify(errInfo));
 }
 
-type Tab = "overview" | "projects" | "editor" | "testimonials" | "testimonial-editor" | "seo";
+type Tab = "overview" | "projects" | "editor" | "analytics" | "testimonials" | "testimonial-editor" | "seo";
 
 export default function Admin() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
@@ -126,6 +126,13 @@ export default function Admin() {
             label="Projects" 
             active={activeTab === "projects" || activeTab === "editor"} 
             onClick={() => setActiveTab("projects")}
+            collapsed={!isSidebarOpen}
+          />
+          <NavItem 
+            icon={<BarChart3 size={18} />} 
+            label="Analytics" 
+            active={activeTab === "analytics"} 
+            onClick={() => setActiveTab("analytics")}
             collapsed={!isSidebarOpen}
           />
           <NavItem 
@@ -192,9 +199,10 @@ export default function Admin() {
 
         <div className="flex-grow overflow-y-auto p-8">
           <AnimatePresence mode="wait">
-            {activeTab === "overview" && <OverviewView key="overview" onNewProject={() => { (window as any)._editingProjectId = null; setActiveTab("editor"); }} />}
+            {activeTab === "overview" && <OverviewView key="overview" onNewProject={() => { (window as any)._editingProjectId = null; setActiveTab("editor"); }} onGoToAnalytics={() => setActiveTab("analytics")} />}
             {activeTab === "projects" && <ProjectsView key="projects" onEditProject={(id) => { setActiveTab("editor"); (window as any)._editingProjectId = id; }} onNewProject={() => { (window as any)._editingProjectId = null; setActiveTab("editor"); }} />}
             {activeTab === "editor" && <EditorView key="editor" id={(window as any)._editingProjectId} onBack={() => setActiveTab("projects")} />}
+            {activeTab === "analytics" && <AnalyticsView key="analytics" />}
             {activeTab === "testimonials" && <TestimonialsView key="testimonials" onEdit={(id) => { (window as any)._editingTestimonialId = id; setActiveTab("testimonial-editor"); }} onNew={() => { (window as any)._editingTestimonialId = null; setActiveTab("testimonial-editor"); }} />}
             {activeTab === "testimonial-editor" && <TestimonialEditorView key="testimonial-editor" id={(window as any)._editingTestimonialId} onBack={() => setActiveTab("testimonials")} />}
             {activeTab === "seo" && <SEOView key="seo" />}
@@ -220,8 +228,8 @@ function NavItem({ icon, label, active, onClick, collapsed }: { icon: React.Reac
   );
 }
 
-function OverviewView({ onNewProject }: { onNewProject: () => void, key?: string }) {
-  const [stats, setStats] = useState({ projects: 0, testimonials: 0, updates: 0 });
+function OverviewView({ onNewProject, onGoToAnalytics }: { onNewProject: () => void, onGoToAnalytics: () => void, key?: string }) {
+  const [stats, setStats] = useState({ projects: 0, testimonials: 0, updates: 0, visitors: 0 });
   const [recentActivity, setRecentActivity] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -236,7 +244,13 @@ function OverviewView({ onNewProject }: { onNewProject: () => void, key?: string
           projects: projectsSnap.size,
           testimonials: testimonialSnap.size,
           updates: projectsSnap.size, // Fallback for now
+          visitors: 0
         });
+
+        // Fetch analytics for visitor count
+        const analyticsSnap = await getDocs(query(collection(db, "analytics"), limit(500)));
+        const pageViews = analyticsSnap.docs.filter(d => d.data().type === "page_view").length;
+        setStats(prev => ({ ...prev, visitors: pageViews }));
 
         // Fetch Recent Activity (last 4 updated projects)
         const q = query(collection(db, "projects"), orderBy("updatedAt", "desc"), limit(4));
@@ -274,7 +288,7 @@ function OverviewView({ onNewProject }: { onNewProject: () => void, key?: string
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard label="Live Projects" value={stats.projects.toString()} change="Real-time" icon={<FolderKanban size={20} />} />
         <StatCard label="Public Testimonials" value={stats.testimonials.toString()} change="Real-time" icon={<MessageSquareQuote size={20} />} />
-        <StatCard label="Site Visitors" value="0" change="Soon" icon={<BarChart3 size={20} />} />
+        <StatCard label="Site Visitors" value={stats.visitors.toString()} change="Lifetime" icon={<BarChart3 size={20} />} />
         <StatCard label="New Inquiries" value="0" change="Soon" icon={<FileText size={20} />} />
       </div>
 
@@ -282,7 +296,7 @@ function OverviewView({ onNewProject }: { onNewProject: () => void, key?: string
         <div className="bg-white p-8 rounded-[32px] border border-black/5 space-y-6">
           <div className="flex lg:items-center justify-between">
             <h3 className="text-lg font-display font-medium">Recent Activity</h3>
-            <button className="text-[10px] font-black uppercase tracking-widest text-[#25A9B3]">View History</button>
+            <button onClick={onGoToAnalytics} className="text-[10px] font-black uppercase tracking-widest text-[#25A9B3]">View Analytics</button>
           </div>
           <div className="space-y-4">
              {loading ? (
@@ -810,6 +824,138 @@ function SEOView({ key }: { key?: string }) {
              </div>
           </Section>
        </div>
+    </motion.div>
+  );
+}
+
+function AnalyticsView() {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAnalytics = async () => {
+      try {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        
+        // Using getDocs with limit for now to avoid massive reads if it explodes
+        // Real production needs a more complex query with index or a cloud function aggregator
+        const snapshot = await getDocs(query(collection(db, "analytics"), orderBy("timestamp", "desc"), limit(1000)));
+        const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        
+        const recentEvents = events.filter((e: any) => e.timestamp?.toDate() >= thirtyDaysAgo);
+
+        // Calcs
+        const pageViews = recentEvents.filter((e: any) => e.type === "page_view");
+        const projectViews = recentEvents.filter((e: any) => e.type === "project_view");
+        const contactClicks = recentEvents.filter((e: any) => e.type === "contact_click");
+
+        // Most viewed project
+        const projectCounts: Record<string, { count: number, title: string }> = {};
+        projectViews.forEach((e: any) => {
+          if (!projectCounts[e.projectId]) {
+            projectCounts[e.projectId] = { count: 0, title: e.projectTitle || e.projectId };
+          }
+          projectCounts[e.projectId].count++;
+        });
+        const sortedProjects = Object.values(projectCounts).sort((a, b) => b.count - a.count);
+
+        // Device split
+        const desktopCount = recentEvents.filter((e: any) => e.device === "desktop").length;
+        const mobileCount = recentEvents.filter((e: any) => e.device === "mobile").length;
+        const totalEvents = recentEvents.length || 1;
+
+        setData({
+          totalVisits: pageViews.length,
+          contactClicks: contactClicks.length,
+          topProjects: sortedProjects.slice(0, 5),
+          deviceSplit: {
+            desktop: Math.round((desktopCount / totalEvents) * 100),
+            mobile: Math.round((mobileCount / totalEvents) * 100),
+          }
+        });
+      } catch (error) {
+        console.error("Error fetching analytics:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAnalytics();
+  }, []);
+
+  if (loading) return <div className="h-64 flex items-center justify-center"><Loader2 className="animate-spin text-black/20" size={32} /></div>;
+  if (!data) return <div className="p-8 text-black/40">No analytics data available yet.</div>;
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="max-w-6xl space-y-10"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="bg-white p-8 rounded-[32px] border border-black/5">
+          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">Total Visits</span>
+          <div className="text-5xl font-display font-medium tracking-tighter">{data.totalVisits}</div>
+          <p className="text-xs text-black/40 mt-4">Across all pages (Last 30 days)</p>
+        </div>
+        <div className="bg-white p-8 rounded-[32px] border border-black/5">
+          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">Contact Clicks</span>
+          <div className="text-5xl font-display font-medium tracking-tighter">{data.contactClicks}</div>
+          <p className="text-xs text-black/40 mt-4">Total interactions (Last 30 days)</p>
+        </div>
+        <div className="bg-white p-8 rounded-[32px] border border-black/5 flex flex-col justify-center">
+          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-4">Device Distribution</span>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs font-bold uppercase tracking-widest">
+                <span>Desktop</span>
+                <span>{data.deviceSplit.desktop}%</span>
+              </div>
+              <div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden">
+                <div className="h-full bg-black" style={{ width: `${data.deviceSplit.desktop}%` }} />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs font-bold uppercase tracking-widest">
+                <span>Mobile</span>
+                <span>{data.deviceSplit.mobile}%</span>
+              </div>
+              <div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden">
+                <div className="h-full bg-[#25A9B3]" style={{ width: `${data.deviceSplit.mobile}%` }} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white p-8 rounded-[32px] border border-black/5">
+        <h3 className="text-lg font-display font-medium mb-8">Most Viewed Projects</h3>
+        <div className="space-y-6">
+          {data.topProjects.length > 0 ? data.topProjects.map((p: any, i: number) => {
+            const maxCount = data.topProjects[0].count;
+            const percentage = Math.round((p.count / maxCount) * 100);
+            return (
+              <div key={i} className="flex items-center gap-6 group">
+                <div className="flex-grow space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-bold uppercase tracking-widest truncate">{p.title}</span>
+                    <span className="text-xs font-black text-black/30">{p.count} views</span>
+                  </div>
+                  <div className="h-2 w-full bg-black/5 rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: `${percentage}%` }}
+                      className="h-full bg-black group-hover:bg-[#25A9B3] transition-colors" 
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          }) : (
+            <p className="text-sm text-black/30 py-4 italic">No project data recorded yet.</p>
+          )}
+        </div>
+      </div>
     </motion.div>
   );
 }

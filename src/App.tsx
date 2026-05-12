@@ -13,11 +13,25 @@ import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
 import Meta from "./components/Meta";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { logEvent } from "./lib/analytics";
+
+function PageTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    logEvent("page_view", { page: location.pathname });
+  }, [location.pathname]);
+
+  return null;
+}
 
 export default function App() {
   return (
     <Router>
       <ScrollToTop />
+      <PageTracker />
       <Meta />
       <div className="relative selection:bg-black selection:text-white">
         {/* Background elements */}

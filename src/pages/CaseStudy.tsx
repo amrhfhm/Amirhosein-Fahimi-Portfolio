@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, ExternalLink, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { collection, query, orderBy, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
+import { logEvent } from "../lib/analytics";
 
 enum OperationType {
   GET = 'get',
@@ -37,15 +38,20 @@ export default function CaseStudy() {
         const projectSnap = await getDoc(projectRef);
         
         if (projectSnap.exists()) {
-          const currentData = { id: projectSnap.id, ...projectSnap.data() };
+          const currentData = { id: projectSnap.id, ...projectSnap.data() } as any;
           setProject(currentData);
+          
+          logEvent("project_view", { 
+            projectId: id, 
+            projectTitle: currentData.title 
+          });
 
           // Fetch all projects to find the "next" one
           const q = query(collection(db, "projects"), orderBy("order", "asc"));
           const allSnap = await getDocs(q);
-          const allProjects = allSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+          const allProjects = allSnap.docs.map(d => ({ id: d.id, ...d.data() } as any));
           
-          const currentIndex = allProjects.findIndex(p => p.id === id);
+          const currentIndex = allProjects.findIndex((p: any) => p.id === id);
           const nextIdx = (currentIndex + 1) % allProjects.length;
           setNextProject(allProjects[nextIdx]);
         }

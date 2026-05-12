@@ -16,6 +16,11 @@ service cloud.firestore {
       allow get, list: if true;
       allow create, update, delete: if true;
     }
+
+    match /analytics/{eventId} {
+      allow create: if true;
+      allow get, list, update, delete: if true; // In production this would be admin only
+    }
     
     // Default deny for everything else
     match /{document=**} {

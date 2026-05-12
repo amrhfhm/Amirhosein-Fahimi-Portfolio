@@ -97,6 +97,20 @@
         "keywords": { "type": "string" },
         "ogImage": { "type": "string" }
       }
+    },
+    "AnalyticsEvent": {
+      "title": "Analytics Event",
+      "description": "Custom tracking events.",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "projectId": { "type": "string" },
+        "projectTitle": { "type": "string" },
+        "page": { "type": "string" },
+        "device": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["type", "device", "timestamp"]
     }
   },
   "firestore": {
@@ -111,6 +125,10 @@
     "settings": {
       "schema": "Settings",
       "description": "Global application configuration."
+    },
+    "analytics": {
+      "schema": "AnalyticsEvent",
+      "description": "Custom event tracking data."
     }
   }
 }
