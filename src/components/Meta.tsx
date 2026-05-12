@@ -4,10 +4,10 @@ import { db } from "../lib/firebase";
 
 export default function Meta() {
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, "settings", "seo"), (snap) => {
+    const unsub = onSnapshot(doc(db, "settings", "site"), (snap) => {
       if (snap.exists()) {
         const data = snap.data();
-        if (data.title) document.title = data.title;
+        if (data.siteTitle) document.title = data.siteTitle;
         
         // Update description meta tag
         let metaDesc = document.querySelector('meta[name="description"]');
@@ -16,7 +16,7 @@ export default function Meta() {
           metaDesc.setAttribute('name', 'description');
           document.head.appendChild(metaDesc);
         }
-        if (data.description) metaDesc.setAttribute('content', data.description);
+        if (data.metaDescription) metaDesc.setAttribute('content', data.metaDescription);
 
         // Update favicon if provided
         if (data.favicon) {

@@ -5,6 +5,20 @@ import { useState, useEffect } from "react";
 import { collection, query, orderBy, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
+enum OperationType {
+  LIST = 'list',
+}
+
+function handleFirestoreError(error: unknown, operationType: OperationType, path: string) {
+  const errInfo = {
+    error: error instanceof Error ? error.message : String(error),
+    operationType,
+    path
+  };
+  console.error('Firestore Error:', JSON.stringify(errInfo));
+  throw new Error(JSON.stringify(errInfo));
+}
+
 export default function ProjectList() {
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +30,7 @@ export default function ProjectList() {
         const snap = await getDocs(q);
         setProjects(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
       } catch (error) {
-        console.error("Error fetching projects:", error);
+        handleFirestoreError(error, OperationType.LIST, "projects");
       } finally {
         setLoading(false);
       }

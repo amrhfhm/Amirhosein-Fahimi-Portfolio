@@ -5,6 +5,21 @@ import { useState, useEffect } from "react";
 import { collection, query, orderBy, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
+enum OperationType {
+  GET = 'get',
+  LIST = 'list',
+}
+
+function handleFirestoreError(error: unknown, operationType: OperationType, path: string) {
+  const errInfo = {
+    error: error instanceof Error ? error.message : String(error),
+    operationType,
+    path
+  };
+  console.error('Firestore Error:', JSON.stringify(errInfo));
+  throw new Error(JSON.stringify(errInfo));
+}
+
 export default function CaseStudy() {
   const { id } = useParams();
   const [project, setProject] = useState<any>(null);
@@ -35,7 +50,7 @@ export default function CaseStudy() {
           setNextProject(allProjects[nextIdx]);
         }
       } catch (error) {
-        console.error("Error fetching project:", error);
+        handleFirestoreError(error, OperationType.GET, `projects/${id}`);
       } finally {
         setLoading(false);
       }

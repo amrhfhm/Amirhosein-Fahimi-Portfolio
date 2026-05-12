@@ -1,37 +1,25 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Default deny
-    match /{document=**} {
-      allow read, write: if false;
-    }
-
-    // Global helpers
-    function isSignedIn() {
-      return request.auth != null;
-    }
-    
-    function isValidId(id) {
-      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
-    }
-
-    // Since user requested no auth for now, we'll allow all. 
-    // WARNING: This is insecure for production but matches user's explicit legacy request.
-    // In a real app, these should be restricted to an admin UID.
-
+    // Explicitly allow read for all collections used by the app
     match /projects/{projectId} {
-      allow read: if true;
-      allow write: if true; // User requested no auth for now
+      allow get, list: if true;
+      allow create, update, delete: if true;
     }
 
     match /testimonials/{testimonialId} {
-      allow read: if true;
-      allow write: if true;
+      allow get, list: if true;
+      allow create, update, delete: if true;
     }
 
     match /settings/{settingId} {
-      allow read: if true;
-      allow write: if true;
+      allow get, list: if true;
+      allow create, update, delete: if true;
+    }
+    
+    // Default deny for everything else
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }
