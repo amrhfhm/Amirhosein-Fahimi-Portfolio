@@ -9,6 +9,8 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import CaseStudy from "./pages/CaseStudy";
 import Admin from "./pages/Admin";
+import Login from "./pages/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
 import Meta from "./components/Meta";
 
@@ -27,7 +29,12 @@ export default function App() {
         <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-500/[0.03] blur-[120px] rounded-full pointer-events-none -z-40" />
 
         <Routes>
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/login" element={<Login />} />
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          } />
           <Route path="/" element={
             <div className="flex flex-col min-h-screen">
               <Navigation />

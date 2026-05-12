@@ -13,9 +13,11 @@ import {
   Settings,
   ChevronRight,
   MoreHorizontal,
-  Loader2
+  Loader2,
+  LogOut
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { useNavigate } from "react-router-dom";
 import { 
   collection, 
   getDocs, 
@@ -70,6 +72,18 @@ export default function Admin() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isMigrating, setIsMigrating] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+      navigate("/admin/login");
+    } catch (err) {
+      console.error("Logout failed", err);
+      // Fallback: just redirect
+      navigate("/admin/login");
+    }
+  };
 
   const handleMigrate = async () => {
     setIsMigrating(true);
@@ -163,6 +177,12 @@ export default function Admin() {
             </button>
             <button className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-black/40 hover:text-black transition-colors flex items-center gap-2">
               <Eye size={14} /> Preview
+            </button>
+            <button 
+              onClick={handleLogout}
+              className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-red-500 hover:text-red-600 transition-colors flex items-center gap-2"
+            >
+              <LogOut size={14} /> Logout
             </button>
             <button className="px-5 py-2 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-black/80 transition-colors flex items-center gap-2">
               <Save size={14} /> Global Save
