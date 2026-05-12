@@ -62,7 +62,7 @@ function handleFirestoreError(error: unknown, operationType: OperationType, path
   throw new Error(JSON.stringify(errInfo));
 }
 
-type Tab = "overview" | "projects" | "editor" | "testimonials" | "seo";
+type Tab = "overview" | "projects" | "editor" | "testimonials" | "testimonial-editor" | "seo";
 
 export default function Admin() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
@@ -109,14 +109,14 @@ export default function Admin() {
           <NavItem 
             icon={<FolderKanban size={18} />} 
             label="Projects" 
-            active={activeTab === "projects"} 
+            active={activeTab === "projects" || activeTab === "editor"} 
             onClick={() => setActiveTab("projects")}
             collapsed={!isSidebarOpen}
           />
           <NavItem 
             icon={<MessageSquareQuote size={18} />} 
             label="Testimonials" 
-            active={activeTab === "testimonials"} 
+            active={activeTab === "testimonials" || activeTab === "testimonial-editor"} 
             onClick={() => setActiveTab("testimonials")}
             collapsed={!isSidebarOpen}
           />
@@ -150,7 +150,7 @@ export default function Admin() {
             >
               <ChevronRight className={`transition-transform duration-500 ${isSidebarOpen ? "rotate-180" : ""}`} size={20} />
             </button>
-            <h2 className="text-sm font-medium text-black capitalize">{activeTab}</h2>
+            <h2 className="text-sm font-medium text-black capitalize">{activeTab.replace("-", " ")}</h2>
           </div>
           <div className="flex items-center gap-3">
             <button 
@@ -171,10 +171,11 @@ export default function Admin() {
 
         <div className="flex-grow overflow-y-auto p-8">
           <AnimatePresence mode="wait">
-            {activeTab === "overview" && <OverviewView key="overview" />}
-            {activeTab === "projects" && <ProjectsView key="projects" onEditProject={(id) => { setActiveTab("editor"); (window as any)._editingProjectId = id; }} />}
+            {activeTab === "overview" && <OverviewView key="overview" onNewProject={() => { (window as any)._editingProjectId = null; setActiveTab("editor"); }} />}
+            {activeTab === "projects" && <ProjectsView key="projects" onEditProject={(id) => { setActiveTab("editor"); (window as any)._editingProjectId = id; }} onNewProject={() => { (window as any)._editingProjectId = null; setActiveTab("editor"); }} />}
             {activeTab === "editor" && <EditorView key="editor" id={(window as any)._editingProjectId} onBack={() => setActiveTab("projects")} />}
-            {activeTab === "testimonials" && <TestimonialsView key="testimonials" />}
+            {activeTab === "testimonials" && <TestimonialsView key="testimonials" onEdit={(id) => { (window as any)._editingTestimonialId = id; setActiveTab("testimonial-editor"); }} onNew={() => { (window as any)._editingTestimonialId = null; setActiveTab("testimonial-editor"); }} />}
+            {activeTab === "testimonial-editor" && <TestimonialEditorView key="testimonial-editor" id={(window as any)._editingTestimonialId} onBack={() => setActiveTab("testimonials")} />}
             {activeTab === "seo" && <SEOView key="seo" />}
           </AnimatePresence>
         </div>
@@ -198,7 +199,7 @@ function NavItem({ icon, label, active, onClick, collapsed }: { icon: React.Reac
   );
 }
 
-function OverviewView() {
+function OverviewView({ onNewProject }: { onNewProject: () => void, key?: string }) {
   const [stats, setStats] = useState({ visits: "2.4k", inquiries: "14", views: "842", success: "92%" });
 
   return (
@@ -251,7 +252,10 @@ function OverviewView() {
             <h3 className="text-lg font-display font-medium mb-2">Build something new</h3>
             <p className="text-white/40 text-sm leading-relaxed">Your projects are the heartbeat of your portfolio. Add a new one today.</p>
           </div>
-          <button className="relative z-10 mt-12 w-full py-4 bg-white text-black rounded-2xl text-xs font-black uppercase tracking-[0.2em] hover:scale-[1.02] transition-transform flex items-center justify-center gap-2 font-display">
+          <button 
+            onClick={onNewProject}
+            className="relative z-10 mt-12 w-full py-4 bg-white text-black rounded-2xl text-xs font-black uppercase tracking-[0.2em] hover:scale-[1.02] transition-transform flex items-center justify-center gap-2 font-display"
+          >
             <Plus size={16} /> New Project
           </button>
           {/* Decorative element */}
@@ -277,7 +281,7 @@ function StatCard({ label, value, change, icon }: { label: string, value: string
   );
 }
 
-function ProjectsView({ onEditProject }: { onEditProject: (id: string) => void }) {
+function ProjectsView({ onEditProject, onNewProject }: { onEditProject: (id: string) => void, onNewProject: () => void, key?: string }) {
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -302,7 +306,10 @@ function ProjectsView({ onEditProject }: { onEditProject: (id: string) => void }
            <h2 className="text-2xl font-display font-medium">Projects</h2>
            <p className="text-sm text-black/40">Manage your work and display order.</p>
         </div>
-        <button className="p-3 bg-black text-white rounded-xl flex items-center justify-center transition-transform hover:scale-110 active:scale-95 shadow-xl shadow-black/10">
+        <button 
+          onClick={onNewProject}
+          className="p-3 bg-black text-white rounded-xl flex items-center justify-center transition-transform hover:scale-110 active:scale-95 shadow-xl shadow-black/10"
+        >
           <Plus size={20} />
         </button>
       </div>
@@ -346,9 +353,24 @@ function ProjectsView({ onEditProject }: { onEditProject: (id: string) => void }
   );
 }
 
-function EditorView({ id, onBack }: { id: string | null, onBack: () => void }) {
-  const [project, setProject] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key?: string }) {
+  const [project, setProject] = useState<any>({
+    title: "",
+    category: "",
+    description: "",
+    role: "",
+    timeline: "",
+    image: "",
+    overview: "",
+    problem: "",
+    solution: "",
+    accent: "",
+    order: 0,
+    thinking: [],
+    comparisons: [],
+    sections: []
+  });
+  const [loading, setLoading] = useState(id ? true : false);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -373,13 +395,21 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void }) {
   };
 
   const save = async () => {
-    if (!id) return;
     setSaving(true);
     try {
-      await updateDoc(doc(db, "projects", id), project);
+      if (id) {
+        await updateDoc(doc(db, "projects", id), project);
+      } else {
+        await addDoc(collection(db, "projects"), {
+          ...project,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        });
+      }
       alert("Project saved successfully.");
+      onBack();
     } catch (error) {
-      handleFirestoreError(error, OperationType.UPDATE, `projects/${id}`);
+      handleFirestoreError(error, id ? OperationType.UPDATE : OperationType.CREATE, `projects/${id || ''}`);
     } finally {
       setSaving(false);
     }
@@ -478,7 +508,7 @@ function TextArea({ label, value, onChange }: { label: string, value?: string, o
   );
 }
 
-function TestimonialsView() {
+function TestimonialsView({ onEdit, onNew }: { onEdit: (id: string) => void, onNew: () => void, key?: string }) {
   const [testimonials, setTestimonials] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -490,6 +520,15 @@ function TestimonialsView() {
     }, (error) => handleFirestoreError(error, OperationType.LIST, "testimonials"));
     return () => unsubscribe();
   }, []);
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Delete this testimonial?")) return;
+    try {
+      await deleteDoc(doc(db, "testimonials", id));
+    } catch (error) {
+      handleFirestoreError(error, OperationType.DELETE, `testimonials/${id}`);
+    }
+  }
 
   return (
      <motion.div 
@@ -503,7 +542,10 @@ function TestimonialsView() {
            <h2 className="text-2xl font-display font-medium">Testimonials</h2>
            <p className="text-sm text-black/40">Manage client feedback and visibility.</p>
         </div>
-        <button className="p-3 bg-black text-white rounded-xl shadow-xl shadow-black/10">
+        <button 
+          onClick={onNew}
+          className="p-3 bg-black text-white rounded-xl shadow-xl shadow-black/10 transition-transform hover:scale-110 active:scale-95"
+        >
           <Plus size={20} />
         </button>
       </div>
@@ -525,15 +567,22 @@ function TestimonialsView() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <button className="p-2 hover:bg-black/5 rounded-lg transition-colors text-black/20 hover:text-black">
+                    <button 
+                      onClick={() => onEdit(t.id)}
+                      className="p-2 hover:bg-black/5 rounded-lg transition-colors text-black/20 hover:text-black"
+                    >
                       <FileText size={16} />
                     </button>
-                    <button className="p-2 hover:bg-black/5 rounded-lg transition-colors text-black/20 hover:text-red-500">
+                    <button 
+                      onClick={() => handleDelete(t.id)}
+                      className="p-2 hover:bg-black/5 rounded-lg transition-colors text-black/20 hover:text-red-500"
+                    >
                       <MoreHorizontal size={16} />
                     </button>
                   </div>
                 </div>
-                <p className="text-sm text-black/60 leading-relaxed font-sans font-light italic">"{t.text}"</p>
+                <p className="text-sm text-black/60 leading-relaxed font-sans font-light italic">"{t.text || t.quote}"</p>
+                {t.extra && <p className="text-[10px] text-black/30 font-bold uppercase tracking-widest">{t.extra}</p>}
             </div>
           ))}
         </div>
@@ -542,7 +591,94 @@ function TestimonialsView() {
   );
 }
 
-function SEOView() {
+function TestimonialEditorView({ id, onBack }: { id: string | null, onBack: () => void, key?: string }) {
+  const [data, setData] = useState<any>({
+    name: "",
+    role: "",
+    extra: "",
+    text: "",
+    avatar: "",
+    order: 0
+  });
+  const [loading, setLoading] = useState(id ? true : false);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (!id) return;
+    const fetch = async () => {
+      try {
+        const snap = await getDoc(doc(db, "testimonials", id));
+        if (snap.exists()) setData(snap.data());
+      } catch (error) {
+        handleFirestoreError(error, OperationType.GET, `testimonials/${id}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetch();
+  }, [id]);
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      if (id) {
+        await updateDoc(doc(db, "testimonials", id), data);
+      } else {
+        await addDoc(collection(db, "testimonials"), {
+          ...data,
+          createdAt: new Date().toISOString()
+        });
+      }
+      onBack();
+    } catch (error) {
+      handleFirestoreError(error, id ? OperationType.UPDATE : OperationType.CREATE, `testimonials/${id || ''}`);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) return <div className="h-64 flex items-center justify-center"><Loader2 className="animate-spin" /></div>;
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      className="max-w-2xl mx-auto space-y-8"
+    >
+      <div className="flex items-center justify-between">
+        <button onClick={onBack} className="text-[10px] font-black uppercase text-black/30 hover:text-black transition-colors">← Back</button>
+        <button 
+          onClick={save}
+          disabled={saving}
+          className="px-6 py-2 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest disabled:opacity-50"
+        >
+          {saving ? "Saving..." : "Save Testimonial"}
+        </button>
+      </div>
+
+      <div className="bg-white p-8 rounded-[32px] border border-black/5 space-y-6">
+        <div className="flex items-center gap-6 pb-6 border-b border-black/5">
+          <div className="w-20 h-20 rounded-full bg-black/5 overflow-hidden flex-shrink-0">
+             {data.avatar && <img src={data.avatar} className="w-full h-full object-cover" />}
+          </div>
+          <div className="flex-grow">
+            <Input label="Avatar URL" value={data.avatar} onChange={(v) => setData({...data, avatar: v})} />
+          </div>
+        </div>
+        <div className="grid md:grid-cols-2 gap-6">
+          <Input label="Name" value={data.name} onChange={(v) => setData({...data, name: v})} />
+          <Input label="Role" value={data.role} onChange={(v) => setData({...data, role: v})} />
+        </div>
+        <Input label="Extra Info" value={data.extra} onChange={(v) => setData({...data, extra: v})} />
+        <TextArea label="Testimonial Text" value={data.text || data.quote} onChange={(v) => setData({...data, text: v, quote: v})} />
+        <Input label="Display Order" value={data.order?.toString()} onChange={(v) => setData({...data, order: parseInt(v) || 0})} />
+      </div>
+    </motion.div>
+  );
+}
+
+function SEOView({ key }: { key?: string }) {
   const [settings, setSettings] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
