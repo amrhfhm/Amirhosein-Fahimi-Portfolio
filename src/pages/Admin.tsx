@@ -135,6 +135,7 @@ export default function Admin() {
             onClick={() => setActiveTab("analytics")}
             collapsed={!isSidebarOpen}
           />
+
           <NavItem 
             icon={<MessageSquareQuote size={18} />} 
             label="Testimonials" 
@@ -828,6 +829,9 @@ function SEOView({ key }: { key?: string }) {
   );
 }
 
+
+
+
 function AnalyticsView() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -959,7 +963,6 @@ function AnalyticsView() {
     </motion.div>
   );
 }
-
 
 function folder({ size }: { size: number }) {
   return <FolderKanban size={size} />;
