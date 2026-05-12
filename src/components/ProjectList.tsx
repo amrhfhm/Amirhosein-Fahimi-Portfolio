@@ -1,51 +1,48 @@
 import { motion } from "motion/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
-
-const PROJECTS = [
-  {
-    id: "gg10",
-    displayId: "01",
-    title: "GG10",
-    category: "Gaming",
-    description: "Led the end-to-end design of a gaming engagement platform from scratch, scaling the experience across 100+ screens with a custom Material 3 design system.",
-    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop",
-    accent: "bg-purple-500/10 text-purple-600"
-  },
-  {
-    id: "personal-portfolio",
-    displayId: "02",
-    title: "Personal Portfolio Design",
-    category: "AI",
-    description: "Designed and developed a portfolio through an end-to-end AI-native workflow using Google AI Studio to translate prompts into production-ready interfaces.",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop",
-    accent: "bg-blue-500/10 text-blue-600"
-  },
-  {
-    id: "bit24-spot",
-    displayId: "03",
-    title: "Bit24 Spot Product",
-    category: "Fintech/Crypto",
-    description: "Reduced support complaints by improving the peer-to-peer crypto trading experience through usability testing and research-driven UX improvements",
-    image: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=2070&auto=format&fit=crop",
-    accent: "bg-amber-500/10 text-amber-600"
-  },
-  {
-    id: "bit24-kyc",
-    displayId: "04",
-    title: "Bit24 KYC Product",
-    category: "Fintech/Crypto",
-    description: "Increased registration conversion rates by optimizing the onboarding flow through behavioral analytics and UX improvements.",
-    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2070&auto=format&fit=crop",
-    accent: "bg-emerald-500/10 text-emerald-600"
-  }
-];
+import { useState, useEffect } from "react";
+import { collection, query, orderBy, getDocs } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 export default function ProjectList() {
+  const [projects, setProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const q = query(collection(db, "projects"), orderBy("order", "asc"));
+        const snap = await getDocs(q);
+        setProjects(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
+
+  const getAccent = (category: string) => {
+    if (category.toLowerCase().includes('gaming')) return "bg-purple-500/10 text-purple-600";
+    if (category.toLowerCase().includes('ai')) return "bg-blue-500/10 text-blue-600";
+    if (category.toLowerCase().includes('fintech')) return "bg-emerald-500/10 text-emerald-600";
+    return "bg-black/5 text-black/60";
+  };
+
+  if (loading) {
+    return (
+      <div className="py-64 flex items-center justify-center">
+        <Loader2 className="animate-spin text-black/20" size={48} />
+      </div>
+    );
+  }
+
   return (
     <section id="work" className="px-6 py-32 max-w-7xl mx-auto uppercase">
       <div className="grid gap-32">
-        {PROJECTS.map((project, index) => (
+        {projects.map((project, index) => (
           <motion.div
             key={project.id}
             initial={{ opacity: 0, y: 50 }}
@@ -69,7 +66,7 @@ export default function ProjectList() {
             </div>
 
             <div className={`${index % 2 === 0 ? "md:order-2" : "md:order-1"}`}>
-              <div className={`inline-block px-3 py-1 rounded-full text-[10px] font-bold tracking-widest ${project.accent} mb-6`}>
+              <div className={`inline-block px-3 py-1 rounded-full text-[10px] font-bold tracking-widest ${getAccent(project.category)} mb-6`}>
                 {project.category}
               </div>
               <h3 className="text-3xl md:text-5xl font-sans font-medium mb-6 leading-tight group-hover:text-black transition-colors">
@@ -100,3 +97,4 @@ export default function ProjectList() {
     </section>
   );
 }
+

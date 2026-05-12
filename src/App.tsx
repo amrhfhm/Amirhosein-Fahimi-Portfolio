@@ -10,11 +10,13 @@ import Home from "./pages/Home";
 import CaseStudy from "./pages/CaseStudy";
 import Admin from "./pages/Admin";
 import ScrollToTop from "./components/ScrollToTop";
+import Meta from "./components/Meta";
 
 export default function App() {
   return (
     <Router>
       <ScrollToTop />
+      <Meta />
       <div className="relative selection:bg-black selection:text-white">
         {/* Background elements */}
         <div className="noise-bg" />

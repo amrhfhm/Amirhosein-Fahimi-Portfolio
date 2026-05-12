@@ -1,0 +1,116 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Portfolio Project",
+      "description": "A detailed portfolio project and its case study content.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" },
+        "client": { "type": "string" },
+        "role": { "type": "string" },
+        "timeline": { "type": "string" },
+        "collaborators": { 
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "link": { "type": "string" },
+        "overview": { "type": "string" },
+        "problem": { "type": "string" },
+        "solution": { "type": "string" },
+        "thinking": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "content": { "type": "string" }
+            }
+          }
+        },
+        "comparisons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "before": {
+                "type": "object",
+                "properties": {
+                  "image": { "type": "string" },
+                  "caption": { "type": "string" }
+                }
+              },
+              "after": {
+                "type": "object",
+                "properties": {
+                  "image": { "type": "string" },
+                  "caption": { "type": "string" }
+                }
+              },
+              "reasoning": { "type": "string" }
+            }
+          }
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "content": { "type": "string" },
+              "image": { "type": "string" },
+              "isDark": { "type": "boolean" },
+              "layout": { "type": "string", "enum": ["stacked", "split", "grid"] }
+            }
+          }
+        },
+        "status": { "type": "string", "enum": ["Published", "Draft"] },
+        "order": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "category", "description", "image", "role", "timeline", "overview", "problem", "solution"]
+    },
+    "Testimonial": {
+      "title": "Client Testimonial",
+      "description": "Feedback from clients or colleagues.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "text": { "type": "string" },
+        "avatar": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["name", "role", "text"]
+    },
+    "Settings": {
+      "title": "Site Settings",
+      "description": "Global SEO and site configuration.",
+      "type": "object",
+      "properties": {
+        "siteTitle": { "type": "string" },
+        "metaDescription": { "type": "string" },
+        "keywords": { "type": "string" },
+        "ogImage": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "projects": {
+      "schema": "Project",
+      "description": "Main portfolio projects and case studies."
+    },
+    "testimonials": {
+      "schema": "Testimonial",
+      "description": "User testimonials displayed on the site."
+    },
+    "settings": {
+      "schema": "Settings",
+      "description": "Global application configuration."
+    }
+  }
+}

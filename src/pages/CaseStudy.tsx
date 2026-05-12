@@ -1,26 +1,59 @@
 import { motion } from "motion/react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
-import { CASE_STUDIES } from "../constants/projects";
-import { useEffect } from "react";
+import { ArrowLeft, ArrowRight, ExternalLink, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { collection, query, orderBy, getDocs, doc, getDoc } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 export default function CaseStudy() {
   const { id } = useParams();
-  const project = id ? CASE_STUDIES[id] : null;
-
-  // Find next project for the footer
-  const projectIds = Object.keys(CASE_STUDIES);
-  const currentIndex = projectIds.indexOf(id || "");
-  const nextId = projectIds[(currentIndex + 1) % projectIds.length];
-  const nextProject = CASE_STUDIES[nextId];
+  const [project, setProject] = useState<any>(null);
+  const [nextProject, setNextProject] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchProjectData = async () => {
+      if (!id) return;
+      setLoading(true);
+      try {
+        // Fetch current project
+        const projectRef = doc(db, "projects", id);
+        const projectSnap = await getDoc(projectRef);
+        
+        if (projectSnap.exists()) {
+          const currentData = { id: projectSnap.id, ...projectSnap.data() };
+          setProject(currentData);
+
+          // Fetch all projects to find the "next" one
+          const q = query(collection(db, "projects"), orderBy("order", "asc"));
+          const allSnap = await getDocs(q);
+          const allProjects = allSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+          
+          const currentIndex = allProjects.findIndex(p => p.id === id);
+          const nextIdx = (currentIndex + 1) % allProjects.length;
+          setNextProject(allProjects[nextIdx]);
+        }
+      } catch (error) {
+        console.error("Error fetching project:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjectData();
   }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#EBEDE9]">
+        <Loader2 className="animate-spin text-black/20" size={48} />
+      </div>
+    );
+  }
 
   if (!project) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-[#EBEDE9]">
         <div className="text-center">
           <h1 className="text-4xl font-display mb-4">Project not found</h1>
           <Link to="/" className="text-[#25A9B3] hover:underline">Back to Home</Link>
@@ -72,11 +105,11 @@ export default function CaseStudy() {
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-black/30 block mb-2">Timeline</span>
                 <span className="text-sm font-bold text-black uppercase tracking-widest">{project.timeline}</span>
               </div>
-              {project.collaborators && (
+              {project.collaborators && project.collaborators.length > 0 && (
                 <div className="md:col-span-2">
                   <span className="text-[10px] font-black uppercase tracking-[0.3em] text-black/30 block mb-2">Collaborators</span>
                   <div className="flex flex-wrap gap-x-4 gap-y-1">
-                    {project.collaborators.map((c, i) => (
+                    {project.collaborators.map((c: string, i: number) => (
                       <span key={i} className="text-[11px] font-bold text-black uppercase tracking-widest opacity-80">
                         {c}{i < project.collaborators!.length - 1 ? " •" : ""}
                       </span>
@@ -144,7 +177,7 @@ export default function CaseStudy() {
               <div className="h-px bg-black/10 flex-grow" />
             </div>
             <div className="grid md:grid-cols-2 gap-16 lg:gap-32">
-              {project.thinking.map((item, i) => (
+              {project.thinking.map((item: any, i: number) => (
                 <motion.div 
                   key={i} 
                   initial={{ opacity: 0, y: 20 }}
@@ -174,28 +207,28 @@ export default function CaseStudy() {
                <p className="text-black/40 font-sans tracking-widest text-xs font-black uppercase">Before & After Comparisons</p>
             </div>
             
-            {project.comparisons.map((comp, i) => (
+            {project.comparisons.map((comp: any, i: number) => (
               <div key={i} className="space-y-12">
                 <h3 className="text-2xl md:text-3xl font-display font-medium tracking-tight text-center md:text-left">{comp.title}</h3>
                 <div className="grid md:grid-cols-2 gap-8">
                   {/* Before */}
                   <div className="space-y-4">
                     <div className="aspect-[4/3] rounded-[32px] overflow-hidden bg-black/5 border border-black/5 grayscale opacity-60">
-                      <img src={comp.before.image} alt="Before" className="w-full h-full object-cover" />
+                      <img src={comp.before?.image} alt="Before" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex items-center gap-3 px-2">
                       <span className="text-[10px] bg-red-500/10 text-red-600 px-2 py-0.5 rounded-full font-black uppercase tracking-widest leading-none">Previous</span>
-                      <p className="text-sm text-black/50 font-sans italic">{comp.before.caption}</p>
+                      <p className="text-sm text-black/50 font-sans italic">{comp.before?.caption}</p>
                     </div>
                   </div>
                   {/* After */}
                   <div className="space-y-4">
                     <div className="aspect-[4/3] rounded-[32px] overflow-hidden bg-white shadow-xl border border-black/5">
-                      <img src={comp.after.image} alt="After" className="w-full h-full object-cover" />
+                      <img src={comp.after?.image} alt="After" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex items-center gap-3 px-2">
                        <span className="text-[10px] bg-emerald-500/10 text-emerald-600 px-2 py-0.5 rounded-full font-black uppercase tracking-widest leading-none">Improved</span>
-                       <p className="text-sm text-black/80 font-sans font-medium">{comp.after.caption}</p>
+                       <p className="text-sm text-black/80 font-sans font-medium">{comp.after?.caption}</p>
                     </div>
                   </div>
                 </div>
@@ -210,7 +243,7 @@ export default function CaseStudy() {
         )}
 
         {/* Dynamic Sections */}
-        {project.sections.map((section, idx) => (
+        {project.sections && project.sections.map((section: any, idx: number) => (
           <motion.div 
             key={idx}
             initial={{ opacity: 0, y: 40 }}
@@ -286,22 +319,25 @@ export default function CaseStudy() {
       </div>
 
       {/* Footer Navigation - Next Project */}
-      <footer className="border-t border-black/5 py-32 md:py-48 px-6 bg-white/30 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto">
-          <Link to={`/project/${nextId}`} className="group block text-center md:text-left">
-            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-black/30 block mb-6">Up Next</span>
-            <div className="flex flex-col md:flex-row items-center md:items-end justify-between gap-8">
-              <h3 className="text-5xl md:text-8xl lg:text-9xl font-display font-medium tracking-tighter leading-none group-hover:translate-x-4 transition-transform duration-700">
-                {nextProject.title}
-              </h3>
-              <div className="flex items-center gap-4 text-black/40 group-hover:text-black transition-colors">
-                <span className="text-sm font-black uppercase tracking-widest leading-none">View Case Study</span>
-                <ArrowRight size={40} className="stroke-[1] group-hover:translate-x-2 transition-transform" />
+      {nextProject && (
+        <footer className="border-t border-black/5 py-32 md:py-48 px-6 bg-white/30 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto">
+            <Link to={`/project/${nextProject.id}`} className="group block text-center md:text-left">
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-black/30 block mb-6">Up Next</span>
+              <div className="flex flex-col md:flex-row items-center md:items-end justify-between gap-8">
+                <h3 className="text-5xl md:text-8xl lg:text-9xl font-display font-medium tracking-tighter leading-none group-hover:translate-x-4 transition-transform duration-700">
+                  {nextProject.title}
+                </h3>
+                <div className="flex items-center gap-4 text-black/40 group-hover:text-black transition-colors">
+                  <span className="text-sm font-black uppercase tracking-widest leading-none">View Case Study</span>
+                  <ArrowRight size={40} className="stroke-[1] group-hover:translate-x-2 transition-transform" />
+                </div>
               </div>
-            </div>
-          </Link>
-        </div>
-      </footer>
+            </Link>
+          </div>
+        </footer>
+      )}
     </div>
   );
 }
+

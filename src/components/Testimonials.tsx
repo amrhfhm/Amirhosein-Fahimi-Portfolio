@@ -1,69 +1,54 @@
 import { motion, AnimatePresence } from "motion/react";
-import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
-
-interface Testimonial {
-  id: number;
-  name: string;
-  role: string;
-  extra: string;
-  quote: string;
-  avatar: string;
-}
-
-const TESTIMONIALS: Testimonial[] = [
-  {
-    id: 1,
-    name: "Kamran Kaviani",
-    role: "Chief Product Officer",
-    extra: "Managed Amirhosein directly at Bit24",
-    quote: "AmirHossein is a gifted and dedicated UX Researcher with a talent for uncovering valuable user insights. His expertise in conducting deep user interviews, usability tests, and heuristic evaluations has been instrumental in enhancing our product's user experience. AmirHossein’s ability to translate complex research findings into actionable recommendations makes him a valuable asset to any design team.",
-    avatar: "/Kamran.png"
-  },
-  {
-    id: 2,
-    name: "Melika Mirazizi",
-    role: "Product Manager",
-    extra: "Managed Amirhosein directly at FEEL",
-    quote: "I worked with him on several occasion, like FEEL AmirHosein is an incredibly disciplined product designer who approaches every task with a positive attitude and a strong sense of ownership. He is highly adaptive and flexible, able to seamlessly adjust to changing circumstances and requirements. He has a keen understanding of user-centric design principles and always strives to achieve the best possible results for both the end user and the team.",
-    avatar: "/Melika.png"
-  },
-  {
-    id: 3,
-    name: "Yasaman Zarezadeh",
-    role: "Scrum Master",
-    extra: "Worked with Amirhosein on different teams",
-    quote: "Amirhossein was one of my most passionate and highly skilled colleagues in Espad. With a deep under-standing of UX and his UI skills in Figma, he was able to design many brilliant frames for our website and application which were innovative. He had to design tricky frames for a complicated business, yet he was successful in creating simple and user-friendly frames for a very pleasant user experience.",
-    avatar: "/Yasaman.png"
-  },
-  {
-    id: 4,
-    name: "Hadis Hosseini",
-    role: "Product Designer",
-    extra: "Worked with Amirhosein on the same team",
-    quote: "Amirhosein is a very supportive, empathetic, and encouraging team leader who truly comprehends his colleagues' work circumstances. He strives to maintain a work environment free from anxiety and tension. In addition to emphasizing the importance of meetings' organization, he pays attention to all the details and aspects. All of these factors have led me to learn from and enjoy working alongside him.",
-    avatar: "/Hadis.png"
-  },
-  {
-    id: 5,
-    name: "Yalda Nasirian",
-    role: "UX/UI Designer",
-    extra: "Reported to Amirhosein directly",
-    quote: "Amirhosein is a leader who helps others around his grow. He mentored me during our time together by having an open feedback loop for our projects. I've learned so much from working with him; he helped me to become a better professional. He was always reliable and professional, and at stressful times he was a positive influence on all of us.",
-    avatar: "/Yalda.png"
-  }
-];
+import { Quote, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { collection, query, orderBy, getDocs } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 export default function Testimonials() {
+  const [testimonials, setTestimonials] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [active, setActive] = useState(0);
 
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const q = query(collection(db, "testimonials"), orderBy("order", "asc"));
+        const snap = await getDocs(q);
+        setTestimonials(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      } catch (error) {
+        console.error("Error fetching testimonials:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTestimonials();
+  }, []);
+
   const next = () => {
-    setActive((prev) => (prev + 1) % TESTIMONIALS.length);
+    setTestimonials(prev => {
+      if (prev.length === 0) return prev;
+      setActive((old) => (old + 1) % prev.length);
+      return prev;
+    });
   };
 
   const prev = () => {
-    setActive((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+    setTestimonials(prev => {
+      if (prev.length === 0) return prev;
+      setActive((old) => (old - 1 + prev.length) % prev.length);
+      return prev;
+    });
   };
+
+  if (loading) {
+    return (
+      <section id="testimonials" className="bg-[#121212] py-40 flex items-center justify-center">
+        <Loader2 className="animate-spin text-white/20" size={48} />
+      </section>
+    );
+  }
+
+  if (testimonials.length === 0) return null;
 
   return (
     <section id="testimonials" className="bg-[#121212] py-24 md:py-40 overflow-hidden">
@@ -102,8 +87,8 @@ export default function Testimonials() {
         <div className="flex gap-6 md:gap-10 items-center justify-center w-full max-w-7xl min-h-[550px]">
           <AnimatePresence mode="popLayout" initial={false}>
             {[-1, 0, 1].map((offset) => {
-              const index = (active + offset + TESTIMONIALS.length) % TESTIMONIALS.length;
-              const t = TESTIMONIALS[index];
+              const index = (active + offset + testimonials.length) % testimonials.length;
+              const t = testimonials[index];
               const isActive = offset === 0;
 
               return (
@@ -139,7 +124,7 @@ export default function Testimonials() {
                       <Quote className="w-12 h-12 fill-current" />
                     </div>
                     <p className={`text-lg md:text-xl leading-relaxed font-sans font-medium tracking-tight mt-8 ${isActive ? "text-white" : "text-black/70"}`}>
-                      {t.quote}
+                      {t.text || t.quote}
                     </p>
                   </div>
 
@@ -169,7 +154,7 @@ export default function Testimonials() {
 
       {/* Progress indicators */}
       <div className="flex justify-center gap-3 mt-20">
-        {TESTIMONIALS.map((_, i) => (
+        {testimonials.map((_, i) => (
           <button
             key={i}
             onClick={() => setActive(i)}

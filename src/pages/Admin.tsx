@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   LayoutDashboard, 
   FolderKanban, 
@@ -12,15 +12,76 @@ import {
   Image as ImageIcon, 
   Settings,
   ChevronRight,
-  MoreHorizontal
+  MoreHorizontal,
+  Loader2
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { 
+  collection, 
+  getDocs, 
+  doc, 
+  updateDoc, 
+  setDoc, 
+  addDoc, 
+  deleteDoc, 
+  query, 
+  orderBy, 
+  onSnapshot,
+  getDoc
+} from "firebase/firestore";
+import { db, auth } from "../lib/firebase";
+import { migrateData } from "../lib/migration";
+
+enum OperationType {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
+  LIST = 'list',
+  GET = 'get',
+  WRITE = 'write',
+}
+
+interface FirestoreErrorInfo {
+  error: string;
+  operationType: OperationType;
+  path: string | null;
+  authInfo: any;
+}
+
+function handleFirestoreError(error: unknown, operationType: OperationType, path: string | null) {
+  const errInfo: FirestoreErrorInfo = {
+    error: error instanceof Error ? error.message : String(error),
+    authInfo: {
+      userId: auth.currentUser?.uid,
+      email: auth.currentUser?.email,
+    },
+    operationType,
+    path
+  }
+  console.error('Firestore Error: ', JSON.stringify(errInfo));
+  throw new Error(JSON.stringify(errInfo));
+}
 
 type Tab = "overview" | "projects" | "editor" | "testimonials" | "seo";
 
 export default function Admin() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isMigrating, setIsMigrating] = useState(false);
+
+  const handleMigrate = async () => {
+    setIsMigrating(true);
+    try {
+      await migrateData();
+      alert("Migration complete!");
+    } catch (error) {
+      console.error(error);
+      alert("Migration failed.");
+    } finally {
+      setIsMigrating(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F9FAFB] flex font-sans selection:bg-black selection:text-white">
@@ -50,13 +111,6 @@ export default function Admin() {
             label="Projects" 
             active={activeTab === "projects"} 
             onClick={() => setActiveTab("projects")}
-            collapsed={!isSidebarOpen}
-          />
-          <NavItem 
-            icon={<FileText size={18} />} 
-            label="Editor" 
-            active={activeTab === "editor"} 
-            onClick={() => setActiveTab("editor")}
             collapsed={!isSidebarOpen}
           />
           <NavItem 
@@ -99,22 +153,29 @@ export default function Admin() {
             <h2 className="text-sm font-medium text-black capitalize">{activeTab}</h2>
           </div>
           <div className="flex items-center gap-3">
+            <button 
+              onClick={handleMigrate} 
+              disabled={isMigrating}
+              className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#25A9B3] hover:text-[#25A9B3]/80 transition-colors disabled:opacity-50"
+            >
+              {isMigrating ? "Migrating..." : "Seed Data"}
+            </button>
             <button className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-black/40 hover:text-black transition-colors flex items-center gap-2">
               <Eye size={14} /> Preview
             </button>
             <button className="px-5 py-2 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-black/80 transition-colors flex items-center gap-2">
-              <Save size={14} /> Save Changes
+              <Save size={14} /> Global Save
             </button>
           </div>
         </header>
 
         <div className="flex-grow overflow-y-auto p-8">
           <AnimatePresence mode="wait">
-            {activeTab === "overview" && <OverviewView />}
-            {activeTab === "projects" && <ProjectsView />}
-            {activeTab === "editor" && <EditorView />}
-            {activeTab === "testimonials" && <TestimonialsView />}
-            {activeTab === "seo" && <SEOView />}
+            {activeTab === "overview" && <OverviewView key="overview" />}
+            {activeTab === "projects" && <ProjectsView key="projects" onEditProject={(id) => { setActiveTab("editor"); (window as any)._editingProjectId = id; }} />}
+            {activeTab === "editor" && <EditorView key="editor" id={(window as any)._editingProjectId} onBack={() => setActiveTab("projects")} />}
+            {activeTab === "testimonials" && <TestimonialsView key="testimonials" />}
+            {activeTab === "seo" && <SEOView key="seo" />}
           </AnimatePresence>
         </div>
       </main>
@@ -138,6 +199,8 @@ function NavItem({ icon, label, active, onClick, collapsed }: { icon: React.Reac
 }
 
 function OverviewView() {
+  const [stats, setStats] = useState({ visits: "2.4k", inquiries: "14", views: "842", success: "92%" });
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
@@ -153,10 +216,10 @@ function OverviewView() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard label="Total Visits" value="2.4k" change="+12%" icon={<BarChart3 size={20} />} />
-        <StatCard label="Inquiries" value="14" change="+3" icon={<MessageSquareQuote size={20} />} />
-        <StatCard label="Case Study Views" value="842" change="+18%" icon={<Eye size={20} />} />
-        <StatCard label="Form Success" value="92%" change="+2%" icon={<folder size={20} />} />
+        <StatCard label="Total Visits" value={stats.visits} change="+12%" icon={<BarChart3 size={20} />} />
+        <StatCard label="Inquiries" value={stats.inquiries} change="+3" icon={<MessageSquareQuote size={20} />} />
+        <StatCard label="Case Study Views" value={stats.views} change="+18%" icon={<Eye size={20} />} />
+        <StatCard label="Form Success" value={stats.success} change="+2%" icon={<FolderKanban size={20} />} />
       </div>
 
       <div className="grid lg:grid-cols-[2fr_1fr] gap-8">
@@ -174,7 +237,7 @@ function OverviewView() {
              ].map((action, i) => (
                <div key={i} className="flex items-center justify-between py-3 border-b border-black/5 last:border-0 group">
                   <div className="flex items-center gap-4">
-                     <div className={`w-2 h-2 rounded-full bg-${action.color}-500/40 opacity-0 group-hover:opacity-100 transition-opacity`} />
+                     <div className={`w-2 h-2 rounded-full bg-${action.color}-600/40 opacity-0 group-hover:opacity-100 transition-opacity`} />
                      <span className="text-sm text-black/70 group-hover:text-black transition-colors">{action.entry}</span>
                   </div>
                   <span className="text-xs text-black/30">{action.time}</span>
@@ -188,7 +251,7 @@ function OverviewView() {
             <h3 className="text-lg font-display font-medium mb-2">Build something new</h3>
             <p className="text-white/40 text-sm leading-relaxed">Your projects are the heartbeat of your portfolio. Add a new one today.</p>
           </div>
-          <button className="relative z-10 mt-12 w-full py-4 bg-white text-black rounded-2xl text-xs font-black uppercase tracking-[0.2em] hover:scale-[1.02] transition-transform flex items-center justify-center gap-2">
+          <button className="relative z-10 mt-12 w-full py-4 bg-white text-black rounded-2xl text-xs font-black uppercase tracking-[0.2em] hover:scale-[1.02] transition-transform flex items-center justify-center gap-2 font-display">
             <Plus size={16} /> New Project
           </button>
           {/* Decorative element */}
@@ -207,14 +270,26 @@ function StatCard({ label, value, change, icon }: { label: string, value: string
         <span className="text-[10px] font-black uppercase text-[#25A9B3]">{change}</span>
       </div>
       <div>
-        <h4 className="text-2xl font-display font-medium tracking-tight">{value}</h4>
-        <p className="text-xs text-black/40 font-medium uppercase tracking-widest mt-1">{label}</p>
+        <h4 className="text-2xl font-display font-medium tracking-tight leading-none">{value}</h4>
+        <p className="text-xs text-black/40 font-medium uppercase tracking-widest mt-2">{label}</p>
       </div>
     </div>
   );
 }
 
-function ProjectsView() {
+function ProjectsView({ onEditProject }: { onEditProject: (id: string) => void }) {
+  const [projects, setProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const q = query(collection(db, "projects"), orderBy("order", "asc"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      setProjects(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      setLoading(false);
+    }, (error) => handleFirestoreError(error, OperationType.LIST, "projects"));
+    return () => unsubscribe();
+  }, []);
+
   return (
     <motion.div 
       initial={{ opacity: 0, x: 20 }}
@@ -232,92 +307,133 @@ function ProjectsView() {
         </button>
       </div>
 
-      <div className="grid gap-4">
-        {[
-          { title: "GG10 Gaming Platform", category: "Gaming", status: "Published", updated: "2h ago" },
-          { title: "Bit24 Spot Product", category: "Fintech", status: "Published", updated: "1d ago" },
-          { title: "Bit24 KYC Redesign", category: "Fintech", status: "Published", updated: "Yesterday" },
-          { title: "Personal Portfolio", category: "AI / Design", status: "Draft", updated: "3d ago" },
-        ].map((project, i) => (
-          <div key={i} className="bg-white p-4 pr-6 rounded-[24px] border border-black/5 flex items-center justify-between group hover:border-black/10 transition-all cursor-pointer">
-            <div className="flex items-center gap-6">
-              <div className="w-16 h-12 bg-black/5 rounded-xl flex-shrink-0" />
-              <div>
-                <h4 className="font-medium text-sm text-black">{project.title}</h4>
-                <div className="flex items-center gap-3 mt-1">
-                  <span className="text-[10px] uppercase font-black tracking-widest text-black/30">{project.category}</span>
-                  <span className="w-1 h-1 rounded-full bg-black/10" />
-                  <span className="text-[10px] uppercase font-black tracking-widest text-[#25A9B3]">{project.status}</span>
+      {loading ? (
+        <div className="h-64 flex items-center justify-center">
+          <Loader2 className="animate-spin text-black/20" size={32} />
+        </div>
+      ) : (
+        <div className="grid gap-4">
+          {projects.map((project, i) => (
+            <div 
+              key={project.id} 
+              onClick={() => onEditProject(project.id)}
+              className="bg-white p-4 pr-6 rounded-[24px] border border-black/5 flex items-center justify-between group hover:border-black/10 transition-all cursor-pointer"
+            >
+              <div className="flex items-center gap-6">
+                <div className="w-16 h-12 bg-black/5 rounded-xl flex-shrink-0 overflow-hidden">
+                  {project.image && <img src={project.image} alt={project.title} className="w-full h-full object-cover" />}
+                </div>
+                <div>
+                  <h4 className="font-medium text-sm text-black">{project.title}</h4>
+                  <div className="flex items-center gap-3 mt-1">
+                    <span className="text-[10px] uppercase font-black tracking-widest text-black/30">{project.category}</span>
+                    <span className="w-1 h-1 rounded-full bg-black/10" />
+                    <span className="text-[10px] uppercase font-black tracking-widest text-[#25A9B3]">{project.status || 'Draft'}</span>
+                  </div>
                 </div>
               </div>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-black/30 hidden md:block">Updated {new Date(project.updatedAt).toLocaleDateString()}</span>
+                <button className="p-2 text-black/20 hover:text-black transition-colors">
+                  <MoreHorizontal size={18} />
+                </button>
+              </div>
             </div>
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-black/30 hidden md:block">Updated {project.updated}</span>
-              <button className="p-2 text-black/20 hover:text-black transition-colors">
-                <MoreHorizontal size={18} />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 }
 
-function EditorView() {
+function EditorView({ id, onBack }: { id: string | null, onBack: () => void }) {
+  const [project, setProject] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (!id) return;
+    const fetch = async () => {
+      try {
+        const docRef = doc(db, "projects", id);
+        const snap = await getDoc(docRef);
+        if (snap.exists()) setProject(snap.data());
+      } catch (error) {
+        handleFirestoreError(error, OperationType.GET, `projects/${id}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetch();
+  }, [id]);
+
+  const handleUpdate = async (field: string, value: any) => {
+    const updated = { ...project, [field]: value };
+    setProject(updated);
+  };
+
+  const save = async () => {
+    if (!id) return;
+    setSaving(true);
+    try {
+      await updateDoc(doc(db, "projects", id), project);
+      alert("Project saved successfully.");
+    } catch (error) {
+      handleFirestoreError(error, OperationType.UPDATE, `projects/${id}`);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) return <div className="h-64 flex items-center justify-center"><Loader2 className="animate-spin" /></div>;
+  if (!project) return <div>Project not found.</div>;
+
   return (
     <motion.div 
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="max-w-4xl mx-auto space-y-12"
+      className="max-w-4xl mx-auto space-y-12 pb-20"
     >
-      <div className="space-y-2">
-        <span className="text-[10px] font-black uppercase text-[#25A9B3] tracking-[0.3em]">Editor</span>
-        <h2 className="text-4xl font-display font-medium tracking-tight">Bit24 KYC Redesign</h2>
+      <div className="flex items-center justify-between">
+        <div className="space-y-2">
+          <button onClick={onBack} className="text-[10px] font-black uppercase text-black/30 hover:text-black transition-colors mb-2">← Back to Projects</button>
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] font-black uppercase text-[#25A9B3] tracking-[0.3em]">Editor</span>
+            {saving && <Loader2 className="animate-spin text-[#25A9B3]" size={14} />}
+          </div>
+          <h2 className="text-4xl font-display font-medium tracking-tight leading-none">{project.title}</h2>
+        </div>
+        <button 
+          onClick={save}
+          disabled={saving}
+          className="px-6 py-3 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-black/80 transition-colors disabled:opacity-50 flex items-center gap-2"
+        >
+          {saving ? <Loader2 className="animate-spin" size={14} /> : <Save size={14} />} Save Project
+        </button>
       </div>
 
       <div className="space-y-10">
         <Section title="Hero Details">
           <div className="grid md:grid-cols-2 gap-6">
-            <Input label="Project Title" defaultValue="Bit24 KYC Redesign" />
-            <Input label="Category" defaultValue="Fintech / Optimization" />
+            <Input label="Project Title" value={project.title} onChange={(v) => handleUpdate('title', v)} />
+            <Input label="Category" value={project.category} onChange={(v) => handleUpdate('category', v)} />
             <div className="md:col-span-2">
-              <TextArea label="Description" defaultValue="Driving growth by deconstructing the friction in high-stakes identity verification." />
+              <TextArea label="Description" value={project.description} onChange={(v) => handleUpdate('description', v)} />
+            </div>
+            <Input label="Role" value={project.role} onChange={(v) => handleUpdate('role', v)} />
+            <Input label="Timeline" value={project.timeline} onChange={(v) => handleUpdate('timeline', v)} />
+            <div className="md:col-span-2">
+               <Input label="Hero Image URL" value={project.image} onChange={(v) => handleUpdate('image', v)} />
             </div>
           </div>
         </Section>
 
-        <Section title="Strategic Thinking">
-          <div className="space-y-6">
-             <div className="p-6 bg-black/5 rounded-2xl border border-black/5 space-y-4">
-                <Input label="Thinking Title 01" defaultValue="The Distortion of 'Drop-offs'" />
-                <TextArea label="Content" defaultValue="One of the most important findings was that not every exit was a failure..." />
-                <button className="text-[10px] font-black uppercase text-red-500/60 hover:text-red-500 transition-colors">Remove Section</button>
-             </div>
-             <button className="w-full py-4 border-2 border-dashed border-black/5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-black/30 hover:bg-black/5 hover:border-black/10 transition-all">
-                Add Strategy Section
-             </button>
-          </div>
-        </Section>
-
-        <Section title="Before & After Comparison">
-           <div className="p-6 bg-black/5 rounded-2xl border border-black/5 space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                 <div className="space-y-4">
-                    <span className="text-[10px] font-black uppercase text-black/30">Before View</span>
-                    <div className="aspect-[4/3] bg-black/10 rounded-xl flex items-center justify-center text-black/20">
-                       <ImageIcon size={24} />
-                    </div>
-                 </div>
-                 <div className="space-y-4">
-                    <span className="text-[10px] font-black uppercase text-black/30">After View</span>
-                    <div className="aspect-[4/3] bg-black/10 rounded-xl flex items-center justify-center text-black/20">
-                       <ImageIcon size={24} />
-                    </div>
-                 </div>
-              </div>
-              <TextArea label="Reasoning" defaultValue="By reducing perceived complexity through progressive disclosure..." />
+        <Section title="Overview Content">
+           <div className="grid gap-6">
+              <TextArea label="Project Overview" value={project.overview} onChange={(v) => handleUpdate('overview', v)} />
+              <TextArea label="The Problem" value={project.problem} onChange={(v) => handleUpdate('problem', v)} />
+              <TextArea label="The Solution" value={project.solution} onChange={(v) => handleUpdate('solution', v)} />
            </div>
         </Section>
       </div>
@@ -328,39 +444,53 @@ function EditorView() {
 function Section({ title, children }: { title: string, children: React.ReactNode }) {
   return (
     <div className="space-y-6">
-      <h3 className="text-sm font-black uppercase tracking-[0.2em] text-black/30 pb-4 border-b border-black/5">{title}</h3>
+      <h3 className="text-sm font-black uppercase tracking-[0.2em] text-black/30 pb-4 border-b border-black/5 font-display">{title}</h3>
       {children}
     </div>
   );
 }
 
-function Input({ label, defaultValue }: { label: string, defaultValue?: string }) {
+function Input({ label, value, onChange }: { label: string, value?: string, onChange: (v: string) => void }) {
   return (
-    <div className="space-y-2">
-      <label className="text-xs font-bold text-black/40 uppercase tracking-widest">{label}</label>
+    <div className="space-y-2 font-display">
+      <label className="text-[10px] font-black text-black/40 uppercase tracking-widest">{label}</label>
       <input 
         type="text" 
-        defaultValue={defaultValue}
-        className="w-full bg-white border border-black/5 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black/20 transition-all"
+        value={value || ""}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full bg-white border border-black/5 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black/20 transition-all font-sans"
       />
     </div>
   );
 }
 
-function TextArea({ label, defaultValue }: { label: string, defaultValue?: string }) {
+function TextArea({ label, value, onChange }: { label: string, value?: string, onChange: (v: string) => void }) {
   return (
-    <div className="space-y-2">
-      <label className="text-xs font-bold text-black/40 uppercase tracking-widest">{label}</label>
+    <div className="space-y-2 font-display">
+      <label className="text-[10px] font-black text-black/40 uppercase tracking-widest">{label}</label>
       <textarea 
-        defaultValue={defaultValue}
+        value={value || ""}
+        onChange={(e) => onChange(e.target.value)}
         rows={4}
-        className="w-full bg-white border border-black/5 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black/20 transition-all resize-none"
+        className="w-full bg-white border border-black/5 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black/20 transition-all resize-none font-sans"
       />
     </div>
   );
 }
 
 function TestimonialsView() {
+  const [testimonials, setTestimonials] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const q = query(collection(db, "testimonials"), orderBy("order", "asc"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      setTestimonials(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      setLoading(false);
+    }, (error) => handleFirestoreError(error, OperationType.LIST, "testimonials"));
+    return () => unsubscribe();
+  }, []);
+
   return (
      <motion.div 
       initial={{ opacity: 0, y: 10 }}
@@ -378,70 +508,112 @@ function TestimonialsView() {
         </button>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-         {[
-           { name: "Jane Doe", role: "Product Manager", text: "Amir's eye for detail is unmatched. He transformed our onboarding flow..." },
-           { name: "Bruce Wayne", role: "CEO, Wayne Ent.", text: "A strategic thinker who understands the intersection of design and business..." },
-         ].map((t, i) => (
-           <div key={i} className="bg-white p-8 rounded-[32px] border border-black/5 space-y-6 hover:border-black/10 transition-all group">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-black/5" />
-                  <div>
-                    <h4 className="text-sm font-bold">{t.name}</h4>
-                    <span className="text-[10px] uppercase font-black tracking-widest text-black/30">{t.role}</span>
+      {loading ? (
+        <div className="h-64 flex items-center justify-center"><Loader2 className="animate-spin" /></div>
+      ) : (
+        <div className="grid md:grid-cols-2 gap-6">
+          {testimonials.map((t) => (
+            <div key={t.id} className="bg-white p-8 rounded-[32px] border border-black/5 space-y-6 hover:border-black/10 transition-all group">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-black/5 overflow-hidden">
+                      {t.avatar && <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />}
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold">{t.name}</h4>
+                      <span className="text-[10px] uppercase font-black tracking-widest text-black/30">{t.role}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button className="p-2 hover:bg-black/5 rounded-lg transition-colors text-black/20 hover:text-black">
+                      <FileText size={16} />
+                    </button>
+                    <button className="p-2 hover:bg-black/5 rounded-lg transition-colors text-black/20 hover:text-red-500">
+                      <MoreHorizontal size={16} />
+                    </button>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                   <button className="p-2 hover:bg-black/5 rounded-lg transition-colors text-black/20 hover:text-black">
-                     <FileText size={16} />
-                   </button>
-                   <button className="p-2 hover:bg-black/5 rounded-lg transition-colors text-black/20 hover:text-red-500">
-                     <MoreHorizontal size={16} />
-                   </button>
-                </div>
-              </div>
-              <p className="text-sm text-black/60 leading-relaxed font-sans font-light italic">"{t.text}"</p>
-           </div>
-         ))}
-      </div>
+                <p className="text-sm text-black/60 leading-relaxed font-sans font-light italic">"{t.text}"</p>
+            </div>
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 }
 
 function SEOView() {
+  const [settings, setSettings] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const snap = await getDoc(doc(db, "settings", "site"));
+        if (snap.exists()) setSettings(snap.data());
+      } catch (error) {
+        handleFirestoreError(error, OperationType.GET, "settings/site");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetch();
+  }, []);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await setDoc(doc(db, "settings", "site"), settings);
+      alert("Settings saved.");
+    } catch (error) {
+      handleFirestoreError(error, OperationType.WRITE, "settings/site");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) return <div className="h-64 flex items-center justify-center"><Loader2 className="animate-spin" /></div>;
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
-      className="max-w-4xl space-y-12"
+      className="max-w-4xl space-y-12 pb-20"
     >
-       <div className="space-y-4">
-          <h2 className="text-2xl font-display font-medium">Search Engine Optimization</h2>
-          <p className="text-sm text-black/40">Fine-tune how your portfolio appears in search results and social shares.</p>
+       <div className="flex items-center justify-between">
+          <div className="space-y-2">
+            <h2 className="text-2xl font-display font-medium">Search Engine Optimization</h2>
+            <p className="text-sm text-black/40">Fine-tune how your portfolio appears in search results.</p>
+          </div>
+          <button 
+            onClick={handleSave}
+            disabled={saving}
+            className="px-6 py-3 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-black/80 transition-colors disabled:opacity-50 flex items-center gap-2"
+          >
+             {saving ? <Loader2 className="animate-spin" size={14} /> : <Save size={14} />} Save Settings
+          </button>
        </div>
 
        <div className="space-y-10">
           <Section title="Global Settings">
              <div className="grid gap-6">
-                <Input label="Site Title" defaultValue="Amirhosein Fahimi — Product Designer" />
-                <TextArea label="Meta Description" defaultValue="Self-taught Product Designer focused on creating premium digital experiences for the next generation of users." />
-                <Input label="Keywords" defaultValue="Product Design, UX Research, Portfolio, Fintech Design" />
+                <Input label="Site Title" value={settings?.siteTitle} onChange={(v) => setSettings({...settings, siteTitle: v})} />
+                <TextArea label="Meta Description" value={settings?.metaDescription} onChange={(v) => setSettings({...settings, metaDescription: v})} />
+                <Input label="Keywords" value={settings?.keywords} onChange={(v) => setSettings({...settings, keywords: v})} />
              </div>
           </Section>
 
           <Section title="Social Appearance (OG Tags)">
              <div className="p-8 bg-white rounded-[32px] border border-black/5 flex flex-col md:flex-row gap-8 items-center">
-                <div className="w-full md:w-64 aspect-[1.91/1] bg-black/5 rounded-2xl flex items-center justify-center text-black/20 border border-black/5 border-dashed">
-                   <ImageIcon size={32} />
+                <div className="w-full md:w-64 aspect-[1.91/1] bg-black/5 rounded-2xl flex items-center justify-center text-black/20 border border-black/5 border-dashed overflow-hidden">
+                   {settings?.ogImage ? <img src={settings.ogImage} className="w-full h-full object-cover" /> : <ImageIcon size={32} />}
                 </div>
                 <div className="flex-grow space-y-4">
                    <h4 className="text-sm font-bold">Social Preview Image</h4>
                    <p className="text-xs text-black/40 leading-relaxed">Dimensions: 1200x630px. This image will appear when you share links on Twitter, LinkedIn, etc.</p>
-                   <button className="px-5 py-2.5 bg-black/5 text-black rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-black/10 transition-colors">
-                      Upload New Image
-                   </button>
+                   <Input label="OG Image URL" value={settings?.ogImage} onChange={(v) => setSettings({...settings, ogImage: v})} />
                 </div>
              </div>
           </Section>
@@ -449,6 +621,7 @@ function SEOView() {
     </motion.div>
   );
 }
+
 
 function folder({ size }: { size: number }) {
   return <FolderKanban size={size} />;
