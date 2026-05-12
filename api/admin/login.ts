@@ -1,7 +1,8 @@
-import { sign } from "jsonwebtoken";
+import { SignJWT } from "jose";
 import { serialize } from "cookie";
 
 const JWT_SECRET = process.env.JWT_SECRET || "fallback-secret";
+const secret = new TextEncoder().encode(JWT_SECRET);
 
 export default async function handler(req: any, res: any) {
   if (req.method !== "POST") {
@@ -13,7 +14,10 @@ export default async function handler(req: any, res: any) {
   const adminPass = process.env.ADMIN_PASSWORD || "password";
 
   if (username === adminUser && password === adminPass) {
-    const token = sign({ user: username }, JWT_SECRET, { expiresIn: "7d" });
+    const token = await new SignJWT({ user: username })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime("7d")
+      .sign(secret);
     
     // Set cookie
     res.setHeader("Set-Cookie", serialize("admin_token", token, {

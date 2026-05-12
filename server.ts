@@ -2,7 +2,7 @@ import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
 import cookieParser from "cookie-parser";
-import jwt from "jsonwebtoken";
+import { SignJWT, jwtVerify } from "jose";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -12,6 +12,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || "development";
 const app = express();
 const PORT = 3000;
 const JWT_SECRET = process.env.JWT_SECRET || "fallback-secret";
+const secret = new TextEncoder().encode(JWT_SECRET);
 
 console.log("Starting server in", process.env.NODE_ENV, "mode");
 
@@ -24,7 +25,7 @@ app.get("/api/health", (req, res) => {
 });
 
 // API Login route
-app.post("/api/admin/login", (req, res) => {
+app.post("/api/admin/login", async (req, res) => {
   console.log("Login attempt:", req.body.username);
   const { username, password } = req.body;
   const adminUser = process.env.ADMIN_USERNAME || "admin";
@@ -34,7 +35,11 @@ app.post("/api/admin/login", (req, res) => {
 
   if (username === adminUser && password === adminPass) {
     console.log("Login successful for:", username);
-    const token = jwt.sign({ user: username }, JWT_SECRET, { expiresIn: "7d" });
+    const token = await new SignJWT({ user: username })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime("7d")
+      .sign(secret);
+    
     res.cookie("admin_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -48,12 +53,12 @@ app.post("/api/admin/login", (req, res) => {
 });
 
 // Check auth status
-app.get("/api/admin/check", (req, res) => {
+app.get("/api/admin/check", async (req, res) => {
   const token = req.cookies.admin_token;
   if (!token) return res.status(401).json({ authenticated: false });
 
   try {
-    jwt.verify(token, JWT_SECRET);
+    await jwtVerify(token, secret);
     return res.json({ authenticated: true });
   } catch (err) {
     return res.status(401).json({ authenticated: false });

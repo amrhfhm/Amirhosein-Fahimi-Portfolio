@@ -1,7 +1,8 @@
-import { verify } from "jsonwebtoken";
+import { jwtVerify } from "jose";
 import { parse } from "cookie";
 
 const JWT_SECRET = process.env.JWT_SECRET || "fallback-secret";
+const secret = new TextEncoder().encode(JWT_SECRET);
 
 export default async function handler(req: any, res: any) {
   const cookies = parse(req.headers.cookie || "");
@@ -12,7 +13,7 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    verify(token, JWT_SECRET);
+    await jwtVerify(token, secret);
     return res.status(200).json({ authenticated: true });
   } catch (err) {
     return res.status(401).json({ authenticated: false });
