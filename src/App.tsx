@@ -26,17 +26,33 @@ export default function App() {
 
         <Routes>
           <Route path="/admin" element={<Admin />} />
-          <Route path="*" element={
-            <>
+          <Route path="/" element={
+            <div className="flex flex-col min-h-screen">
               <Navigation />
-              <main>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/project/:id" element={<CaseStudy />} />
-                </Routes>
+              <main className="flex-grow">
+                <Home />
               </main>
               <Footer />
-            </>
+            </div>
+          } />
+          <Route path="/project/:id" element={
+            <div className="flex flex-col min-h-screen">
+              <Navigation />
+              <main className="flex-grow">
+                <CaseStudy />
+              </main>
+              <Footer />
+            </div>
+          } />
+          {/* Fallback to Home */}
+          <Route path="*" element={
+            <div className="flex flex-col min-h-screen">
+              <Navigation />
+              <main className="flex-grow">
+                <Home />
+              </main>
+              <Footer />
+            </div>
           } />
         </Routes>
       </div>
