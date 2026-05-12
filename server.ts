@@ -7,20 +7,33 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
+
 const app = express();
 const PORT = 3000;
 const JWT_SECRET = process.env.JWT_SECRET || "fallback-secret";
 
+console.log("Starting server in", process.env.NODE_ENV, "mode");
+
 app.use(express.json());
 app.use(cookieParser());
 
+// Health check
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok", env: process.env.NODE_ENV });
+});
+
 // API Login route
 app.post("/api/admin/login", (req, res) => {
+  console.log("Login attempt:", req.body.username);
   const { username, password } = req.body;
   const adminUser = process.env.ADMIN_USERNAME || "admin";
   const adminPass = process.env.ADMIN_PASSWORD || "password";
 
+  console.log("Expected:", adminUser, "Received:", username);
+
   if (username === adminUser && password === adminPass) {
+    console.log("Login successful for:", username);
     const token = jwt.sign({ user: username }, JWT_SECRET, { expiresIn: "7d" });
     res.cookie("admin_token", token, {
       httpOnly: true,
@@ -67,6 +80,12 @@ async function startServer() {
       res.sendFile(path.join(distPath, "index.html"));
     });
   }
+
+  // Global error handler
+  app.use((err: any, req: any, res: any, next: any) => {
+    console.error("Global server error:", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  });
 
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on http://localhost:${PORT}`);

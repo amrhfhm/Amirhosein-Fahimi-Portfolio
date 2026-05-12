@@ -22,6 +22,12 @@ export default function Login() {
         body: JSON.stringify({ username, password }),
       });
 
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ message: `Server error: ${res.status}` }));
+        setError(errorData.message || "Invalid credentials");
+        return;
+      }
+
       const data = await res.json();
 
       if (data.success) {
@@ -30,7 +36,12 @@ export default function Login() {
         setError(data.message || "Invalid credentials");
       }
     } catch (err) {
-      setError("An error occurred. Please try again.");
+      console.error("Login fetch error:", err);
+      if (err instanceof Error && err.name === "TypeError" && err.message === "Failed to fetch") {
+        setError("Cannot reach the server. Please check your connection or wait for the server to start.");
+      } else {
+        setError(err instanceof Error ? `Error: ${err.message}` : "An unknown error occurred.");
+      }
     } finally {
       setLoading(false);
     }
