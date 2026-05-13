@@ -157,28 +157,37 @@ export default function CaseStudy() {
           >
             <h2 className="text-xs font-black uppercase tracking-[0.3em] text-[#25A9B3]">Outcome</h2>
             <div className="prose prose-sm md:prose-base max-w-none text-black/70">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.outcome || ""}</ReactMarkdown>
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  ul: ({ node, ...props }) => <ul className="list-disc list-outside pl-4 space-y-1" {...props} />,
+                  li: ({ node, ...props }) => <li className="mb-2" {...props} />
+                }}
+              >
+                {project.outcome || ""}
+              </ReactMarkdown>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Background Section */}
-      <section className="py-24 md:py-48 px-6 max-w-7xl mx-auto space-y-16">
-        <div className="grid md:grid-cols-[1fr_2fr] gap-12 items-start">
-          <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight whitespace-nowrap">
+      <section className="py-24 md:py-48 px-6 max-w-3xl mx-auto space-y-6 text-center">
+        <div className="space-y-4">
+          <span className="text-xs font-black uppercase tracking-[0.3em] text-[#25A9B3]">Background</span>
+          <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight">
             {project.backgroundTitle || "Background"}
           </h2>
-          <div className="text-lg md:text-xl text-black/60 leading-relaxed font-light prose prose-lg max-w-none">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.backgroundText || ""}</ReactMarkdown>
-          </div>
+        </div>
+        <div className="text-lg md:text-xl text-black/60 leading-relaxed font-light prose prose-lg max-w-none text-left">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.backgroundText || ""}</ReactMarkdown>
         </div>
         {project.backgroundImage && (
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="aspect-video rounded-[40px] md:rounded-[60px] overflow-hidden bg-black/5"
+            className="aspect-video rounded-[40px] md:rounded-[60px] overflow-hidden bg-black/5 mt-16"
           >
             <img 
               src={project.backgroundImage} 
