@@ -31,6 +31,7 @@ export function ImageUpload({ label, value, onChange, folder = "projects" }: Ima
     setProgress(0);
 
     const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+    console.log("Starting upload...", { folder, fileName, fileType: file.type, fileSize: file.size });
     const storageRef = ref(storage, `${folder}/${fileName}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -38,16 +39,19 @@ export function ImageUpload({ label, value, onChange, folder = "projects" }: Ima
       "state_changed",
       (snapshot) => {
         const p = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload progress:", p);
         setProgress(p);
       },
       (err) => {
-        console.error("Upload error:", err);
-        setError("Upload failed. Please check your permissions or network.");
+        console.error("Upload error details:", err);
+        setError("Upload failed.");
         setUploading(false);
       },
       async () => {
+        console.log("Upload completed, getting download URL...");
         try {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          console.log("Download URL:", downloadURL);
           onChange(downloadURL);
           setUploading(false);
           setProgress(0);

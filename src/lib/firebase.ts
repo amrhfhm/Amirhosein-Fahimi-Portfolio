@@ -17,7 +17,7 @@ export const db = initializeFirestore(app, {
 }, firebaseConfig.firestoreDatabaseId);
 
 export const auth = getAuth(app);
-export const storage = getStorage(app);
+export const storage = getStorage(app, "gs://gen-lang-client-0033443463.firebasestorage.app");
 
 async function testConnection() {
   try {
