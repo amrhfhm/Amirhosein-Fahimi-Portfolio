@@ -4,7 +4,7 @@ import { initializeFirestore, doc, getDocFromServer, setLogLevel } from 'firebas
 import firebaseConfig from '../../firebase-applet-config.json';
 
 // Set log level to debug to help diagnose connection issues in the environment
-setLogLevel('debug');
+// setLogLevel('debug');
 
 const app = initializeApp(firebaseConfig);
 

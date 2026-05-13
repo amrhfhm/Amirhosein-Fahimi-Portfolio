@@ -160,13 +160,7 @@ export default function CaseStudy() {
               >
                 {project.roleResponsibilities || ""}
               </ReactMarkdown>
-              {project.title === "GG10" && (
-                <div className="mt-4">
-                  <a href="https://www.figma.com/design/RnyozvrlnFgOY9FIoGfu9Y/GG10--A-Game-Engagement-Platform?node-id=11-1833&t=VdVTx03n3VMdHmeM-1" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                    View full Figma design file here
-                  </a>
-                </div>
-              )}
+
             </div>
           </motion.div>
           <motion.div 
