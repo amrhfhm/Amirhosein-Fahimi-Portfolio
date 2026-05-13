@@ -135,7 +135,7 @@ export default function CaseStudy() {
             viewport={{ once: true }}
             className="space-y-6"
           >
-            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-[#25A9B3]">Role & Responsibilities</h2>
+            <h2 className="text-sm font-black uppercase tracking-[0.3em] text-[#25A9B3]">Role & Responsibilities</h2>
             <div className="prose prose-sm md:prose-base max-w-none text-black/70">
               <ReactMarkdown 
                 remarkPlugins={[remarkGfm]}
@@ -155,7 +155,7 @@ export default function CaseStudy() {
             transition={{ delay: 0.2 }}
             className="space-y-6"
           >
-            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-[#25A9B3]">Outcome</h2>
+            <h2 className="text-sm font-black uppercase tracking-[0.3em] text-[#25A9B3]">Outcome</h2>
             <div className="prose prose-sm md:prose-base max-w-none text-black/70">
               <ReactMarkdown 
                 remarkPlugins={[remarkGfm]}
@@ -172,14 +172,14 @@ export default function CaseStudy() {
       </section>
 
       {/* Background Section */}
-      <section className="py-24 md:py-48 px-6 max-w-3xl mx-auto space-y-6 text-center">
-        <div className="space-y-4">
-          <span className="text-xs font-black uppercase tracking-[0.3em] text-[#25A9B3]">Background</span>
-          <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight">
+      <section className="py-24 md:py-48 px-6 max-w-3xl mx-auto space-y-16 text-center">
+        <div className="space-y-8">
+          <span className="text-sm font-black uppercase tracking-[0.3em] text-[#25A9B3]">Background</span>
+          <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight mb-8">
             {project.backgroundTitle || "Background"}
           </h2>
         </div>
-        <div className="text-lg md:text-xl text-black/60 leading-relaxed font-light prose prose-lg max-w-none text-left">
+        <div className="text-lg md:text-xl text-black/60 leading-relaxed font-light prose prose-lg max-w-none mx-auto text-left">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.backgroundText || ""}</ReactMarkdown>
         </div>
         {project.backgroundImage && (
@@ -200,17 +200,18 @@ export default function CaseStudy() {
       </section>
 
       {/* Problem Section */}
-      <section className="py-24 md:py-48 px-6 max-w-7xl mx-auto space-y-16">
-        <div className="grid md:grid-cols-[1fr_2fr] gap-12 items-start">
-          <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight whitespace-nowrap">
+      <section className="py-24 md:py-48 px-6 max-w-3xl mx-auto space-y-16 text-center">
+        <div className="space-y-12">
+          <span className="text-sm font-black uppercase tracking-[0.3em] text-[#25A9B3]">The Problem</span>
+          <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight mb-8">
             {project.problemTitle || "The Problem"}
           </h2>
-          <div className="text-lg md:text-xl text-black/60 leading-relaxed font-light prose prose-lg max-w-none">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.problemText || ""}</ReactMarkdown>
-          </div>
+        </div>
+        <div className="text-lg md:text-xl text-black/60 leading-relaxed font-light prose prose-lg max-w-none mx-auto text-left">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.problemText || ""}</ReactMarkdown>
         </div>
         {project.problemImages && project.problemImages.length > 0 && (
-          <div className={`grid gap-8 ${project.problemImages.length === 1 ? 'grid-cols-1' : 'md:grid-cols-2'}`}>
+          <div className={`grid gap-8 mt-16 ${project.problemImages.length === 1 ? 'grid-cols-1' : 'md:grid-cols-2'}`}>
             {project.problemImages.map((img: string, i: number) => (
               <motion.div 
                 key={i}
@@ -269,25 +270,14 @@ export default function CaseStudy() {
       </section>
 
       {/* Impact Section */}
-      <section className="py-24 md:py-48 px-6 max-w-7xl mx-auto text-center space-y-16">
-        <h2 className="text-4xl md:text-6xl font-display font-medium tracking-tighter uppercase whitespace-nowrap">Impact</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-          {project.impactStats && project.impactStats.map((stat: any, i: number) => (
-             <motion.div 
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="p-8 md:p-12 bg-white rounded-[40px] border border-black/5 shadow-sm group hover:border-[#25A9B3]/20 transition-all"
-             >
-                <div className="text-3xl md:text-5xl font-display font-medium text-[#25A9B3] mb-4 group-hover:scale-110 transition-transform">
-                  {stat.value}
-                </div>
-                <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] font-black text-black/30">
-                  {stat.label}
-                </div>
-             </motion.div>
+      <section className="py-24 md:py-48 px-6 max-w-3xl mx-auto space-y-16">
+        <h2 className="text-4xl md:text-6xl font-display font-medium tracking-tighter uppercase text-center">Impact</h2>
+        <div className="space-y-12">
+          {project.impactSections && project.impactSections.map((section: any, i: number) => (
+             <div key={i}>
+                <h3 className="text-2xl font-display font-medium mb-4 text-[#25A9B3]">{section.title}</h3>
+                <div className="text-lg text-black/60 prose prose-lg max-w-none"><ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body || ""}</ReactMarkdown></div>
+             </div>
           ))}
         </div>
       </section>
@@ -300,13 +290,12 @@ export default function CaseStudy() {
           viewport={{ once: true }}
           className="bg-[#121212] p-12 md:p-24 rounded-[60px] text-white space-y-12 max-w-4xl w-full text-center"
         >
-          <span className="text-xs font-black uppercase tracking-[0.5em] text-white/40 block">Final Thoughts</span>
-          <h2 className="text-4xl md:text-6xl font-display font-medium tracking-tighter leading-tight uppercase">
-            {project.takeawayTitle || "Key Takeaway"}
-          </h2>
-          <div className="text-lg md:text-xl text-white/60 leading-relaxed font-light prose prose-invert mx-auto">
-             <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.takeawayText || ""}</ReactMarkdown>
-          </div>
+           {project.takeawaySections && project.takeawaySections.map((section: any, i: number) => (
+             <div key={i} className="mb-12 last:mb-0">
+               <h3 className="text-2xl font-display font-medium mb-4 text-[#25A9B3]">{section.title}</h3>
+               <div className="text-white/60 prose prose-invert mx-auto"><ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body || ""}</ReactMarkdown></div>
+             </div>
+           ))}
         </motion.div>
       </section>
 

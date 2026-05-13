@@ -413,9 +413,8 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
     problemText: "",
     problemImages: [],
     approachSteps: [],
-    impactStats: [],
-    takeawayTitle: "",
-    takeawayText: "",
+    impactSections: [],
+    takeawaySections: [],
     status: "Draft",
     order: 0,
     updatedAt: new Date().toISOString()
@@ -451,8 +450,26 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
     setSaving(true);
     try {
       const data = {
-        ...project,
-        updatedAt: new Date().toISOString()
+        title: project.title,
+        category: project.category,
+        description: project.description,
+        heroSubtitle: project.heroSubtitle,
+        heroMockup: project.heroMockup,
+        roleResponsibilities: project.roleResponsibilities,
+        outcome: project.outcome,
+        backgroundTitle: project.backgroundTitle,
+        backgroundText: project.backgroundText,
+        backgroundImage: project.backgroundImage,
+        problemTitle: project.problemTitle,
+        problemText: project.problemText,
+        problemImages: project.problemImages || [],
+        approachSteps: (project.approachSteps || []).map((s: any) => ({ title: s.title, body: s.body, image: s.image })),
+        impactSections: (project.impactSections || []).map((s: any) => ({ title: s.title, body: s.body })),
+        takeawaySections: (project.takeawaySections || []).map((s: any) => ({ title: s.title, body: s.body })),
+        status: project.status,
+        order: project.order,
+        updatedAt: new Date().toISOString(),
+        createdAt: project.createdAt || new Date().toISOString()
       };
       
       try {
@@ -634,44 +651,71 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
           </div>
         </Section>
 
-        <Section title="Impact (Metrics)">
-          <div className="grid md:grid-cols-2 gap-4">
-            {(project.impactStats || []).map((stat: any, idx: number) => (
-              <div key={idx} className="p-4 bg-white rounded-2xl border border-black/5 flex gap-4 items-end">
-                <Input label="Value (e.g. +30%)" value={stat.value} onChange={(v) => {
-                  const newStats = [...project.impactStats];
-                  newStats[idx] = { ...stat, value: v };
-                  handleUpdate('impactStats', newStats);
-                }} />
-                <Input label="Label" value={stat.label} onChange={(v) => {
-                  const newStats = [...project.impactStats];
-                  newStats[idx] = { ...stat, label: v };
-                  handleUpdate('impactStats', newStats);
-                }} />
+        <Section title="Impact Sections">
+          <div className="space-y-8">
+            {(project.impactSections || []).map((section: any, idx: number) => (
+              <div key={idx} className="p-6 bg-white rounded-3xl border border-black/5 space-y-4 relative group">
                 <button 
                   onClick={() => {
-                    const newStats = (project.impactStats || []).filter((_: any, i: number) => i !== idx);
-                    handleUpdate('impactStats', newStats);
+                    const newSections = (project.impactSections || []).filter((_: any, i: number) => i !== idx);
+                    handleUpdate('impactSections', newSections);
                   }}
-                  className="mb-1 p-2.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors leading-none"
+                  className="absolute top-4 right-4 text-black/20 hover:text-red-500 transition-colors"
                 >
-                  ×
+                  Remove Section
                 </button>
+                <Input label="Section Title" value={section.title} onChange={(v) => {
+                  const newSections = [...project.impactSections];
+                  newSections[idx] = { ...section, title: v };
+                  handleUpdate('impactSections', newSections);
+                }} />
+                <TextArea label="Body Text (Markdown supported)" value={section.body} onChange={(v) => {
+                  const newSections = [...project.impactSections];
+                  newSections[idx] = { ...section, body: v };
+                  handleUpdate('impactSections', newSections);
+                }} />
               </div>
             ))}
-             <button 
-              onClick={() => handleUpdate('impactStats', [...(project.impactStats || []), { label: "", value: "" }])}
-              className="p-4 border-2 border-dashed border-black/5 rounded-2xl text-black/30 hover:border-[#25A9B3]/40 hover:text-[#25A9B3] transition-all font-display text-[10px] font-black uppercase tracking-widest h-full flex items-center justify-center"
+            <button 
+              onClick={() => handleUpdate('impactSections', [...(project.impactSections || []), { title: "", body: "" }])}
+              className="w-full py-4 border-2 border-dashed border-black/5 rounded-3xl text-black/30 hover:border-[#25A9B3]/40 hover:text-[#25A9B3] transition-all font-display text-xs font-black uppercase tracking-widest"
             >
-              + Add Metric
+              + Add Impact Section
             </button>
           </div>
         </Section>
 
-        <Section title="Takeaway">
-          <div className="grid gap-6">
-            <Input label="Section Title" value={project.takeawayTitle} onChange={(v) => handleUpdate('takeawayTitle', v)} />
-            <TextArea label="Body Text (Markdown supported)" value={project.takeawayText} onChange={(v) => handleUpdate('takeawayText', v)} />
+        <Section title="Takeaway Sections">
+          <div className="space-y-8">
+            {(project.takeawaySections || []).map((section: any, idx: number) => (
+              <div key={idx} className="p-6 bg-white rounded-3xl border border-black/5 space-y-4 relative group">
+                <button 
+                  onClick={() => {
+                    const newSections = (project.takeawaySections || []).filter((_: any, i: number) => i !== idx);
+                    handleUpdate('takeawaySections', newSections);
+                  }}
+                  className="absolute top-4 right-4 text-black/20 hover:text-red-500 transition-colors"
+                >
+                  Remove Section
+                </button>
+                <Input label="Section Title" value={section.title} onChange={(v) => {
+                  const newSections = [...project.takeawaySections];
+                  newSections[idx] = { ...section, title: v };
+                  handleUpdate('takeawaySections', newSections);
+                }} />
+                <TextArea label="Body Text (Markdown supported)" value={section.body} onChange={(v) => {
+                  const newSections = [...project.takeawaySections];
+                  newSections[idx] = { ...section, body: v };
+                  handleUpdate('takeawaySections', newSections);
+                }} />
+              </div>
+            ))}
+            <button 
+              onClick={() => handleUpdate('takeawaySections', [...(project.takeawaySections || []), { title: "", body: "" }])}
+              className="w-full py-4 border-2 border-dashed border-black/5 rounded-3xl text-black/30 hover:border-[#25A9B3]/40 hover:text-[#25A9B3] transition-all font-display text-xs font-black uppercase tracking-widest"
+            >
+              + Add Takeaway Section
+            </button>
           </div>
         </Section>
 
