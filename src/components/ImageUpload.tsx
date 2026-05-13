@@ -1,6 +1,4 @@
 import { useState, useRef } from "react";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "../lib/firebase";
 import { Loader2, Upload, X, CheckCircle2 } from "lucide-react";
 
 interface ImageUploadProps {
@@ -10,17 +8,32 @@ interface ImageUploadProps {
   folder?: string;
 }
 
-export function ImageUpload({ label, value, onChange, folder = "projects" }: ImageUploadProps) {
+export function ImageUpload({ label, value, onChange }: ImageUploadProps) {
   const [uploading, setUploading] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [dragging, setDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragging(true);
+    } else if (e.type === "dragleave") {
+      setDragging(false);
+    }
+  };
 
-    // Validate if it's an image
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFile(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleFile = async (file: File) => {
     if (!file.type.startsWith("image/")) {
       setError("Please upload an image file.");
       return;
@@ -28,40 +41,32 @@ export function ImageUpload({ label, value, onChange, folder = "projects" }: Ima
 
     setUploading(true);
     setError(null);
-    setProgress(0);
 
-    const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
-    console.log("Starting upload...", { folder, fileName, fileType: file.type, fileSize: file.size });
-    const storageRef = ref(storage, `${folder}/${fileName}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "Portfolio");
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const p = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload progress:", p);
-        setProgress(p);
-      },
-      (err) => {
-        console.error("Upload error details:", err);
-        setError("Upload failed.");
-        setUploading(false);
-      },
-      async () => {
-        console.log("Upload completed, getting download URL...");
-        try {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          console.log("Download URL:", downloadURL);
-          onChange(downloadURL);
-          setUploading(false);
-          setProgress(0);
-        } catch (err) {
-          console.error("Download URL error:", err);
-          setError("Failed to get download URL.");
-          setUploading(false);
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/dujb86o8g/image/upload`,
+        {
+          method: "POST",
+          body: formData,
         }
+      );
+
+      if (!response.ok) {
+        throw new Error("Upload failed.");
       }
-    );
+
+      const data = await response.json();
+      onChange(data.secure_url);
+      setUploading(false);
+    } catch (err) {
+      console.error("Upload error:", err instanceof Error ? err.message : String(err));
+      setError("Upload failed. Please check your network.");
+      setUploading(false);
+    }
   };
 
   const removeImage = () => {
@@ -108,11 +113,17 @@ export function ImageUpload({ label, value, onChange, folder = "projects" }: Ima
       ) : (
         <button
           onClick={() => fileInputRef.current?.click()}
+          onDragEnter={handleDrag}
+          onDragLeave={handleDrag}
+          onDragOver={handleDrag}
+          onDrop={handleDrop}
           disabled={uploading}
           className={`
             w-full aspect-video rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-3 transition-all
             ${uploading 
               ? "border-black/5 bg-black/5 cursor-wait" 
+              : dragging
+              ? "border-[#25A9B3] bg-[#25A9B3]/5"
               : "border-black/10 hover:border-[#25A9B3]/40 hover:bg-[#25A9B3]/5 group cursor-pointer"
             }
           `}
@@ -122,7 +133,6 @@ export function ImageUpload({ label, value, onChange, folder = "projects" }: Ima
               <Loader2 className="animate-spin text-[#25A9B3]" />
               <div className="text-center">
                 <div className="text-[10px] font-black text-black/40 uppercase tracking-widest">Uploading...</div>
-                <div className="text-xs font-bold text-[#25A9B3] mt-1">{Math.round(progress)}%</div>
               </div>
             </>
           ) : (
@@ -146,7 +156,7 @@ export function ImageUpload({ label, value, onChange, folder = "projects" }: Ima
       <input
         type="file"
         ref={fileInputRef}
-        onChange={handleUpload}
+        onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
         className="hidden"
         accept="image/*"
       />
