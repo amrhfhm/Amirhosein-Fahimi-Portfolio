@@ -14,7 +14,8 @@ import {
   ChevronRight,
   MoreHorizontal,
   Loader2,
-  LogOut
+  LogOut,
+  X
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useNavigate } from "react-router-dom";
@@ -34,36 +35,8 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../lib/firebase";
 import { migrateData } from "../lib/migration";
-
-enum OperationType {
-  CREATE = 'create',
-  UPDATE = 'update',
-  DELETE = 'delete',
-  LIST = 'list',
-  GET = 'get',
-  WRITE = 'write',
-}
-
-interface FirestoreErrorInfo {
-  error: string;
-  operationType: OperationType;
-  path: string | null;
-  authInfo: any;
-}
-
-function handleFirestoreError(error: unknown, operationType: OperationType, path: string | null) {
-  const errInfo: FirestoreErrorInfo = {
-    error: error instanceof Error ? error.message : String(error),
-    authInfo: {
-      userId: auth.currentUser?.uid,
-      email: auth.currentUser?.email,
-    },
-    operationType,
-    path
-  }
-  console.error('Firestore Error: ', JSON.stringify(errInfo));
-  throw new Error(JSON.stringify(errInfo));
-}
+import { handleFirestoreError, OperationType } from "../lib/firestore-errors";
+import { ImageUpload } from "../components/ImageUpload";
 
 type Tab = "overview" | "projects" | "editor" | "analytics" | "testimonials" | "testimonial-editor" | "seo";
 
@@ -79,7 +52,7 @@ export default function Admin() {
       await fetch("/api/admin/logout", { method: "POST" });
       navigate("/admin/login");
     } catch (err) {
-      console.error("Logout failed", err);
+      console.error("Logout failed", err instanceof Error ? err.message : String(err));
       // Fallback: just redirect
       navigate("/admin/login");
     }
@@ -91,7 +64,7 @@ export default function Admin() {
       await migrateData();
       alert("Migration complete!");
     } catch (error) {
-      console.error(error);
+      console.error(error instanceof Error ? error.message : String(error));
       alert("Migration failed.");
     } finally {
       setIsMigrating(false);
@@ -264,7 +237,7 @@ function OverviewView({ onNewProject, onGoToAnalytics }: { onNewProject: () => v
         setRecentActivity(activities);
 
       } catch (error) {
-        console.error("Error fetching overview stats:", error);
+        console.error("Error fetching overview stats:", error instanceof Error ? error.message : String(error));
       } finally {
         setLoading(false);
       }
@@ -547,10 +520,10 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
               <TextArea label="Card Description (Used on Home)" value={project.description} onChange={(v) => handleUpdate('description', v)} />
             </div>
             <div className="md:col-span-2">
-               <Input label="Card Image URL (Home Page)" value={project.image} onChange={(v) => handleUpdate('image', v)} />
+               <ImageUpload label="Card Image (Home Page)" value={project.image} onChange={(v) => handleUpdate('image', v)} />
             </div>
             <div className="md:col-span-2">
-               <Input label="Case Study Mockup URL (Inside Case Study)" value={project.heroMockup} onChange={(v) => handleUpdate('heroMockup', v)} />
+               <ImageUpload label="Case Study Mockup (Inside Case Study)" value={project.heroMockup} onChange={(v) => handleUpdate('heroMockup', v)} />
             </div>
           </div>
         </Section>
@@ -566,7 +539,7 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
           <div className="grid gap-6">
             <Input label="Section Title" value={project.backgroundTitle} onChange={(v) => handleUpdate('backgroundTitle', v)} />
             <TextArea label="Body Text (Markdown supported)" value={project.backgroundText} onChange={(v) => handleUpdate('backgroundText', v)} />
-            <Input label="Large Image URL" value={project.backgroundImage} onChange={(v) => handleUpdate('backgroundImage', v)} />
+            <ImageUpload label="Large Background Image" value={project.backgroundImage} onChange={(v) => handleUpdate('backgroundImage', v)} />
           </div>
         </Section>
 
@@ -577,30 +550,30 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
             
             <div className="space-y-4">
               <label className="text-[10px] font-black text-black/40 uppercase tracking-widest block">Illustrative Images</label>
-              {(project.problemImages || []).map((img: string, idx: number) => (
-                <div key={idx} className="flex gap-2">
-                  <input 
-                    type="text" 
-                    value={img} 
-                    onChange={(e) => {
-                      const newImgs = [...(project.problemImages || [])];
-                      newImgs[idx] = e.target.value;
-                      handleUpdate('problemImages', newImgs);
-                    }}
-                    className="flex-grow bg-white border border-black/5 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-black/20"
-                    placeholder="Image URL"
-                  />
-                  <button 
-                    onClick={() => {
-                      const newImgs = (project.problemImages || []).filter((_: any, i: number) => i !== idx);
-                      handleUpdate('problemImages', newImgs);
-                    }}
-                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
+              <div className="grid md:grid-cols-2 gap-4">
+                {(project.problemImages || []).map((img: string, idx: number) => (
+                  <div key={idx} className="relative">
+                    <ImageUpload 
+                      label={`Image ${idx + 1}`} 
+                      value={img} 
+                      onChange={(v) => {
+                        const newImgs = [...(project.problemImages || [])];
+                        newImgs[idx] = v;
+                        handleUpdate('problemImages', newImgs);
+                      }} 
+                    />
+                    <button 
+                      onClick={() => {
+                        const newImgs = (project.problemImages || []).filter((_: any, i: number) => i !== idx);
+                        handleUpdate('problemImages', newImgs);
+                      }}
+                      className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full shadow-lg"
+                    >
+                      <X size={12} />
+                    </button>
+                  </div>
+                ))}
+              </div>
               <button 
                 onClick={() => handleUpdate('problemImages', [...(project.problemImages || []), ""])}
                 className="text-[10px] font-black uppercase text-[#25A9B3] hover:underline"
@@ -630,7 +603,7 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
                     newSteps[idx] = { ...step, title: v };
                     handleUpdate('approachSteps', newSteps);
                   }} />
-                  <Input label="Image URL" value={step.image} onChange={(v) => {
+                  <ImageUpload label="Step Image" value={step.image} onChange={(v) => {
                     const newSteps = [...project.approachSteps];
                     newSteps[idx] = { ...step, image: v };
                     handleUpdate('approachSteps', newSteps);
@@ -895,7 +868,7 @@ function TestimonialEditorView({ id, onBack }: { id: string | null, onBack: () =
              {data.avatar && <img src={data.avatar} className="w-full h-full object-cover" />}
           </div>
           <div className="flex-grow">
-            <Input label="Avatar URL" value={data.avatar} onChange={(v) => setData({...data, avatar: v})} />
+            <ImageUpload label="Avatar Image" value={data.avatar} onChange={(v) => setData({...data, avatar: v})} folder="testimonials" />
           </div>
         </div>
         <div className="grid md:grid-cols-2 gap-6">
@@ -981,7 +954,7 @@ function SEOView({ key }: { key?: string }) {
                 <div className="flex-grow space-y-4">
                    <h4 className="text-sm font-bold">Social Preview Image</h4>
                    <p className="text-xs text-black/40 leading-relaxed">Dimensions: 1200x630px. This image will appear when you share links on Twitter, LinkedIn, etc.</p>
-                   <Input label="OG Image URL" value={settings?.ogImage} onChange={(v) => setSettings({...settings, ogImage: v})} />
+                   <ImageUpload label="OG Image" value={settings?.ogImage} onChange={(v) => setSettings({...settings, ogImage: v})} folder="seo" />
                 </div>
              </div>
           </Section>
@@ -1040,7 +1013,7 @@ function AnalyticsView() {
           }
         });
       } catch (error) {
-        console.error("Error fetching analytics:", error);
+        console.error("Error fetching analytics:", error instanceof Error ? error.message : String(error));
       } finally {
         setLoading(false);
       }
@@ -1123,8 +1096,4 @@ function AnalyticsView() {
       </div>
     </motion.div>
   );
-}
-
-function folder({ size }: { size: number }) {
-  return <FolderKanban size={size} />;
 }

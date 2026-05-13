@@ -22,6 +22,6 @@ export const logEvent = async (type: EventType, data: EventData = {}) => {
     });
   } catch (error) {
     // Silently fail for analytics to not disturb user experience
-    console.error("Analytics Error:", error);
+    console.error("Analytics Error:", error instanceof Error ? error.message : String(error));
   }
 };

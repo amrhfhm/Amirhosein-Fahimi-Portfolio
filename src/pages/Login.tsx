@@ -36,7 +36,7 @@ export default function Login() {
         setError(data.message || "Invalid credentials");
       }
     } catch (err) {
-      console.error("Login fetch error:", err);
+      console.error("Login fetch error:", err instanceof Error ? err.message : String(err));
       if (err instanceof Error && err.name === "TypeError" && err.message === "Failed to fetch") {
         setError("Cannot reach the server. Please check your connection or wait for the server to start.");
       } else {

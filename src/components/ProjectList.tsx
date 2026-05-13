@@ -4,20 +4,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { collection, query, orderBy, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
-
-enum OperationType {
-  LIST = 'list',
-}
-
-function handleFirestoreError(error: unknown, operationType: OperationType, path: string) {
-  const errInfo = {
-    error: error instanceof Error ? error.message : String(error),
-    operationType,
-    path
-  };
-  console.error('Firestore Error:', JSON.stringify(errInfo));
-  throw new Error(JSON.stringify(errInfo));
-}
+import { handleFirestoreError, OperationType } from "../lib/firestore-errors";
 
 export default function ProjectList() {
   const [projects, setProjects] = useState<any[]>([]);

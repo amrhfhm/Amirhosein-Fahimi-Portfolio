@@ -7,21 +7,7 @@ import { db } from "../lib/firebase";
 import { logEvent } from "../lib/analytics";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-
-enum OperationType {
-  GET = 'get',
-  LIST = 'list',
-}
-
-function handleFirestoreError(error: unknown, operationType: OperationType, path: string) {
-  const errInfo = {
-    error: error instanceof Error ? error.message : String(error),
-    operationType,
-    path
-  };
-  console.error('Firestore Error:', JSON.stringify(errInfo));
-  throw new Error(JSON.stringify(errInfo));
-}
+import { handleFirestoreError, OperationType } from "../lib/firestore-errors";
 
 export default function CaseStudy() {
   const { id } = useParams();
