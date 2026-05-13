@@ -111,12 +111,14 @@ export default function CaseStudy() {
                 className="relative"
               >
                 <div className="relative z-10 p-4 bg-white rounded-2xl shadow-2xl skew-x-[-1deg] skew-y-[1deg]">
-                   <img 
-                    src={project.heroMockup} 
-                    alt="Mockup" 
-                    className="rounded-lg w-full h-auto"
-                    referrerPolicy="no-referrer"
-                  />
+                  {project.heroMockup && (
+                    <img 
+                      src={project.heroMockup} 
+                      alt="Mockup" 
+                      className="rounded-lg w-full h-auto"
+                      referrerPolicy="no-referrer"
+                    />
+                  )}
                 </div>
                 {/* Visual Accent */}
                 <div className="absolute inset-0 bg-[#25A9B3]/5 blur-3xl -z-0 rounded-full" />
@@ -221,7 +223,9 @@ export default function CaseStudy() {
                 transition={{ delay: i * 0.1 }}
                 className="aspect-video md:aspect-square rounded-[32px] overflow-hidden bg-black/5"
               >
-                <img src={img} alt={`Problem illustration ${i + 1}`} className="w-full h-full object-cover" />
+                  {img && (
+                    <img src={img} alt={`Problem illustration ${i + 1}`} className="w-full h-full object-cover" />
+                  )}
               </motion.div>
             ))}
           </div>
@@ -271,7 +275,7 @@ export default function CaseStudy() {
 
       {/* Impact Section */}
       <section className="py-24 md:py-48 px-6 max-w-3xl mx-auto space-y-16">
-        <h2 className="text-4xl md:text-6xl font-display font-medium tracking-tighter uppercase text-center">Impact</h2>
+        <h2 className="text-4xl md:text-6xl font-display font-medium tracking-tighter text-center">Impact</h2>
         <div className="space-y-12">
           {project.impactSections && project.impactSections.map((section: any, i: number) => (
              <div key={i}>
@@ -283,7 +287,8 @@ export default function CaseStudy() {
       </section>
 
       {/* Takeaway Section */}
-      <section className="py-24 md:py-48 px-6 max-w-7xl mx-auto flex justify-center">
+      <section className="py-24 md:py-48 px-6 max-w-7xl mx-auto flex flex-col items-center">
+        <h2 className="text-4xl md:text-6xl font-display font-medium tracking-tighter mb-16 text-center">Takeaway</h2>
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}

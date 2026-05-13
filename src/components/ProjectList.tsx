@@ -76,12 +76,14 @@ export default function ProjectList() {
 
               {/* Mobile Thumbnail */}
               <Link to={`/project/${project.id}`} className="block md:hidden mb-8 relative aspect-[4/3] overflow-hidden rounded-2xl bg-black/5 border border-black/5">
-                 <img
-                  src={project.image}
-                  alt={project.title}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover opacity-90"
-                />
+                {project.image && (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover opacity-90"
+                  />
+                )}
               </Link>
 
               <p className="text-lg md:text-xl font-sans text-black/40 font-light mb-10 leading-relaxed normal-case">

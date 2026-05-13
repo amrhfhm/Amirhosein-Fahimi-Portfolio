@@ -130,15 +130,17 @@ export default function Testimonials() {
                   </div>
 
                   <div className={`flex items-center gap-5 pt-8 border-t ${isActive ? "border-white/10" : "border-black/5"}`}>
-                    <img 
-                      src={t.avatar} 
-                      alt={t.name}
-                      referrerPolicy="no-referrer"
-                      className={`w-14 h-14 rounded-full object-cover border-2 ${isActive ? "border-white/30" : "border-black/5"}`}
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=${isActive ? 'FFFFFF' : '25A9B3'}&color=${isActive ? '25A9B3' : 'FFFFFF'}&bold=true`;
-                      }}
-                    />
+                    {t.avatar && (
+                      <img 
+                        src={t.avatar} 
+                        alt={t.name}
+                        referrerPolicy="no-referrer"
+                        className={`w-14 h-14 rounded-full object-cover border-2 ${isActive ? "border-white/30" : "border-black/5"}`}
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=${isActive ? 'FFFFFF' : '25A9B3'}&color=${isActive ? '25A9B3' : 'FFFFFF'}&bold=true`;
+                        }}
+                      />
+                    )}
                     <div>
                       <h4 className="text-lg font-bold leading-none mb-1.5">{t.name}</h4>
                       <p className={`text-xs font-black uppercase tracking-widest ${isActive ? "text-white/60" : "text-black/40"}`}>
