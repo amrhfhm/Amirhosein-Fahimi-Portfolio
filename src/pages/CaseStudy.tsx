@@ -8,6 +8,7 @@ import { logEvent } from "../lib/analytics";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { handleFirestoreError, OperationType } from "../lib/firestore-errors";
+import { BackToTop } from "../components/BackToTop";
 
 export default function CaseStudy() {
   const { id } = useParams();
@@ -97,9 +98,20 @@ export default function CaseStudy() {
                 {project.title}
               </h1>
               {project.heroSubtitle && (
-                <p className="text-xl md:text-2xl text-black/60 max-w-xl leading-relaxed font-light">
+                <p className="text-xl md:text-2xl text-black/60 max-w-xl leading-relaxed font-light mb-8">
                   {project.heroSubtitle}
                 </p>
+              )}
+              {project.figmaLink && (
+                <a 
+                  href={project.figmaLink} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest border-b border-black/10 pb-2 hover:border-black transition-all"
+                >
+                  VIEW FIGMA FILE
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
               )}
             </div>
 
@@ -148,6 +160,13 @@ export default function CaseStudy() {
               >
                 {project.roleResponsibilities || ""}
               </ReactMarkdown>
+              {project.title === "GG10" && (
+                <div className="mt-4">
+                  <a href="https://www.figma.com/design/RnyozvrlnFgOY9FIoGfu9Y/GG10--A-Game-Engagement-Platform?node-id=11-1833&t=VdVTx03n3VMdHmeM-1" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                    View full Figma design file here
+                  </a>
+                </div>
+              )}
             </div>
           </motion.div>
           <motion.div 
@@ -204,13 +223,16 @@ export default function CaseStudy() {
       {/* Problem Section */}
       <section className="py-24 md:py-48 px-6 max-w-3xl mx-auto space-y-16 text-center">
         <div className="space-y-12">
-          <span className="text-sm font-black uppercase tracking-[0.3em] text-[#25A9B3]">The Problem</span>
-          <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight mb-8">
-            {project.problemTitle || "The Problem"}
-          </h2>
-        </div>
-        <div className="text-lg md:text-xl text-black/60 leading-relaxed font-light prose prose-lg max-w-none mx-auto text-left">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.problemText || ""}</ReactMarkdown>
+           {project.problemSections && project.problemSections.map((section: any, idx: number) => (
+             <div key={idx}>
+               <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight mb-8">
+                {section.title}
+               </h2>
+               <div className="text-lg md:text-xl text-black/60 leading-relaxed font-light prose prose-lg max-w-none mx-auto text-left">
+                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body || ""}</ReactMarkdown>
+               </div>
+             </div>
+           ))}
         </div>
         {project.problemImages && project.problemImages.length > 0 && (
           <div className={`grid gap-8 mt-16 ${project.problemImages.length === 1 ? 'grid-cols-1' : 'md:grid-cols-2'}`}>
@@ -242,18 +264,19 @@ export default function CaseStudy() {
 
           <div className="space-y-24 md:space-y-48">
             {project.approachSteps && project.approachSteps.map((step: any, i: number) => (
-              <div key={i} className="grid md:grid-cols-2 gap-16 items-center">
+              <div key={i} className={`grid ${step.image ? 'md:grid-cols-2' : ''} gap-16 items-center`}>
                 <motion.div 
-                  initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
+                  initial={{ opacity: 0, x: step.image ? (i % 2 === 0 ? -40 : 40) : 0 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  className={`space-y-8 ${i % 2 === 1 ? 'md:order-2' : ''}`}
+                  className={`space-y-8 ${step.image ? (i % 2 === 1 ? 'md:order-2' : '') : 'text-center max-w-3xl mx-auto'}`}
                 >
                   <div className="text-xs font-black text-[#25A9B3] uppercase tracking-[0.5em]">Step 0{i + 1}</div>
                   <h3 className="text-3xl md:text-5xl font-display font-medium tracking-tight leading-none uppercase">
                     {step.title}
                   </h3>
-                  <div className="text-lg md:text-xl text-black/60 leading-relaxed font-light prose prose-lg max-w-none">
+                   {step.subtitle && <p className="text-xl text-black/60 font-light">{step.subtitle}</p>}
+                  <div className={`text-lg md:text-xl text-black/60 leading-relaxed font-light prose prose-lg ${step.image ? 'max-w-none' : 'max-w-none mx-auto'}`}>
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{step.body || ""}</ReactMarkdown>
                   </div>
                 </motion.div>
@@ -323,6 +346,7 @@ export default function CaseStudy() {
           </div>
         </footer>
       )}
+      <BackToTop />
     </div>
   );
 }

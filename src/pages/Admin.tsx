@@ -406,11 +406,11 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
     heroMockup: "",
     roleResponsibilities: "",
     outcome: "",
+    figmaLink: "",
     backgroundTitle: "",
     backgroundText: "",
     backgroundImage: "",
-    problemTitle: "",
-    problemText: "",
+    problemSections: [],
     problemImages: [],
     approachSteps: [],
     impactSections: [],
@@ -450,36 +450,28 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
     setSaving(true);
     try {
       const data = {
-        title: project.title,
-        category: project.category,
-        description: project.description,
-        heroSubtitle: project.heroSubtitle,
-        heroMockup: project.heroMockup,
-        roleResponsibilities: project.roleResponsibilities,
-        outcome: project.outcome,
-        backgroundTitle: project.backgroundTitle,
-        backgroundText: project.backgroundText,
-        backgroundImage: project.backgroundImage,
-        problemTitle: project.problemTitle,
-        problemText: project.problemText,
-        problemImages: project.problemImages || [],
-        approachSteps: (project.approachSteps || []).map((s: any) => ({ title: s.title, body: s.body, image: s.image })),
-        impactSections: (project.impactSections || []).map((s: any) => ({ title: s.title, body: s.body })),
-        takeawaySections: (project.takeawaySections || []).map((s: any) => ({ title: s.title, body: s.body })),
-        status: project.status,
-        order: project.order,
+        title: String(project.title || ""),
+        category: String(project.category || ""),
+        description: String(project.description || ""),
+        heroSubtitle: String(project.heroSubtitle || ""),
+        heroMockup: String(project.heroMockup || ""),
+        roleResponsibilities: String(project.roleResponsibilities || ""),
+        outcome: String(project.outcome || ""),
+        figmaLink: String(project.figmaLink || ""),
+        backgroundTitle: String(project.backgroundTitle || ""),
+        backgroundText: String(project.backgroundText || ""),
+        backgroundImage: String(project.backgroundImage || ""),
+        problemSections: Array.isArray(project.problemSections) ? project.problemSections.map((s: any) => ({ title: String(s.title || ""), body: String(s.body || "") })) : [],
+        problemImages: Array.isArray(project.problemImages) ? project.problemImages.map(String) : [],
+        approachSteps: Array.isArray(project.approachSteps) ? project.approachSteps.map((s: any) => ({ title: String(s.title || ""), subtitle: String(s.subtitle || ""), body: String(s.body || ""), image: String(s.image || "") })) : [],
+        impactSections: Array.isArray(project.impactSections) ? project.impactSections.map((s: any) => ({ title: String(s.title || ""), body: String(s.body || "") })) : [],
+        takeawaySections: Array.isArray(project.takeawaySections) ? project.takeawaySections.map((s: any) => ({ title: String(s.title || ""), body: String(s.body || "") })) : [],
+        status: String(project.status || "Draft"),
+        order: Number(project.order || 0),
         updatedAt: new Date().toISOString(),
         createdAt: project.createdAt || new Date().toISOString()
       };
       
-      try {
-        JSON.stringify(data);
-      } catch (e) {
-        console.error("Circular data detected", data);
-        alert("Circular data detected! Cannot save because of invalid data structure.");
-        return;
-      }
-
       if (id) {
         await updateDoc(doc(db, "projects", id), data);
       } else {
@@ -549,7 +541,10 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
                <ImageUpload label="Card Image (Home Page)" value={project.image} onChange={(v) => handleUpdate('image', v)} />
             </div>
             <div className="md:col-span-2">
-               <ImageUpload label="Case Study Mockup (Inside Case Study)" value={project.heroMockup} onChange={(v) => handleUpdate('heroMockup', v)} />
+               <Input label="Case Study Mockup (Inside Case Study)" value={project.heroMockup} onChange={(v) => handleUpdate('heroMockup', v)} />
+            </div>
+            <div className="md:col-span-2">
+               <Input label="Figma View Link" value={project.figmaLink} onChange={(v) => handleUpdate('figmaLink', v)} />
             </div>
           </div>
         </Section>
@@ -569,43 +564,69 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
           </div>
         </Section>
 
-        <Section title="Problem Section">
-          <div className="grid gap-6">
-            <Input label="Section Title" value={project.problemTitle} onChange={(v) => handleUpdate('problemTitle', v)} />
-            <TextArea label="Body Text (Markdown supported)" value={project.problemText} onChange={(v) => handleUpdate('problemText', v)} />
-            
-            <div className="space-y-4">
-              <label className="text-[10px] font-black text-black/40 uppercase tracking-widest block">Illustrative Images</label>
-              <div className="grid md:grid-cols-2 gap-4">
-                {(project.problemImages || []).map((img: string, idx: number) => (
-                  <div key={idx} className="relative">
-                    <ImageUpload 
-                      label={`Image ${idx + 1}`} 
-                      value={img} 
-                      onChange={(v) => {
-                        const newImgs = [...(project.problemImages || [])];
-                        newImgs[idx] = v;
-                        handleUpdate('problemImages', newImgs);
-                      }} 
-                    />
-                    <button 
-                      onClick={() => {
-                        const newImgs = (project.problemImages || []).filter((_: any, i: number) => i !== idx);
-                        handleUpdate('problemImages', newImgs);
-                      }}
-                      className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full shadow-lg"
-                    >
-                      <X size={12} />
-                    </button>
-                  </div>
-                ))}
+        <Section title="Problem Sections">
+          <div className="space-y-8">
+            {(project.problemSections || []).map((section: any, idx: number) => (
+              <div key={idx} className="p-6 bg-white rounded-3xl border border-black/5 space-y-4 relative group">
+                <button 
+                  onClick={() => {
+                    const newSections = (project.problemSections || []).filter((_: any, i: number) => i !== idx);
+                    handleUpdate('problemSections', newSections);
+                  }}
+                  className="absolute top-4 right-4 text-black/20 hover:text-red-500 transition-colors"
+                >
+                  Remove Section
+                </button>
+                <Input label="Section Title" value={section.title} onChange={(v) => {
+                  const newSections = [...project.problemSections];
+                  newSections[idx] = { ...section, title: v };
+                  handleUpdate('problemSections', newSections);
+                }} />
+                <TextArea label="Body Text (Markdown supported)" value={section.body} onChange={(v) => {
+                  const newSections = [...project.problemSections];
+                  newSections[idx] = { ...section, body: v };
+                  handleUpdate('problemSections', newSections);
+                }} />
               </div>
-              <button 
-                onClick={() => handleUpdate('problemImages', [...(project.problemImages || []), ""])}
-                className="text-[10px] font-black uppercase text-[#25A9B3] hover:underline"
-              >
-                + Add Image
-              </button>
+            ))}
+            <button 
+              onClick={() => handleUpdate('problemSections', [...(project.problemSections || []), { title: "", body: "" }])}
+              className="w-full py-4 border-2 border-dashed border-black/5 rounded-3xl text-black/30 hover:border-[#25A9B3]/40 hover:text-[#25A9B3] transition-all font-display text-xs font-black uppercase tracking-widest"
+            >
+              + Add Problem Section
+            </button>
+            <div className="pt-8">
+               <label className="text-[10px] font-black text-black/40 uppercase tracking-widest block mb-4">Illustrative Images</label>
+               <div className="grid md:grid-cols-2 gap-4">
+                 {(project.problemImages || []).map((img: string, idx: number) => (
+                   <div key={idx} className="relative">
+                     <ImageUpload 
+                       label={`Image ${idx + 1}`} 
+                       value={img} 
+                       onChange={(v) => {
+                         const newImgs = [...(project.problemImages || [])];
+                         newImgs[idx] = v;
+                         handleUpdate('problemImages', newImgs);
+                       }} 
+                     />
+                     <button 
+                       onClick={() => {
+                         const newImgs = (project.problemImages || []).filter((_: any, i: number) => i !== idx);
+                         handleUpdate('problemImages', newImgs);
+                       }}
+                       className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full shadow-lg"
+                     >
+                       <X size={12} />
+                     </button>
+                   </div>
+                 ))}
+               </div>
+               <button 
+                 onClick={() => handleUpdate('problemImages', [...(project.problemImages || []), ""])}
+                 className="mt-4 text-[10px] font-black uppercase text-[#25A9B3] hover:underline"
+               >
+                 + Add Image
+               </button>
             </div>
           </div>
         </Section>
@@ -629,12 +650,17 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
                     newSteps[idx] = { ...step, title: v };
                     handleUpdate('approachSteps', newSteps);
                   }} />
-                  <ImageUpload label="Step Image" value={step.image} onChange={(v) => {
+                  <Input label="Subtitle" value={step.subtitle} onChange={(v) => {
                     const newSteps = [...project.approachSteps];
-                    newSteps[idx] = { ...step, image: v };
+                    newSteps[idx] = { ...step, subtitle: v };
                     handleUpdate('approachSteps', newSteps);
                   }} />
                 </div>
+                <ImageUpload label="Step Image (Optional)" value={step.image} onChange={(v) => {
+                  const newSteps = [...project.approachSteps];
+                  newSteps[idx] = { ...step, image: v };
+                  handleUpdate('approachSteps', newSteps);
+                }} />
                 <TextArea label="Body Text (Markdown supported)" value={step.body} onChange={(v) => {
                   const newSteps = [...project.approachSteps];
                   newSteps[idx] = { ...step, body: v };
