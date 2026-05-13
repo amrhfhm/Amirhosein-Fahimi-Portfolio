@@ -71,7 +71,7 @@ export default function Navigation() {
         <a href="/#work" onClick={(e) => handleNavClick(e, 'work')} className="hover:text-black transition-all">Projects</a>
         <a href="/#testimonials" onClick={(e) => handleNavClick(e, 'testimonials')} className="hover:text-black transition-all">Testimonials</a>
         <a href="/#contact" onClick={(e) => handleNavClick(e, 'contact')} className="hover:text-black transition-all">Contact</a>
-        <a href="#" className="hover:text-black transition-all">Resume</a>
+        <a href="https://drive.google.com/file/d/1kd0vNhoYlFwiYvLiwcFIviO8NFsZfTmm/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-all">Resume</a>
       </motion.div>
 
       {/* Mobile menu indicator */}
@@ -116,22 +116,35 @@ export default function Navigation() {
                 { label: "Projects", href: "/#work", id: "work" },
                 { label: "Testimonials", href: "/#testimonials", id: "testimonials" },
                 { label: "Contact", href: "/#contact", id: "contact" },
-                { label: "Resume", href: "#" }
+                { label: "Resume", href: "https://drive.google.com/file/d/1kd0vNhoYlFwiYvLiwcFIviO8NFsZfTmm/view?usp=sharing" }
               ].map((item, i) => (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  onClick={(e) => {
-                    if (item.id) {
-                      handleNavClick(e as unknown as React.MouseEvent<HTMLAnchorElement>, item.id);
-                    } else {
-                      setIsMenuOpen(false);
-                    }
-                  }}
-                  className="text-2xl font-display font-medium tracking-tight text-[#121212] hover:opacity-50 transition-opacity"
-                >
-                  {item.label}
-                </Link>
+                item.href.startsWith('http') ? (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-2xl font-display font-medium tracking-tight text-[#121212] hover:opacity-50 transition-opacity"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    onClick={(e) => {
+                      if (item.id) {
+                        handleNavClick(e as unknown as React.MouseEvent<HTMLAnchorElement>, item.id);
+                      } else {
+                        setIsMenuOpen(false);
+                      }
+                    }}
+                    className="text-2xl font-display font-medium tracking-tight text-[#121212] hover:opacity-50 transition-opacity"
+                  >
+                    {item.label}
+                  </Link>
+                )
               ))}
               
               <div className="mt-4 pt-6 border-t border-black/5">

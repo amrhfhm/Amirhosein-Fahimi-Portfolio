@@ -26,7 +26,9 @@ export default function CaseStudy() {
         const projectSnap = await getDoc(projectRef);
         
         if (projectSnap.exists()) {
-          const currentData = { id: projectSnap.id, ...projectSnap.data() } as any;
+          const data = JSON.parse(JSON.stringify(projectSnap.data()));
+          
+          const currentData = { id: projectSnap.id, ...data } as any;
           setProject(currentData);
           
           logEvent("project_view", { 
@@ -102,12 +104,22 @@ export default function CaseStudy() {
                   {project.heroSubtitle}
                 </p>
               )}
-              {project.figmaLink && (
+              {project.ctaEnabled && project.ctaLabel && project.ctaLink ? (
+                <a 
+                  href={project.ctaLink} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest border-b border-black/10 pb-2 hover:border-black transition-all mb-8"
+                >
+                  {project.ctaLabel}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+              ) : project.figmaLink && (
                 <a 
                   href={project.figmaLink} 
                   target="_blank" 
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest border-b border-black/10 pb-2 hover:border-black transition-all"
+                  className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest border-b border-black/10 pb-2 hover:border-black transition-all mb-8"
                 >
                   VIEW FIGMA FILE
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -216,17 +228,20 @@ export default function CaseStudy() {
 
       {/* Problem Section */}
       <section className="py-24 md:py-48 px-6 max-w-3xl mx-auto space-y-16 text-center">
-        <div className="space-y-12">
-           {project.problemSections && project.problemSections.map((section: any, idx: number) => (
-             <div key={idx}>
-               <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight mb-8">
-                {section.title}
-               </h2>
-               <div className="text-lg md:text-xl text-black/60 leading-relaxed font-light prose prose-lg max-w-none mx-auto text-left">
-                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body || ""}</ReactMarkdown>
-               </div>
-             </div>
-           ))}
+        <div className="space-y-8">
+          <span className="text-sm font-black uppercase tracking-[0.3em] text-[#25A9B3]">PROBLEM</span>
+          <div className="space-y-12">
+            {project.problemSections && project.problemSections.map((section: any, idx: number) => (
+              <div key={idx} className="text-left">
+                <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight mb-4">
+                  {section.title}
+                </h2>
+                <div className="text-lg md:text-xl text-black/60 leading-relaxed font-light prose prose-lg max-w-none">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body || ""}</ReactMarkdown>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
         {project.problemImages && project.problemImages.length > 0 && (
           <div className={`grid gap-8 mt-16 ${project.problemImages.length === 1 ? 'grid-cols-1' : 'md:grid-cols-2'}`}>

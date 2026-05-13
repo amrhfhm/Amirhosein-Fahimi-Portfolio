@@ -415,6 +415,9 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
     approachSteps: [],
     impactSections: [],
     takeawaySections: [],
+    ctaEnabled: false,
+    ctaLabel: "",
+    ctaLink: "",
     status: "Draft",
     order: 0,
     updatedAt: new Date().toISOString()
@@ -466,17 +469,23 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
         approachSteps: Array.isArray(project.approachSteps) ? project.approachSteps.map((s: any) => ({ title: String(s.title || ""), subtitle: String(s.subtitle || ""), body: String(s.body || ""), image: String(s.image || "") })) : [],
         impactSections: Array.isArray(project.impactSections) ? project.impactSections.map((s: any) => ({ title: String(s.title || ""), body: String(s.body || "") })) : [],
         takeawaySections: Array.isArray(project.takeawaySections) ? project.takeawaySections.map((s: any) => ({ title: String(s.title || ""), body: String(s.body || "") })) : [],
+      ctaEnabled: Boolean(project.ctaEnabled),
+        ctaLabel: String(project.ctaLabel || ""),
+        ctaLink: String(project.ctaLink || ""),
         status: String(project.status || "Draft"),
         order: Number(project.order || 0),
         updatedAt: new Date().toISOString(),
         createdAt: project.createdAt || new Date().toISOString()
       };
       
+      // Sanitize to detect or remove circular structure
+      const sanitizedData = JSON.parse(JSON.stringify(data));
+      
       if (id) {
-        await updateDoc(doc(db, "projects", id), data);
+        await updateDoc(doc(db, "projects", id), sanitizedData);
       } else {
         await addDoc(collection(db, "projects"), {
-          ...data,
+          ...sanitizedData,
           createdAt: new Date().toISOString()
         });
       }
@@ -745,6 +754,26 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
           </div>
         </Section>
 
+        <Section title="CTA Section">
+          <div className="space-y-6">
+            <div className="flex items-center gap-4">
+              <input
+                type="checkbox"
+                checked={!!project.ctaEnabled}
+                onChange={(e) => handleUpdate('ctaEnabled', e.target.checked)}
+                className="w-5 h-5 rounded accent-[#25A9B3]"
+              />
+              <label className="text-sm font-medium">Enable Custom CTA</label>
+            </div>
+            {project.ctaEnabled && (
+              <div className="grid md:grid-cols-2 gap-6 p-6 bg-white rounded-3xl border border-black/5">
+                <Input label="CTA Label" value={project.ctaLabel} onChange={(v) => handleUpdate('ctaLabel', v)} />
+                <Input label="CTA Link" value={project.ctaLink} onChange={(v) => handleUpdate('ctaLink', v)} />
+              </div>
+            )}
+          </div>
+        </Section>
+        
         <Section title="Admin & Ordering">
           <div className="grid md:grid-cols-3 gap-6">
              <Input label="Display Order (priority)" value={project.order?.toString()} onChange={(v) => handleUpdate('order', parseInt(v) || 0)} />
