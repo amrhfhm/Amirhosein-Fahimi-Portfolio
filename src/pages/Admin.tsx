@@ -454,6 +454,15 @@ function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key
         ...project,
         updatedAt: new Date().toISOString()
       };
+      
+      try {
+        JSON.stringify(data);
+      } catch (e) {
+        console.error("Circular data detected", data);
+        alert("Circular data detected! Cannot save because of invalid data structure.");
+        return;
+      }
+
       if (id) {
         await updateDoc(doc(db, "projects", id), data);
       } else {

@@ -26,47 +26,40 @@ export interface FirestoreErrorInfo {
   };
 }
 
-/**
- * Safe version of JSON.stringify that handles potential circular references
- * and non-serializable objects by converting them to strings.
- */
-export function safeStringify(obj: any): string {
-  const cache = new Set();
-  return JSON.stringify(obj, (key, value) => {
-    if (typeof value === 'object' && value !== null) {
-      if (cache.has(value)) {
-        return '[Circular]';
-      }
-      cache.add(value);
-    }
-    // Handle error objects specifically to extract message
-    if (value instanceof Error) {
-      return value.message;
-    }
-    return value;
-  });
-}
-
 export function handleFirestoreError(error: unknown, operationType: OperationType, path: string | null) {
+  let errorMessage: string;
+  if (error instanceof Error) {
+    errorMessage = error.message;
+  } else if (typeof error === 'object' && error !== null && 'message' in error) {
+      errorMessage = String((error as any).message);
+  } else {
+    errorMessage = String(error);
+  }
+
   const errInfo: FirestoreErrorInfo = {
-    error: error instanceof Error ? error.message : String(error),
+    error: errorMessage,
     authInfo: {
-      userId: auth.currentUser?.uid,
-      email: auth.currentUser?.email,
-      emailVerified: auth.currentUser?.emailVerified,
-      isAnonymous: auth.currentUser?.isAnonymous,
-      tenantId: auth.currentUser?.tenantId,
+      userId: auth.currentUser?.uid || 'unknown',
+      email: auth.currentUser?.email || 'unknown',
+      emailVerified: auth.currentUser?.emailVerified || false,
+      isAnonymous: auth.currentUser?.isAnonymous || false,
+      tenantId: auth.currentUser?.tenantId || 'unknown',
       providerInfo: auth.currentUser?.providerData?.map(provider => ({
-        providerId: provider.providerId,
-        email: provider.email,
+        providerId: provider.providerId || 'unknown',
+        email: provider.email || 'unknown',
       })) || []
     },
     operationType,
     path
   };
   
-  // Use safeStringify to avoid circular reference issues
-  const stringifiedInfo = safeStringify(errInfo);
-  console.error('Firestore Error:', stringifiedInfo);
-  throw new Error(stringifiedInfo);
+  // Log a very safe version of the error to avoid circularity issues
+  console.error('Firestore Error:', {
+    message: errInfo.error,
+    operationType: errInfo.operationType,
+    path: errInfo.path,
+    userId: errInfo.authInfo.userId
+  });
+  
+  throw new Error(`Firestore operation ${operationType} on ${path || 'unknown path'} failed: ${errorMessage}`);
 }

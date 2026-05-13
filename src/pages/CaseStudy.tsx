@@ -137,7 +137,15 @@ export default function CaseStudy() {
           >
             <h2 className="text-xs font-black uppercase tracking-[0.3em] text-[#25A9B3]">Role & Responsibilities</h2>
             <div className="prose prose-sm md:prose-base max-w-none text-black/70">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.roleResponsibilities || ""}</ReactMarkdown>
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  ul: ({ node, ...props }) => <ul className="list-disc list-outside pl-4 space-y-1" {...props} />,
+                  li: ({ node, ...props }) => <li className="mb-2" {...props} />
+                }}
+              >
+                {project.roleResponsibilities || ""}
+              </ReactMarkdown>
             </div>
           </motion.div>
           <motion.div 
@@ -157,7 +165,7 @@ export default function CaseStudy() {
 
       {/* Background Section */}
       <section className="py-24 md:py-48 px-6 max-w-7xl mx-auto space-y-16">
-        <div className="grid md:grid-cols-[1fr_2fr] gap-12 items-baseline">
+        <div className="grid md:grid-cols-[1fr_2fr] gap-12 items-start">
           <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight whitespace-nowrap">
             {project.backgroundTitle || "Background"}
           </h2>
@@ -184,7 +192,7 @@ export default function CaseStudy() {
 
       {/* Problem Section */}
       <section className="py-24 md:py-48 px-6 max-w-7xl mx-auto space-y-16">
-        <div className="grid md:grid-cols-[1fr_2fr] gap-12 items-baseline">
+        <div className="grid md:grid-cols-[1fr_2fr] gap-12 items-start">
           <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight whitespace-nowrap">
             {project.problemTitle || "The Problem"}
           </h2>
