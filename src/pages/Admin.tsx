@@ -38,10 +38,10 @@ import { migrateData } from "../lib/migration";
 import { handleFirestoreError, OperationType } from "../lib/firestore-errors";
 import { ImageUpload } from "../components/ImageUpload";
 
-type Tab = "overview" | "projects" | "editor" | "analytics" | "testimonials" | "testimonial-editor" | "seo";
+type Tab = "analytics" | "testimonials" | "testimonial-editor" | "seo" | "settings";
 
 export default function Admin() {
-  const [activeTab, setActiveTab] = useState<Tab>("overview");
+  const [activeTab, setActiveTab] = useState<Tab>("analytics");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isMigrating, setIsMigrating] = useState(false);
@@ -86,21 +86,7 @@ export default function Admin() {
           )}
         </div>
 
-        <nav className="flex-grow p-4 space-y-1">
-          <NavItem 
-            icon={<LayoutDashboard size={18} />} 
-            label="Overview" 
-            active={activeTab === "overview"} 
-            onClick={() => setActiveTab("overview")}
-            collapsed={!isSidebarOpen}
-          />
-          <NavItem 
-            icon={<FolderKanban size={18} />} 
-            label="Projects" 
-            active={activeTab === "projects" || activeTab === "editor"} 
-            onClick={() => setActiveTab("projects")}
-            collapsed={!isSidebarOpen}
-          />
+          <nav className="flex-grow p-4 space-y-1">
           <NavItem 
             icon={<BarChart3 size={18} />} 
             label="Analytics" 
@@ -156,9 +142,6 @@ export default function Admin() {
             >
               {isMigrating ? "Migrating..." : "Seed Data"}
             </button>
-            <button className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-black/40 hover:text-black transition-colors flex items-center gap-2">
-              <Eye size={14} /> Preview
-            </button>
             <button 
               onClick={handleLogout}
               className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-red-500 hover:text-red-600 transition-colors flex items-center gap-2"
@@ -173,9 +156,6 @@ export default function Admin() {
 
         <div className="flex-grow overflow-y-auto p-8">
           <AnimatePresence mode="wait">
-            {activeTab === "overview" && <OverviewView key="overview" onNewProject={() => { (window as any)._editingProjectId = null; setActiveTab("editor"); }} onGoToAnalytics={() => setActiveTab("analytics")} />}
-            {activeTab === "projects" && <ProjectsView key="projects" onEditProject={(id) => { setActiveTab("editor"); (window as any)._editingProjectId = id; }} onNewProject={() => { (window as any)._editingProjectId = null; setActiveTab("editor"); }} />}
-            {activeTab === "editor" && <EditorView key="editor" id={(window as any)._editingProjectId} onBack={() => setActiveTab("projects")} />}
             {activeTab === "analytics" && <AnalyticsView key="analytics" />}
             {activeTab === "testimonials" && <TestimonialsView key="testimonials" onEdit={(id) => { (window as any)._editingTestimonialId = id; setActiveTab("testimonial-editor"); }} onNew={() => { (window as any)._editingTestimonialId = null; setActiveTab("testimonial-editor"); }} />}
             {activeTab === "testimonial-editor" && <TestimonialEditorView key="testimonial-editor" id={(window as any)._editingTestimonialId} onBack={() => setActiveTab("testimonials")} />}
