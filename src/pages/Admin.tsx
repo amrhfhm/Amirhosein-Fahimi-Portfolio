@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { 
+  Plus,
   LayoutDashboard, 
-  FolderKanban, 
   FileText, 
   MessageSquareQuote, 
   Globe, 
   BarChart3, 
-  Plus, 
   Save, 
-  Eye, 
   Image as ImageIcon, 
-  Settings,
   ChevronRight,
   MoreHorizontal,
   Loader2,
@@ -38,10 +35,10 @@ import { migrateData } from "../lib/migration";
 import { handleFirestoreError, OperationType } from "../lib/firestore-errors";
 import { ImageUpload } from "../components/ImageUpload";
 
-type Tab = "analytics" | "testimonials" | "testimonial-editor" | "seo" | "settings";
+type Tab = "overview" | "analytics" | "testimonials" | "testimonial-editor" | "seo";
 
 export default function Admin() {
-  const [activeTab, setActiveTab] = useState<Tab>("analytics");
+  const [activeTab, setActiveTab] = useState<Tab>("overview");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isMigrating, setIsMigrating] = useState(false);
@@ -86,7 +83,14 @@ export default function Admin() {
           )}
         </div>
 
-          <nav className="flex-grow p-4 space-y-1">
+        <nav className="flex-grow p-4 space-y-1">
+          <NavItem 
+            icon={<LayoutDashboard size={18} />} 
+            label="Overview" 
+            active={activeTab === "overview"} 
+            onClick={() => setActiveTab("overview")}
+            collapsed={!isSidebarOpen}
+          />
           <NavItem 
             icon={<BarChart3 size={18} />} 
             label="Analytics" 
@@ -110,16 +114,6 @@ export default function Admin() {
             collapsed={!isSidebarOpen}
           />
         </nav>
-
-        <div className="p-4 border-t border-black/5">
-           <NavItem 
-            icon={<Settings size={18} />} 
-            label="Settings" 
-            active={false}
-            onClick={() => {}}
-            collapsed={!isSidebarOpen}
-          />
-        </div>
       </aside>
 
       {/* Main Content */}
@@ -156,9 +150,10 @@ export default function Admin() {
 
         <div className="flex-grow overflow-y-auto p-8">
           <AnimatePresence mode="wait">
+            {activeTab === "overview" && <OverviewView key="overview" onGoToAnalytics={() => setActiveTab("analytics")} />}
             {activeTab === "analytics" && <AnalyticsView key="analytics" />}
-            {activeTab === "testimonials" && <TestimonialsView key="testimonials" onEdit={(id) => { (window as any)._editingTestimonialId = id; setActiveTab("testimonial-editor"); }} onNew={() => { (window as any)._editingTestimonialId = null; setActiveTab("testimonial-editor"); }} />}
-            {activeTab === "testimonial-editor" && <TestimonialEditorView key="testimonial-editor" id={(window as any)._editingTestimonialId} onBack={() => setActiveTab("testimonials")} />}
+            {activeTab === "testimonials" && <TestimonialsView key="testimonials" onEdit={(id) => { (window as any)._testimonialId = id; setActiveTab("testimonial-editor"); }} onNew={() => { (window as any)._testimonialId = null; setActiveTab("testimonial-editor"); }} />}
+            {activeTab === "testimonial-editor" && <TestimonialEditorView key="testimonial-editor" id={(window as any)._testimonialId} onBack={() => setActiveTab("testimonials")} />}
             {activeTab === "seo" && <SEOView key="seo" />}
           </AnimatePresence>
         </div>
@@ -182,22 +177,19 @@ function NavItem({ icon, label, active, onClick, collapsed }: { icon: React.Reac
   );
 }
 
-function OverviewView({ onNewProject, onGoToAnalytics }: { onNewProject: () => void, onGoToAnalytics: () => void, key?: string }) {
-  const [stats, setStats] = useState({ projects: 0, testimonials: 0, updates: 0, visitors: 0 });
+function OverviewView({ onGoToAnalytics }: { onGoToAnalytics: () => void, key?: string }) {
+  const [stats, setStats] = useState({ testimonials: 0, updates: 0, visitors: 0 });
   const [recentActivity, setRecentActivity] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        // Fetch Projects
-        const projectsSnap = await getDocs(collection(db, "projects"));
         const testimonialSnap = await getDocs(collection(db, "testimonials"));
         
         setStats({
-          projects: projectsSnap.size,
           testimonials: testimonialSnap.size,
-          updates: projectsSnap.size, // Fallback for now
+          updates: 0,
           visitors: 0
         });
 
@@ -205,16 +197,6 @@ function OverviewView({ onNewProject, onGoToAnalytics }: { onNewProject: () => v
         const analyticsSnap = await getDocs(query(collection(db, "analytics"), limit(500)));
         const pageViews = analyticsSnap.docs.filter(d => d.data().type === "page_view").length;
         setStats(prev => ({ ...prev, visitors: pageViews }));
-
-        // Fetch Recent Activity (last 4 updated projects)
-        const q = query(collection(db, "projects"), orderBy("updatedAt", "desc"), limit(4));
-        const activitySnap = await getDocs(q);
-        const activities = activitySnap.docs.map(doc => ({
-          entry: `Updated '${doc.data().title}'`,
-          time: new Date(doc.data().updatedAt).toLocaleDateString(),
-          color: "blue"
-        }));
-        setRecentActivity(activities);
 
       } catch (error) {
         console.error("Error fetching overview stats:", error instanceof Error ? error.message : String(error));
@@ -240,7 +222,6 @@ function OverviewView({ onNewProject, onGoToAnalytics }: { onNewProject: () => v
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard label="Live Projects" value={stats.projects.toString()} change="Real-time" icon={<FolderKanban size={20} />} />
         <StatCard label="Public Testimonials" value={stats.testimonials.toString()} change="Real-time" icon={<MessageSquareQuote size={20} />} />
         <StatCard label="Site Visitors" value={stats.visitors.toString()} change="Lifetime" icon={<BarChart3 size={20} />} />
         <StatCard label="New Inquiries" value="0" change="Soon" icon={<FileText size={20} />} />
@@ -255,35 +236,10 @@ function OverviewView({ onNewProject, onGoToAnalytics }: { onNewProject: () => v
           <div className="space-y-4">
              {loading ? (
                <div className="py-12 flex justify-center"><Loader2 className="animate-spin text-black/10" /></div>
-             ) : recentActivity.length > 0 ? (
-               recentActivity.map((action, i) => (
-                 <div key={i} className="flex items-center justify-between py-3 border-b border-black/5 last:border-0 group">
-                    <div className="flex items-center gap-4">
-                       <div className={`w-2 h-2 rounded-full bg-blue-600/40 opacity-0 group-hover:opacity-100 transition-opacity`} />
-                       <span className="text-sm text-black/70 group-hover:text-black transition-colors">{action.entry}</span>
-                    </div>
-                    <span className="text-xs text-black/30">{action.time}</span>
-                 </div>
-               ))
              ) : (
-               <p className="text-sm text-black/30 italic py-4">No recent activity detected.</p>
+                <p className="text-sm text-black/30 italic py-4">No recent activity detected.</p>
              )}
           </div>
-        </div>
-
-        <div className="bg-black text-white p-8 rounded-[32px] flex flex-col justify-between relative overflow-hidden group">
-          <div className="relative z-10">
-            <h3 className="text-lg font-display font-medium mb-2">Build something new</h3>
-            <p className="text-white/40 text-sm leading-relaxed">Your projects are the heartbeat of your portfolio. Add a new one today.</p>
-          </div>
-          <button 
-            onClick={onNewProject}
-            className="relative z-10 mt-12 w-full py-4 bg-white text-black rounded-2xl text-xs font-black uppercase tracking-[0.2em] hover:scale-[1.02] transition-transform flex items-center justify-center gap-2 font-display"
-          >
-            <Plus size={16} /> New Project
-          </button>
-          {/* Decorative element */}
-          <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#25A9B3]/20 blur-[60px] rounded-full group-hover:bg-[#25A9B3]/40 transition-colors duration-1000" />
         </div>
       </div>
     </motion.div>
@@ -305,464 +261,7 @@ function StatCard({ label, value, change, icon }: { label: string, value: string
   );
 }
 
-function ProjectsView({ onEditProject, onNewProject }: { onEditProject: (id: string) => void, onNewProject: () => void, key?: string }) {
-  const [projects, setProjects] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const q = query(collection(db, "projects"), orderBy("order", "asc"));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      setProjects(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-      setLoading(false);
-    }, (error) => handleFirestoreError(error, OperationType.LIST, "projects"));
-    return () => unsubscribe();
-  }, []);
-
-  return (
-    <motion.div 
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="max-w-6xl space-y-8"
-    >
-      <div className="flex items-center justify-between">
-        <div>
-           <h2 className="text-2xl font-display font-medium">Projects</h2>
-           <p className="text-sm text-black/40">Manage your work and display order.</p>
-        </div>
-        <button 
-          onClick={onNewProject}
-          className="p-3 bg-black text-white rounded-xl flex items-center justify-center transition-transform hover:scale-110 active:scale-95 shadow-xl shadow-black/10"
-        >
-          <Plus size={20} />
-        </button>
-      </div>
-
-      {loading ? (
-        <div className="h-64 flex items-center justify-center">
-          <Loader2 className="animate-spin text-black/20" size={32} />
-        </div>
-      ) : (
-        <div className="grid gap-4">
-          {projects.map((project, i) => (
-            <div 
-              key={project.id} 
-              onClick={() => onEditProject(project.id)}
-              className="bg-white p-4 pr-6 rounded-[24px] border border-black/5 flex items-center justify-between group hover:border-black/10 transition-all cursor-pointer"
-            >
-              <div className="flex items-center gap-6">
-                <div className="w-16 h-12 bg-black/5 rounded-xl flex-shrink-0 overflow-hidden">
-                  {project.image && <img src={project.image} alt={project.title} className="w-full h-full object-cover" />}
-                </div>
-                <div>
-                  <h4 className="font-medium text-sm text-black">{project.title}</h4>
-                  <div className="flex items-center gap-3 mt-1">
-                    <span className="text-[10px] uppercase font-black tracking-widest text-black/30">{project.category}</span>
-                    <span className="w-1 h-1 rounded-full bg-black/10" />
-                    <span className="text-[10px] uppercase font-black tracking-widest text-[#25A9B3]">{project.status || 'Draft'}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-xs text-black/30 hidden md:block">Updated {new Date(project.updatedAt).toLocaleDateString()}</span>
-                <button className="p-2 text-black/20 hover:text-black transition-colors">
-                  <MoreHorizontal size={18} />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </motion.div>
-  );
-}
-
-function EditorView({ id, onBack }: { id: string | null, onBack: () => void, key?: string }) {
-  const [project, setProject] = useState<any>({
-    title: "",
-    category: "",
-    description: "", // Still used for cards
-    heroSubtitle: "",
-    heroMockup: "",
-    roleResponsibilities: "",
-    outcome: "",
-    figmaLink: "",
-    backgroundTitle: "",
-    backgroundText: "",
-    backgroundImage: "",
-    problemSections: [],
-    problemImages: [],
-    approachSteps: [],
-    impactSections: [],
-    takeawaySections: [],
-    ctaEnabled: false,
-    ctaLabel: "",
-    ctaLink: "",
-    status: "Draft",
-    order: 0,
-    updatedAt: new Date().toISOString()
-  });
-  const [loading, setLoading] = useState(id ? true : false);
-  const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    if (!id) return;
-    const fetch = async () => {
-      try {
-        const docRef = doc(db, "projects", id);
-        const snap = await getDoc(docRef);
-        if (snap.exists()) setProject({ ...project, ...snap.data() });
-      } catch (error) {
-        handleFirestoreError(error, OperationType.GET, `projects/${id}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetch();
-  }, [id]);
-
-  const handleUpdate = async (field: string, value: any) => {
-    setProject(prev => ({ ...prev, [field]: value }));
-  };
-
-  const save = async () => {
-    if (!project.title) {
-      alert("Project title is required.");
-      return;
-    }
-    setSaving(true);
-    try {
-      const data = {
-        title: String(project.title || ""),
-        category: String(project.category || ""),
-        description: String(project.description || ""),
-        heroSubtitle: String(project.heroSubtitle || ""),
-        heroMockup: String(project.heroMockup || ""),
-        roleResponsibilities: String(project.roleResponsibilities || ""),
-        outcome: String(project.outcome || ""),
-        figmaLink: String(project.figmaLink || ""),
-        backgroundTitle: String(project.backgroundTitle || ""),
-        backgroundText: String(project.backgroundText || ""),
-        backgroundImage: String(project.backgroundImage || ""),
-        problemSections: Array.isArray(project.problemSections) ? project.problemSections.map((s: any) => ({ title: String(s.title || ""), body: String(s.body || "") })) : [],
-        problemImages: Array.isArray(project.problemImages) ? project.problemImages.map(String) : [],
-        approachSteps: Array.isArray(project.approachSteps) ? project.approachSteps.map((s: any) => ({ title: String(s.title || ""), subtitle: String(s.subtitle || ""), body: String(s.body || ""), image: String(s.image || "") })) : [],
-        impactSections: Array.isArray(project.impactSections) ? project.impactSections.map((s: any) => ({ title: String(s.title || ""), body: String(s.body || "") })) : [],
-        takeawaySections: Array.isArray(project.takeawaySections) ? project.takeawaySections.map((s: any) => ({ title: String(s.title || ""), body: String(s.body || "") })) : [],
-      ctaEnabled: Boolean(project.ctaEnabled),
-        ctaLabel: String(project.ctaLabel || ""),
-        ctaLink: String(project.ctaLink || ""),
-        status: String(project.status || "Draft"),
-        order: Number(project.order || 0),
-        updatedAt: new Date().toISOString(),
-        createdAt: project.createdAt || new Date().toISOString()
-      };
-      
-      // Sanitize to detect or remove circular structure
-      const sanitizedData = JSON.parse(JSON.stringify(data));
-      
-      if (id) {
-        await updateDoc(doc(db, "projects", id), sanitizedData);
-      } else {
-        await addDoc(collection(db, "projects"), {
-          ...sanitizedData,
-          createdAt: new Date().toISOString()
-        });
-      }
-      alert("Project saved successfully.");
-      onBack();
-    } catch (error) {
-      handleFirestoreError(error, id ? OperationType.UPDATE : OperationType.CREATE, `projects/${id || ''}`);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  if (loading) return <div className="h-64 flex items-center justify-center"><Loader2 className="animate-spin" /></div>;
-
-  return (
-    <motion.div 
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="max-w-4xl mx-auto space-y-12 pb-20"
-    >
-      <div className="flex items-center justify-between">
-        <div className="space-y-2">
-          <button onClick={onBack} className="text-[10px] font-black uppercase text-black/30 hover:text-black transition-colors mb-2">← Back to Projects</button>
-          <div className="flex items-center gap-3">
-            <span className="text-[10px] font-black uppercase text-[#25A9B3] tracking-[0.3em]">Case Study Editor</span>
-            {saving && <Loader2 className="animate-spin text-[#25A9B3]" size={14} />}
-          </div>
-          <h2 className="text-4xl font-display font-medium tracking-tight leading-none">{project.title || "Untitled Project"}</h2>
-        </div>
-        <div className="flex items-center gap-4">
-          <select 
-            value={project.status} 
-            onChange={(e) => handleUpdate('status', e.target.value)}
-            className="bg-white border border-black/5 rounded-xl px-4 py-2.5 text-xs font-bold uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-black/5 transition-all cursor-pointer"
-          >
-            <option value="Draft">Draft</option>
-            <option value="Published">Published</option>
-          </select>
-          <button 
-            onClick={save}
-            disabled={saving}
-            className="px-6 py-3 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-black/80 transition-colors disabled:opacity-50 flex items-center gap-2 shadow-xl shadow-black/10"
-          >
-            {saving ? <Loader2 className="animate-spin" size={14} /> : <Save size={14} />} Save Project
-          </button>
-        </div>
-      </div>
-
-      <div className="space-y-16">
-        <Section title="Hero Section">
-          <div className="grid md:grid-cols-2 gap-6">
-            <Input label="Project Title (Required)" value={project.title} onChange={(v) => handleUpdate('title', v)} />
-            <Input label="Category (e.g. Fintech, UI Design)" value={project.category} onChange={(v) => handleUpdate('category', v)} />
-            <div className="md:col-span-2">
-              <Input label="Hero Subtitle (Optional)" value={project.heroSubtitle} onChange={(v) => handleUpdate('heroSubtitle', v)} />
-            </div>
-            <div className="md:col-span-2">
-              <TextArea label="Card Description (Used on Home)" value={project.description} onChange={(v) => handleUpdate('description', v)} />
-            </div>
-            <div className="md:col-span-2">
-               <ImageUpload label="Card Image (Home Page)" value={project.image} onChange={(v) => handleUpdate('image', v)} />
-            </div>
-            <div className="md:col-span-2">
-               <Input label="Case Study Mockup (Inside Case Study)" value={project.heroMockup} onChange={(v) => handleUpdate('heroMockup', v)} />
-            </div>
-            <div className="md:col-span-2">
-               <Input label="Figma View Link" value={project.figmaLink} onChange={(v) => handleUpdate('figmaLink', v)} />
-            </div>
-          </div>
-        </Section>
-
-        <Section title="Section 2: Context">
-           <div className="grid md:grid-cols-2 gap-6">
-              <TextArea label="Role & Responsibilities (Markdown supported)" value={project.roleResponsibilities} onChange={(v) => handleUpdate('roleResponsibilities', v)} />
-              <TextArea label="Outcome (Markdown supported)" value={project.outcome} onChange={(v) => handleUpdate('outcome', v)} />
-           </div>
-        </Section>
-
-        <Section title="Background Section">
-          <div className="grid gap-6">
-            <Input label="Section Title" value={project.backgroundTitle} onChange={(v) => handleUpdate('backgroundTitle', v)} />
-            <TextArea label="Body Text (Markdown supported)" value={project.backgroundText} onChange={(v) => handleUpdate('backgroundText', v)} />
-            <ImageUpload label="Large Background Image" value={project.backgroundImage} onChange={(v) => handleUpdate('backgroundImage', v)} />
-          </div>
-        </Section>
-
-        <Section title="Problem Sections">
-          <div className="space-y-8">
-            {(project.problemSections || []).map((section: any, idx: number) => (
-              <div key={idx} className="p-6 bg-white rounded-3xl border border-black/5 space-y-4 relative group">
-                <button 
-                  onClick={() => {
-                    const newSections = (project.problemSections || []).filter((_: any, i: number) => i !== idx);
-                    handleUpdate('problemSections', newSections);
-                  }}
-                  className="absolute top-4 right-4 text-black/20 hover:text-red-500 transition-colors"
-                >
-                  Remove Section
-                </button>
-                <Input label="Section Title" value={section.title} onChange={(v) => {
-                  const newSections = [...project.problemSections];
-                  newSections[idx] = { ...section, title: v };
-                  handleUpdate('problemSections', newSections);
-                }} />
-                <TextArea label="Body Text (Markdown supported)" value={section.body} onChange={(v) => {
-                  const newSections = [...project.problemSections];
-                  newSections[idx] = { ...section, body: v };
-                  handleUpdate('problemSections', newSections);
-                }} />
-              </div>
-            ))}
-            <button 
-              onClick={() => handleUpdate('problemSections', [...(project.problemSections || []), { title: "", body: "" }])}
-              className="w-full py-4 border-2 border-dashed border-black/5 rounded-3xl text-black/30 hover:border-[#25A9B3]/40 hover:text-[#25A9B3] transition-all font-display text-xs font-black uppercase tracking-widest"
-            >
-              + Add Problem Section
-            </button>
-            <div className="pt-8">
-               <label className="text-[10px] font-black text-black/40 uppercase tracking-widest block mb-4">Illustrative Images</label>
-               <div className="grid md:grid-cols-2 gap-4">
-                 {(project.problemImages || []).map((img: string, idx: number) => (
-                   <div key={idx} className="relative">
-                     <ImageUpload 
-                       label={`Image ${idx + 1}`} 
-                       value={img} 
-                       onChange={(v) => {
-                         const newImgs = [...(project.problemImages || [])];
-                         newImgs[idx] = v;
-                         handleUpdate('problemImages', newImgs);
-                       }} 
-                     />
-                     <button 
-                       onClick={() => {
-                         const newImgs = (project.problemImages || []).filter((_: any, i: number) => i !== idx);
-                         handleUpdate('problemImages', newImgs);
-                       }}
-                       className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full shadow-lg"
-                     >
-                       <X size={12} />
-                     </button>
-                   </div>
-                 ))}
-               </div>
-               <button 
-                 onClick={() => handleUpdate('problemImages', [...(project.problemImages || []), ""])}
-                 className="mt-4 text-[10px] font-black uppercase text-[#25A9B3] hover:underline"
-               >
-                 + Add Image
-               </button>
-            </div>
-          </div>
-        </Section>
-
-        <Section title="Approach (Workflow)">
-          <div className="space-y-8">
-            {(project.approachSteps || []).map((step: any, idx: number) => (
-              <div key={idx} className="p-6 bg-white rounded-3xl border border-black/5 space-y-4 relative group">
-                <button 
-                  onClick={() => {
-                    const newSteps = (project.approachSteps || []).filter((_: any, i: number) => i !== idx);
-                    handleUpdate('approachSteps', newSteps);
-                  }}
-                  className="absolute top-4 right-4 text-black/20 hover:text-red-500 transition-colors"
-                >
-                  Remove Step
-                </button>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <Input label={`Step 0${idx + 1} Title`} value={step.title} onChange={(v) => {
-                    const newSteps = [...project.approachSteps];
-                    newSteps[idx] = { ...step, title: v };
-                    handleUpdate('approachSteps', newSteps);
-                  }} />
-                  <Input label="Subtitle" value={step.subtitle} onChange={(v) => {
-                    const newSteps = [...project.approachSteps];
-                    newSteps[idx] = { ...step, subtitle: v };
-                    handleUpdate('approachSteps', newSteps);
-                  }} />
-                </div>
-                <ImageUpload label="Step Image (Optional)" value={step.image} onChange={(v) => {
-                  const newSteps = [...project.approachSteps];
-                  newSteps[idx] = { ...step, image: v };
-                  handleUpdate('approachSteps', newSteps);
-                }} />
-                <TextArea label="Body Text (Markdown supported)" value={step.body} onChange={(v) => {
-                  const newSteps = [...project.approachSteps];
-                  newSteps[idx] = { ...step, body: v };
-                  handleUpdate('approachSteps', newSteps);
-                }} />
-              </div>
-            ))}
-            <button 
-              onClick={() => handleUpdate('approachSteps', [...(project.approachSteps || []), { title: "", body: "", image: "" }])}
-              className="w-full py-4 border-2 border-dashed border-black/5 rounded-3xl text-black/30 hover:border-[#25A9B3]/40 hover:text-[#25A9B3] transition-all font-display text-xs font-black uppercase tracking-widest"
-            >
-              + Add Process Step
-            </button>
-          </div>
-        </Section>
-
-        <Section title="Impact Sections">
-          <div className="space-y-8">
-            {(project.impactSections || []).map((section: any, idx: number) => (
-              <div key={idx} className="p-6 bg-white rounded-3xl border border-black/5 space-y-4 relative group">
-                <button 
-                  onClick={() => {
-                    const newSections = (project.impactSections || []).filter((_: any, i: number) => i !== idx);
-                    handleUpdate('impactSections', newSections);
-                  }}
-                  className="absolute top-4 right-4 text-black/20 hover:text-red-500 transition-colors"
-                >
-                  Remove Section
-                </button>
-                <Input label="Section Title" value={section.title} onChange={(v) => {
-                  const newSections = [...project.impactSections];
-                  newSections[idx] = { ...section, title: v };
-                  handleUpdate('impactSections', newSections);
-                }} />
-                <TextArea label="Body Text (Markdown supported)" value={section.body} onChange={(v) => {
-                  const newSections = [...project.impactSections];
-                  newSections[idx] = { ...section, body: v };
-                  handleUpdate('impactSections', newSections);
-                }} />
-              </div>
-            ))}
-            <button 
-              onClick={() => handleUpdate('impactSections', [...(project.impactSections || []), { title: "", body: "" }])}
-              className="w-full py-4 border-2 border-dashed border-black/5 rounded-3xl text-black/30 hover:border-[#25A9B3]/40 hover:text-[#25A9B3] transition-all font-display text-xs font-black uppercase tracking-widest"
-            >
-              + Add Impact Section
-            </button>
-          </div>
-        </Section>
-
-        <Section title="Takeaway Sections">
-          <div className="space-y-8">
-            {(project.takeawaySections || []).map((section: any, idx: number) => (
-              <div key={idx} className="p-6 bg-white rounded-3xl border border-black/5 space-y-4 relative group">
-                <button 
-                  onClick={() => {
-                    const newSections = (project.takeawaySections || []).filter((_: any, i: number) => i !== idx);
-                    handleUpdate('takeawaySections', newSections);
-                  }}
-                  className="absolute top-4 right-4 text-black/20 hover:text-red-500 transition-colors"
-                >
-                  Remove Section
-                </button>
-                <Input label="Section Title" value={section.title} onChange={(v) => {
-                  const newSections = [...project.takeawaySections];
-                  newSections[idx] = { ...section, title: v };
-                  handleUpdate('takeawaySections', newSections);
-                }} />
-                <TextArea label="Body Text (Markdown supported)" value={section.body} onChange={(v) => {
-                  const newSections = [...project.takeawaySections];
-                  newSections[idx] = { ...section, body: v };
-                  handleUpdate('takeawaySections', newSections);
-                }} />
-              </div>
-            ))}
-            <button 
-              onClick={() => handleUpdate('takeawaySections', [...(project.takeawaySections || []), { title: "", body: "" }])}
-              className="w-full py-4 border-2 border-dashed border-black/5 rounded-3xl text-black/30 hover:border-[#25A9B3]/40 hover:text-[#25A9B3] transition-all font-display text-xs font-black uppercase tracking-widest"
-            >
-              + Add Takeaway Section
-            </button>
-          </div>
-        </Section>
-
-        <Section title="CTA Section">
-          <div className="space-y-6">
-            <div className="flex items-center gap-4">
-              <input
-                type="checkbox"
-                checked={!!project.ctaEnabled}
-                onChange={(e) => handleUpdate('ctaEnabled', e.target.checked)}
-                className="w-5 h-5 rounded accent-[#25A9B3]"
-              />
-              <label className="text-sm font-medium">Enable Custom CTA</label>
-            </div>
-            {project.ctaEnabled && (
-              <div className="grid md:grid-cols-2 gap-6 p-6 bg-white rounded-3xl border border-black/5">
-                <Input label="CTA Label" value={project.ctaLabel} onChange={(v) => handleUpdate('ctaLabel', v)} />
-                <Input label="CTA Link" value={project.ctaLink} onChange={(v) => handleUpdate('ctaLink', v)} />
-              </div>
-            )}
-          </div>
-        </Section>
-        
-        <Section title="Admin & Ordering">
-          <div className="grid md:grid-cols-3 gap-6">
-             <Input label="Display Order (priority)" value={project.order?.toString()} onChange={(v) => handleUpdate('order', parseInt(v) || 0)} />
-          </div>
-        </Section>
-      </div>
-    </motion.div>
-  );
-}
+/* ProjectsView and EditorView removed */
 
 function Section({ title, children }: { title: string, children: React.ReactNode }) {
   return (
@@ -1054,10 +553,6 @@ function SEOView({ key }: { key?: string }) {
 
 
 
-import { 
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
-  PieChart, Pie, Cell, Legend, BarChart, Bar 
-} from "recharts";
 function AnalyticsView() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -1068,67 +563,41 @@ function AnalyticsView() {
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
         
+        // Using getDocs with limit for now to avoid massive reads if it explodes
+        // Real production needs a more complex query with index or a cloud function aggregator
         const snapshot = await getDocs(query(collection(db, "analytics"), orderBy("timestamp", "desc"), limit(1000)));
         const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         
         const recentEvents = events.filter((e: any) => e.timestamp?.toDate() >= thirtyDaysAgo);
 
-        // Traffic Sources breakdown
-        const sourceCounts: Record<string, number> = { linkedin: 0, google: 0, direct: 0, other: 0 };
+        // Calcs
         const pageViews = recentEvents.filter((e: any) => e.type === "page_view");
-        pageViews.forEach((e: any) => {
-          const source = e.referrer || "direct";
-          if (sourceCounts.hasOwnProperty(source)) sourceCounts[source]++;
-          else sourceCounts["other"]++;
-        });
-
-        // Top Traffic Source
-        const topSource = Object.entries(sourceCounts).sort((a: any, b: any) => b[1] - a[1])[0][0];
-
-        // CTA Clicks
-        const ctaClicks = recentEvents.filter((e: any) => e.type === "cta_click");
-        const ctaCounts: Record<string, number> = {};
-        ctaClicks.forEach((e: any) => {
-          ctaCounts[e.projectId] = (ctaCounts[e.projectId] || 0) + 1;
-        });
-        const topProjectCTA = Object.entries(ctaCounts).sort((a: any, b: any) => b[1] - a[1])[0]?.[0] || 'None';
-
-        // Read Completion per project
         const projectViews = recentEvents.filter((e: any) => e.type === "project_view");
-        const scrollDepths = recentEvents.filter((e: any) => e.type === "scroll_depth" && e.depth === 100);
-        
-        const projectCompletion: Record<string, { totalViews: number, completions: number, title: string }> = {};
+        const contactClicks = recentEvents.filter((e: any) => e.type === "contact_click");
+
+        // Most viewed project
+        const projectCounts: Record<string, { count: number, title: string }> = {};
         projectViews.forEach((e: any) => {
-          if (!projectCompletion[e.projectId]) projectCompletion[e.projectId] = { totalViews: 0, completions: 0, title: e.projectTitle };
-          projectCompletion[e.projectId].totalViews++;
+          if (!projectCounts[e.projectId]) {
+            projectCounts[e.projectId] = { count: 0, title: e.projectTitle || e.projectId };
+          }
+          projectCounts[e.projectId].count++;
         });
-        scrollDepths.forEach((e: any) => {
-          if (projectCompletion[e.projectId]) projectCompletion[e.projectId].completions++;
-        });
+        const sortedProjects = Object.values(projectCounts).sort((a, b) => b.count - a.count);
 
-        const completionStats = Object.entries(projectCompletion).map(([id, stats]) => ({
-          projectId: id,
-          title: stats.title,
-          completionRate: stats.totalViews > 0 ? Math.round((stats.completions / stats.totalViews) * 100) : 0
-        }));
-
-        // Daily visits
-        const dailyVisits: Record<string, number> = {};
-        pageViews.forEach((e: any) => {
-          const date = e.timestamp?.toDate().toLocaleDateString();
-          dailyVisits[date] = (dailyVisits[date] || 0) + 1;
-        });
-        
-        const dailyVisitsData = Object.entries(dailyVisits).map(([date, count]) => ({ date, count })).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        // Device split
+        const desktopCount = recentEvents.filter((e: any) => e.device === "desktop").length;
+        const mobileCount = recentEvents.filter((e: any) => e.device === "mobile").length;
+        const totalEvents = recentEvents.length || 1;
 
         setData({
           totalVisits: pageViews.length,
-          topSource,
-          totalCTAClicks: ctaClicks.length,
-          topProjectCTA,
-          completionStats,
-          dailyVisitsData,
-          trafficSources: Object.entries(sourceCounts).map(([name, value]) => ({ name, value }))
+          contactClicks: contactClicks.length,
+          topProjects: sortedProjects.slice(0, 5),
+          deviceSplit: {
+            desktop: Math.round((desktopCount / totalEvents) * 100),
+            mobile: Math.round((mobileCount / totalEvents) * 100),
+          }
         });
       } catch (error) {
         console.error("Error fetching analytics:", error instanceof Error ? error.message : String(error));
@@ -1148,68 +617,68 @@ function AnalyticsView() {
       animate={{ opacity: 1, y: 0 }}
       className="max-w-6xl space-y-10"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="bg-white p-8 rounded-[32px] border border-black/5">
           <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">Total Visits</span>
           <div className="text-5xl font-display font-medium tracking-tighter">{data.totalVisits}</div>
+          <p className="text-xs text-black/40 mt-4">Across all pages (Last 30 days)</p>
         </div>
         <div className="bg-white p-8 rounded-[32px] border border-black/5">
-          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">Top Traffic Source</span>
-          <div className="text-3xl font-display font-medium tracking-tighter capitalize">{data.topSource}</div>
+          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">Contact Clicks</span>
+          <div className="text-5xl font-display font-medium tracking-tighter">{data.contactClicks}</div>
+          <p className="text-xs text-black/40 mt-4">Total interactions (Last 30 days)</p>
         </div>
-        <div className="bg-white p-8 rounded-[32px] border border-black/5">
-          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">CTA Clicks</span>
-          <div className="text-5xl font-display font-medium tracking-tighter">{data.totalCTAClicks}</div>
-        </div>
-        <div className="bg-white p-8 rounded-[32px] border border-black/5">
-          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">Top Project CTA</span>
-          <div className="text-xl font-display font-medium tracking-tighter truncate">{data.topProjectCTA}</div>
-        </div>
-      </div>
-
-      <div className="grid lg:grid-cols-2 gap-8">
-        <div className="bg-white p-8 rounded-[32px] border border-black/5">
-          <h3 className="text-lg font-display font-medium mb-8">Daily Visits (Last 30 Days)</h3>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data.dailyVisitsData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="date" hide />
-                <YAxis />
-                <Tooltip />
-                <Line type="monotone" dataKey="count" stroke="#25A9B3" strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-        <div className="bg-white p-8 rounded-[32px] border border-black/5">
-          <h3 className="text-lg font-display font-medium mb-8">Traffic Sources</h3>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie data={data.trafficSources} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} fill="#8884d8" label>
-                  {data.trafficSources.map((entry: any, index: number) => <Cell key={`cell-${index}`} fill={['#25A9B3', '#000', '#666', '#ccc'][index % 4]} />)}
-                </Pie>
-                <Tooltip />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
+        <div className="bg-white p-8 rounded-[32px] border border-black/5 flex flex-col justify-center">
+          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-4">Device Distribution</span>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs font-bold uppercase tracking-widest">
+                <span>Desktop</span>
+                <span>{data.deviceSplit.desktop}%</span>
+              </div>
+              <div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden">
+                <div className="h-full bg-black" style={{ width: `${data.deviceSplit.desktop}%` }} />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs font-bold uppercase tracking-widest">
+                <span>Mobile</span>
+                <span>{data.deviceSplit.mobile}%</span>
+              </div>
+              <div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden">
+                <div className="h-full bg-[#25A9B3]" style={{ width: `${data.deviceSplit.mobile}%` }} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="bg-white p-8 rounded-[32px] border border-black/5">
-        <h3 className="text-lg font-display font-medium mb-8">Read Completion per Project</h3>
+        <h3 className="text-lg font-display font-medium mb-8">Most Viewed Projects</h3>
         <div className="space-y-6">
-          {data.completionStats.map((p: any, i: number) => (
-            <div key={i} className="flex items-center gap-6">
-              <span className="text-sm font-bold uppercase tracking-widest w-48 truncate">{p.title}</span>
-              <div className="h-4 w-full bg-black/5 rounded-full overflow-hidden">
-                <div className="h-full bg-[#25A9B3]" style={{ width: `${p.completionRate}%` }} />
+          {data.topProjects.length > 0 ? data.topProjects.map((p: any, i: number) => {
+            const maxCount = data.topProjects[0].count;
+            const percentage = Math.round((p.count / maxCount) * 100);
+            return (
+              <div key={i} className="flex items-center gap-6 group">
+                <div className="flex-grow space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-bold uppercase tracking-widest truncate">{p.title}</span>
+                    <span className="text-xs font-black text-black/30">{p.count} views</span>
+                  </div>
+                  <div className="h-2 w-full bg-black/5 rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: `${percentage}%` }}
+                      className="h-full bg-black group-hover:bg-[#25A9B3] transition-colors" 
+                    />
+                  </div>
+                </div>
               </div>
-              <span className="text-xs font-black text-black/50 w-16">{p.completionRate}%</span>
-            </div>
-          ))}
+            );
+          }) : (
+            <p className="text-sm text-black/30 py-4 italic">No project data recorded yet.</p>
+          )}
         </div>
       </div>
     </motion.div>
