@@ -1,8 +1,7 @@
 import { motion } from "motion/react";
 import { useParams, Link } from "react-router-dom";
-import { useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { logEvent } from "../lib/analytics";
+import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { BackToTop } from "../components/BackToTop";
@@ -10,22 +9,14 @@ import { PROJECTS } from "../data/projects";
 
 export default function CaseStudy() {
   const { id } = useParams();
-  const project = id ? PROJECTS[id] : null;
   
-  // Find next project
-  const projectIds = Object.keys(PROJECTS);
-  const currentIndex = id ? projectIds.indexOf(id) : -1;
-  const nextProject = currentIndex !== -1 ? PROJECTS[projectIds[(currentIndex + 1) % projectIds.length]] : null;
+  const project = PROJECTS.find((p) => p.id === id);
+  const currentIndex = PROJECTS.findIndex((p) => p.id === id);
+  const nextProject = currentIndex !== -1 ? PROJECTS[(currentIndex + 1) % PROJECTS.length] : null;
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (project) {
-        logEvent("project_view", { 
-            projectId: id, 
-            projectTitle: project.title 
-        });
-    }
-  }, [id, project]);
+  }, [id]);
 
   if (!project) {
     return (

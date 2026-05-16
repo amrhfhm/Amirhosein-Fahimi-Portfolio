@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { PROJECTS } from "../data/projects";
 
 export default function ProjectList() {
-  const projects = Object.values(PROJECTS).sort((a, b) => a.order - b.order);
+  const projects = [...PROJECTS].sort((a, b) => a.order - b.order);
 
   const getAccent = (category: string) => {
     if (category.toLowerCase().includes('gaming')) return "bg-purple-500/10 text-purple-600";
@@ -58,6 +58,7 @@ export default function ProjectList() {
                   />
                 )}
               </Link>
+
               <p className="text-lg md:text-xl font-sans text-black/40 font-light mb-10 leading-relaxed normal-case">
                 {project.description}
               </p>
