@@ -1074,6 +1074,10 @@ function SEOView({ key }: { key?: string }) {
 
 
 
+import { 
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
+  PieChart, Pie, Cell, Legend, BarChart, Bar 
+} from "recharts";
 function AnalyticsView() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -1084,41 +1088,67 @@ function AnalyticsView() {
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
         
-        // Using getDocs with limit for now to avoid massive reads if it explodes
-        // Real production needs a more complex query with index or a cloud function aggregator
         const snapshot = await getDocs(query(collection(db, "analytics"), orderBy("timestamp", "desc"), limit(1000)));
         const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         
         const recentEvents = events.filter((e: any) => e.timestamp?.toDate() >= thirtyDaysAgo);
 
-        // Calcs
+        // Traffic Sources breakdown
+        const sourceCounts: Record<string, number> = { linkedin: 0, google: 0, direct: 0, other: 0 };
         const pageViews = recentEvents.filter((e: any) => e.type === "page_view");
-        const projectViews = recentEvents.filter((e: any) => e.type === "project_view");
-        const contactClicks = recentEvents.filter((e: any) => e.type === "contact_click");
-
-        // Most viewed project
-        const projectCounts: Record<string, { count: number, title: string }> = {};
-        projectViews.forEach((e: any) => {
-          if (!projectCounts[e.projectId]) {
-            projectCounts[e.projectId] = { count: 0, title: e.projectTitle || e.projectId };
-          }
-          projectCounts[e.projectId].count++;
+        pageViews.forEach((e: any) => {
+          const source = e.referrer || "direct";
+          if (sourceCounts.hasOwnProperty(source)) sourceCounts[source]++;
+          else sourceCounts["other"]++;
         });
-        const sortedProjects = Object.values(projectCounts).sort((a, b) => b.count - a.count);
 
-        // Device split
-        const desktopCount = recentEvents.filter((e: any) => e.device === "desktop").length;
-        const mobileCount = recentEvents.filter((e: any) => e.device === "mobile").length;
-        const totalEvents = recentEvents.length || 1;
+        // Top Traffic Source
+        const topSource = Object.entries(sourceCounts).sort((a: any, b: any) => b[1] - a[1])[0][0];
+
+        // CTA Clicks
+        const ctaClicks = recentEvents.filter((e: any) => e.type === "cta_click");
+        const ctaCounts: Record<string, number> = {};
+        ctaClicks.forEach((e: any) => {
+          ctaCounts[e.projectId] = (ctaCounts[e.projectId] || 0) + 1;
+        });
+        const topProjectCTA = Object.entries(ctaCounts).sort((a: any, b: any) => b[1] - a[1])[0]?.[0] || 'None';
+
+        // Read Completion per project
+        const projectViews = recentEvents.filter((e: any) => e.type === "project_view");
+        const scrollDepths = recentEvents.filter((e: any) => e.type === "scroll_depth" && e.depth === 100);
+        
+        const projectCompletion: Record<string, { totalViews: number, completions: number, title: string }> = {};
+        projectViews.forEach((e: any) => {
+          if (!projectCompletion[e.projectId]) projectCompletion[e.projectId] = { totalViews: 0, completions: 0, title: e.projectTitle };
+          projectCompletion[e.projectId].totalViews++;
+        });
+        scrollDepths.forEach((e: any) => {
+          if (projectCompletion[e.projectId]) projectCompletion[e.projectId].completions++;
+        });
+
+        const completionStats = Object.entries(projectCompletion).map(([id, stats]) => ({
+          projectId: id,
+          title: stats.title,
+          completionRate: stats.totalViews > 0 ? Math.round((stats.completions / stats.totalViews) * 100) : 0
+        }));
+
+        // Daily visits
+        const dailyVisits: Record<string, number> = {};
+        pageViews.forEach((e: any) => {
+          const date = e.timestamp?.toDate().toLocaleDateString();
+          dailyVisits[date] = (dailyVisits[date] || 0) + 1;
+        });
+        
+        const dailyVisitsData = Object.entries(dailyVisits).map(([date, count]) => ({ date, count })).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
         setData({
           totalVisits: pageViews.length,
-          contactClicks: contactClicks.length,
-          topProjects: sortedProjects.slice(0, 5),
-          deviceSplit: {
-            desktop: Math.round((desktopCount / totalEvents) * 100),
-            mobile: Math.round((mobileCount / totalEvents) * 100),
-          }
+          topSource,
+          totalCTAClicks: ctaClicks.length,
+          topProjectCTA,
+          completionStats,
+          dailyVisitsData,
+          trafficSources: Object.entries(sourceCounts).map(([name, value]) => ({ name, value }))
         });
       } catch (error) {
         console.error("Error fetching analytics:", error instanceof Error ? error.message : String(error));
@@ -1138,68 +1168,68 @@ function AnalyticsView() {
       animate={{ opacity: 1, y: 0 }}
       className="max-w-6xl space-y-10"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white p-8 rounded-[32px] border border-black/5">
           <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">Total Visits</span>
           <div className="text-5xl font-display font-medium tracking-tighter">{data.totalVisits}</div>
-          <p className="text-xs text-black/40 mt-4">Across all pages (Last 30 days)</p>
         </div>
         <div className="bg-white p-8 rounded-[32px] border border-black/5">
-          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">Contact Clicks</span>
-          <div className="text-5xl font-display font-medium tracking-tighter">{data.contactClicks}</div>
-          <p className="text-xs text-black/40 mt-4">Total interactions (Last 30 days)</p>
+          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">Top Traffic Source</span>
+          <div className="text-3xl font-display font-medium tracking-tighter capitalize">{data.topSource}</div>
         </div>
-        <div className="bg-white p-8 rounded-[32px] border border-black/5 flex flex-col justify-center">
-          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-4">Device Distribution</span>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs font-bold uppercase tracking-widest">
-                <span>Desktop</span>
-                <span>{data.deviceSplit.desktop}%</span>
-              </div>
-              <div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden">
-                <div className="h-full bg-black" style={{ width: `${data.deviceSplit.desktop}%` }} />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs font-bold uppercase tracking-widest">
-                <span>Mobile</span>
-                <span>{data.deviceSplit.mobile}%</span>
-              </div>
-              <div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden">
-                <div className="h-full bg-[#25A9B3]" style={{ width: `${data.deviceSplit.mobile}%` }} />
-              </div>
-            </div>
+        <div className="bg-white p-8 rounded-[32px] border border-black/5">
+          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">CTA Clicks</span>
+          <div className="text-5xl font-display font-medium tracking-tighter">{data.totalCTAClicks}</div>
+        </div>
+        <div className="bg-white p-8 rounded-[32px] border border-black/5">
+          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">Top Project CTA</span>
+          <div className="text-xl font-display font-medium tracking-tighter truncate">{data.topProjectCTA}</div>
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-8">
+        <div className="bg-white p-8 rounded-[32px] border border-black/5">
+          <h3 className="text-lg font-display font-medium mb-8">Daily Visits (Last 30 Days)</h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data.dailyVisitsData}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="date" hide />
+                <YAxis />
+                <Tooltip />
+                <Line type="monotone" dataKey="count" stroke="#25A9B3" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+        <div className="bg-white p-8 rounded-[32px] border border-black/5">
+          <h3 className="text-lg font-display font-medium mb-8">Traffic Sources</h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={data.trafficSources} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} fill="#8884d8" label>
+                  {data.trafficSources.map((entry: any, index: number) => <Cell key={`cell-${index}`} fill={['#25A9B3', '#000', '#666', '#ccc'][index % 4]} />)}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
         </div>
       </div>
 
       <div className="bg-white p-8 rounded-[32px] border border-black/5">
-        <h3 className="text-lg font-display font-medium mb-8">Most Viewed Projects</h3>
+        <h3 className="text-lg font-display font-medium mb-8">Read Completion per Project</h3>
         <div className="space-y-6">
-          {data.topProjects.length > 0 ? data.topProjects.map((p: any, i: number) => {
-            const maxCount = data.topProjects[0].count;
-            const percentage = Math.round((p.count / maxCount) * 100);
-            return (
-              <div key={i} className="flex items-center gap-6 group">
-                <div className="flex-grow space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-bold uppercase tracking-widest truncate">{p.title}</span>
-                    <span className="text-xs font-black text-black/30">{p.count} views</span>
-                  </div>
-                  <div className="h-2 w-full bg-black/5 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: `${percentage}%` }}
-                      className="h-full bg-black group-hover:bg-[#25A9B3] transition-colors" 
-                    />
-                  </div>
-                </div>
+          {data.completionStats.map((p: any, i: number) => (
+            <div key={i} className="flex items-center gap-6">
+              <span className="text-sm font-bold uppercase tracking-widest w-48 truncate">{p.title}</span>
+              <div className="h-4 w-full bg-black/5 rounded-full overflow-hidden">
+                <div className="h-full bg-[#25A9B3]" style={{ width: `${p.completionRate}%` }} />
               </div>
-            );
-          }) : (
-            <p className="text-sm text-black/30 py-4 italic">No project data recorded yet.</p>
-          )}
+              <span className="text-xs font-black text-black/50 w-16">{p.completionRate}%</span>
+            </div>
+          ))}
         </div>
       </div>
     </motion.div>

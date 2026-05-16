@@ -1,14 +1,16 @@
 import { motion } from "motion/react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { BackToTop } from "../components/BackToTop";
 import { PROJECTS } from "../data/projects";
+import { logEvent } from "../lib/analytics";
 
 export default function CaseStudy() {
   const { id } = useParams();
+  const trackedDepths = useRef<Set<number>>(new Set());
   
   const project = PROJECTS.find((p) => p.id === id);
   const currentIndex = PROJECTS.findIndex((p) => p.id === id);
@@ -16,7 +18,31 @@ export default function CaseStudy() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    trackedDepths.current.clear();
+    
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPosition = window.scrollY;
+      const scrollPercent = Math.round((scrollPosition / scrollHeight) * 100);
+      
+      [25, 50, 75, 100].forEach((depth) => {
+        if (scrollPercent >= depth && !trackedDepths.current.has(depth)) {
+          trackedDepths.current.add(depth);
+          logEvent("scroll_depth", { 
+            projectId: id, 
+            depth: depth 
+          });
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [id]);
+
+  const handleCTAClick = (label: string) => {
+    logEvent("cta_click", { projectId: id, label });
+  };
 
   if (!project) {
     return (
@@ -66,6 +92,7 @@ export default function CaseStudy() {
                   href={project.ctaLink} 
                   target="_blank" 
                   rel="noreferrer"
+                  onClick={() => handleCTAClick(project.ctaLabel)}
                   className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest border-b border-black/10 pb-2 hover:border-black transition-all mb-8"
                 >
                   {project.ctaLabel}
@@ -76,6 +103,7 @@ export default function CaseStudy() {
                   href={project.figmaLink} 
                   target="_blank" 
                   rel="noreferrer"
+                  onClick={() => handleCTAClick("VIEW FIGMA FILE")}
                   className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest border-b border-black/10 pb-2 hover:border-black transition-all mb-8"
                 >
                   VIEW FIGMA FILE
