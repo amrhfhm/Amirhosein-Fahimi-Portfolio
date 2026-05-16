@@ -1,29 +1,10 @@
 import { motion } from "motion/react";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { collection, query, orderBy, getDocs } from "firebase/firestore";
-import { db } from "../lib/firebase";
-import { handleFirestoreError, OperationType } from "../lib/firestore-errors";
+import { PROJECTS } from "../data/projects";
 
 export default function ProjectList() {
-  const [projects, setProjects] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const q = query(collection(db, "projects"), orderBy("order", "asc"));
-        const snap = await getDocs(q);
-        setProjects(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-      } catch (error) {
-        handleFirestoreError(error, OperationType.LIST, "projects");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProjects();
-  }, []);
+  const projects = Object.values(PROJECTS).sort((a, b) => a.order - b.order);
 
   const getAccent = (category: string) => {
     if (category.toLowerCase().includes('gaming')) return "bg-purple-500/10 text-purple-600";
@@ -31,14 +12,6 @@ export default function ProjectList() {
     if (category.toLowerCase().includes('fintech')) return "bg-emerald-500/10 text-emerald-600";
     return "bg-black/5 text-black/60";
   };
-
-  if (loading) {
-    return (
-      <div className="py-64 flex items-center justify-center">
-        <Loader2 className="animate-spin text-black/20" size={48} />
-      </div>
-    );
-  }
 
   return (
     <section id="work" className="px-6 py-32 max-w-7xl mx-auto uppercase">
@@ -85,7 +58,6 @@ export default function ProjectList() {
                   />
                 )}
               </Link>
-
               <p className="text-lg md:text-xl font-sans text-black/40 font-light mb-10 leading-relaxed normal-case">
                 {project.description}
               </p>

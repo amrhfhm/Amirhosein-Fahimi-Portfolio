@@ -1,65 +1,31 @@
 import { motion } from "motion/react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
-import { useState, useEffect } from "react";
-import { collection, query, orderBy, getDocs, doc, getDoc } from "firebase/firestore";
-import { db } from "../lib/firebase";
+import { useEffect } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { logEvent } from "../lib/analytics";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { handleFirestoreError, OperationType } from "../lib/firestore-errors";
 import { BackToTop } from "../components/BackToTop";
+import { PROJECTS } from "../data/projects";
 
 export default function CaseStudy() {
   const { id } = useParams();
-  const [project, setProject] = useState<any>(null);
-  const [nextProject, setNextProject] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const project = id ? PROJECTS[id] : null;
+  
+  // Find next project
+  const projectIds = Object.keys(PROJECTS);
+  const currentIndex = id ? projectIds.indexOf(id) : -1;
+  const nextProject = currentIndex !== -1 ? PROJECTS[projectIds[(currentIndex + 1) % projectIds.length]] : null;
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const fetchProjectData = async () => {
-      if (!id) return;
-      setLoading(true);
-      try {
-        const projectRef = doc(db, "projects", id);
-        const projectSnap = await getDoc(projectRef);
-        
-        if (projectSnap.exists()) {
-          const data = JSON.parse(JSON.stringify(projectSnap.data()));
-          
-          const currentData = { id: projectSnap.id, ...data } as any;
-          setProject(currentData);
-          
-          logEvent("project_view", { 
+    if (project) {
+        logEvent("project_view", { 
             projectId: id, 
-            projectTitle: currentData.title 
-          });
-
-          const q = query(collection(db, "projects"), orderBy("order", "asc"));
-          const allSnap = await getDocs(q);
-          const allProjects = allSnap.docs.map(d => ({ id: d.id, ...d.data() } as any));
-          
-          const currentIndex = allProjects.findIndex((p: any) => p.id === id);
-          const nextIdx = (currentIndex + 1) % allProjects.length;
-          setNextProject(allProjects[nextIdx]);
-        }
-      } catch (error) {
-        handleFirestoreError(error, OperationType.GET, `projects/${id}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProjectData();
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#EBEDE9]">
-        <Loader2 className="animate-spin text-black/20" size={48} />
-      </div>
-    );
-  }
+            projectTitle: project.title 
+        });
+    }
+  }, [id, project]);
 
   if (!project) {
     return (
