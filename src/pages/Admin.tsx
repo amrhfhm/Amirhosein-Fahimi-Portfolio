@@ -14,6 +14,7 @@ import {
   LogOut,
   X
 } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { motion, AnimatePresence } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import { 
@@ -563,40 +564,48 @@ function AnalyticsView() {
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
         
-        // Using getDocs with limit for now to avoid massive reads if it explodes
-        // Real production needs a more complex query with index or a cloud function aggregator
-        const snapshot = await getDocs(query(collection(db, "analytics"), orderBy("timestamp", "desc"), limit(1000)));
+        const snapshot = await getDocs(query(collection(db, "analytics"), orderBy("timestamp", "desc"), limit(2000)));
         const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         
         const recentEvents = events.filter((e: any) => e.timestamp?.toDate() >= thirtyDaysAgo);
 
-        // Calcs
-        const pageViews = recentEvents.filter((e: any) => e.type === "page_view");
-        const projectViews = recentEvents.filter((e: any) => e.type === "project_view");
-        const contactClicks = recentEvents.filter((e: any) => e.type === "contact_click");
+        // Daily visits for chart
+        const visitsByDay: Record<string, number> = {};
+        for(let i = 0; i < 30; i++) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          visitsByDay[d.toLocaleDateString()] = 0;
+        }
 
-        // Most viewed project
-        const projectCounts: Record<string, { count: number, title: string }> = {};
-        projectViews.forEach((e: any) => {
-          if (!projectCounts[e.projectId]) {
-            projectCounts[e.projectId] = { count: 0, title: e.projectTitle || e.projectId };
-          }
-          projectCounts[e.projectId].count++;
+        recentEvents.filter((e: any) => e.type === "page_view").forEach((e: any) => {
+          const d = e.timestamp?.toDate().toLocaleDateString();
+          if (d && visitsByDay.hasOwnProperty(d)) visitsByDay[d]++;
         });
-        const sortedProjects = Object.values(projectCounts).sort((a, b) => b.count - a.count);
 
-        // Device split
-        const desktopCount = recentEvents.filter((e: any) => e.device === "desktop").length;
-        const mobileCount = recentEvents.filter((e: any) => e.device === "mobile").length;
-        const totalEvents = recentEvents.length || 1;
+        const chartData = Object.entries(visitsByDay).map(([date, count]) => ({ date, visits: count })).reverse();
+
+        // Scroll depth per project
+        const scrollEvents = recentEvents.filter((e: any) => e.type === "scroll");
+        const scrollData: Record<string, { total: number, count: number, title: string }> = {};
+        scrollEvents.forEach((e: any) => {
+          const pid = e.projectId || "unknown";
+          if (!scrollData[pid]) scrollData[pid] = { total: 0, count: 0, title: e.projectTitle || pid };
+          scrollData[pid].total += e.depth || 0;
+          scrollData[pid].count++;
+        });
+
+        const avgScroll = Object.entries(scrollData).map(([id, data]) => ({
+          title: data.title,
+          avgDepth: Math.round(data.total / data.count)
+        }));
 
         setData({
-          totalVisits: pageViews.length,
-          contactClicks: contactClicks.length,
-          topProjects: sortedProjects.slice(0, 5),
+          totalVisits: recentEvents.filter((e: any) => e.type === "page_view").length,
+          chartData,
+          avgScroll,
           deviceSplit: {
-            desktop: Math.round((desktopCount / totalEvents) * 100),
-            mobile: Math.round((mobileCount / totalEvents) * 100),
+            desktop: Math.round((recentEvents.filter((e: any) => e.device === "desktop").length / (recentEvents.length || 1)) * 100),
+            mobile: Math.round((recentEvents.filter((e: any) => e.device === "mobile").length / (recentEvents.length || 1)) * 100),
           }
         });
       } catch (error) {
@@ -617,68 +626,46 @@ function AnalyticsView() {
       animate={{ opacity: 1, y: 0 }}
       className="max-w-6xl space-y-10"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-8 rounded-[32px] border border-black/5">
           <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">Total Visits</span>
           <div className="text-5xl font-display font-medium tracking-tighter">{data.totalVisits}</div>
           <p className="text-xs text-black/40 mt-4">Across all pages (Last 30 days)</p>
         </div>
-        <div className="bg-white p-8 rounded-[32px] border border-black/5">
-          <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-1">Contact Clicks</span>
-          <div className="text-5xl font-display font-medium tracking-tighter">{data.contactClicks}</div>
-          <p className="text-xs text-black/40 mt-4">Total interactions (Last 30 days)</p>
-        </div>
         <div className="bg-white p-8 rounded-[32px] border border-black/5 flex flex-col justify-center">
           <span className="text-[10px] font-black uppercase text-black/30 tracking-widest block mb-4">Device Distribution</span>
           <div className="space-y-4">
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs font-bold uppercase tracking-widest">
-                <span>Desktop</span>
-                <span>{data.deviceSplit.desktop}%</span>
-              </div>
-              <div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden">
-                <div className="h-full bg-black" style={{ width: `${data.deviceSplit.desktop}%` }} />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs font-bold uppercase tracking-widest">
-                <span>Mobile</span>
-                <span>{data.deviceSplit.mobile}%</span>
-              </div>
-              <div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden">
-                <div className="h-full bg-[#25A9B3]" style={{ width: `${data.deviceSplit.mobile}%` }} />
-              </div>
-            </div>
+             {/* ... device display logic ... */}
+             <div className="space-y-2"><div className="flex justify-between text-xs font-bold uppercase tracking-widest"><span>Desktop</span><span>{data.deviceSplit.desktop}%</span></div><div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden"><div className="h-full bg-black" style={{ width: `${data.deviceSplit.desktop}%` }} /></div></div>
+             <div className="space-y-2"><div className="flex justify-between text-xs font-bold uppercase tracking-widest"><span>Mobile</span><span>{data.deviceSplit.mobile}%</span></div><div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden"><div className="h-full bg-[#25A9B3]" style={{ width: `${data.deviceSplit.mobile}%` }} /></div></div>
           </div>
         </div>
       </div>
 
       <div className="bg-white p-8 rounded-[32px] border border-black/5">
-        <h3 className="text-lg font-display font-medium mb-8">Most Viewed Projects</h3>
-        <div className="space-y-6">
-          {data.topProjects.length > 0 ? data.topProjects.map((p: any, i: number) => {
-            const maxCount = data.topProjects[0].count;
-            const percentage = Math.round((p.count / maxCount) * 100);
-            return (
-              <div key={i} className="flex items-center gap-6 group">
-                <div className="flex-grow space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-bold uppercase tracking-widest truncate">{p.title}</span>
-                    <span className="text-xs font-black text-black/30">{p.count} views</span>
-                  </div>
-                  <div className="h-2 w-full bg-black/5 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: `${percentage}%` }}
-                      className="h-full bg-black group-hover:bg-[#25A9B3] transition-colors" 
-                    />
-                  </div>
-                </div>
-              </div>
-            );
-          }) : (
-            <p className="text-sm text-black/30 py-4 italic">No project data recorded yet.</p>
-          )}
+        <h3 className="text-lg font-display font-medium mb-8">Visits (Last 30 Days)</h3>
+        <div className="h-64">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={data.chartData}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+              <XAxis dataKey="date" hide />
+              <YAxis hide />
+              <Tooltip />
+              <Line type="monotone" dataKey="visits" stroke="#25A9B3" strokeWidth={2} dot={false} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div className="bg-white p-8 rounded-[32px] border border-black/5">
+        <h3 className="text-lg font-display font-medium mb-8">Avg Scroll Depth per Project</h3>
+        <div className="space-y-4">
+          {data.avgScroll.map((p: any, i: number) => (
+             <div key={i} className="flex justify-between items-center py-3 border-b border-black/5">
+               <span className="text-sm font-bold uppercase tracking-widest">{p.title}</span>
+               <span className="text-sm font-black text-[#25A9B3]">{p.avgDepth}%</span>
+             </div>
+          ))}
         </div>
       </div>
     </motion.div>
