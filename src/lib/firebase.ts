@@ -16,16 +16,3 @@ export const db = initializeFirestore(app, {
 }, firebaseConfig.firestoreDatabaseId);
 
 export const auth = getAuth(app);
-
-async function testConnection() {
-  try {
-    await getDocFromServer(doc(db, 'test', 'connection'));
-  } catch (error) {
-    const err = error as any;
-    if (err.code === 'unavailable' || (err.message && err.message.includes('backend'))) {
-      console.warn("Firestore connection check failed: Backend unreachable. Using offline mode.");
-    }
-  }
-}
-
-testConnection();

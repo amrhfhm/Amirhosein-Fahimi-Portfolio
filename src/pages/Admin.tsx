@@ -565,9 +565,20 @@ function AnalyticsView() {
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
         
         const snapshot = await getDocs(query(collection(db, "analytics"), orderBy("timestamp", "desc"), limit(2000)));
-        const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const events = snapshot.docs.map(doc => {
+          const d = doc.data();
+          return {
+            id: doc.id,
+            type: d.type,
+            timestamp: d.timestamp,
+            projectId: d.projectId,
+            projectTitle: d.projectTitle,
+            depth: d.depth,
+            device: d.device
+          };
+        });
         
-        const recentEvents = events.filter((e: any) => e.timestamp?.toDate() >= thirtyDaysAgo);
+        const recentEvents = events.filter((e: any) => e.timestamp?.toDate ? e.timestamp.toDate() >= thirtyDaysAgo : false);
 
         // Daily visits for chart
         const visitsByDay: Record<string, number> = {};
@@ -578,7 +589,7 @@ function AnalyticsView() {
         }
 
         recentEvents.filter((e: any) => e.type === "page_view").forEach((e: any) => {
-          const d = e.timestamp?.toDate().toLocaleDateString();
+          const d = e.timestamp?.toDate ? e.timestamp.toDate().toLocaleDateString() : null;
           if (d && visitsByDay.hasOwnProperty(d)) visitsByDay[d]++;
         });
 
