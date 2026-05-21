@@ -129,8 +129,8 @@ export default function CaseStudy() {
               <ReactMarkdown 
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  ul: ({ node, ...props }) => <ul className="list-disc list-outside pl-4 space-y-1" {...props} />,
-                  li: ({ node, ...props }) => <li className="mb-2 text-[16px]" {...props} />
+                  ul: ({ children }) => <ul className="list-disc list-outside pl-4 space-y-1">{children}</ul>,
+                  li: ({ children }) => <li className="mb-2 text-[16px]">{children}</li>
                 }}
               >
                 {project.roleResponsibilities || ""}
@@ -150,8 +150,8 @@ export default function CaseStudy() {
               <ReactMarkdown 
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  ul: ({ node, ...props }) => <ul className="list-disc list-outside pl-4 space-y-1" {...props} />,
-                  li: ({ node, ...props }) => <li className="mb-2 text-[16px]" {...props} />
+                  ul: ({ children }) => <ul className="list-disc list-outside pl-4 space-y-1">{children}</ul>,
+                  li: ({ children }) => <li className="mb-2 text-[16px]">{children}</li>
                 }}
               >
                 {project.outcome || ""}
@@ -165,11 +165,11 @@ export default function CaseStudy() {
       <section className="py-24 md:py-32 px-12 max-w-[1280px] mx-auto overflow-hidden">
         <div style={{ display: 'flex', alignItems: 'center', width: '100%', gap: '40px' }}>
           <div style={{ width: '62%' }}>
-            <span style={{ color: '#242424', fontSize: '20px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>BACKGROUND</span>
+            <span style={{ color: '#242424', fontSize: '24px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>BACKGROUND</span>
             <br />
             <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>A greenfield gaming platform targeting teenage Call of Duty players in the Iranian market<br /></span>
             <br />
-            <span style={{ color: '#656161', fontSize: '20px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>GG10 was a freelance contract to design a competitive gaming platform from scratch — covering team formation, tournaments, and stat tracking, built for mobile web. I was the sole designer, working remotely with a business owner, PM, and two developers. No existing design, no design system, no visual language — everything started from zero. The target users were teenage gamers as young as 12, which meant the experience had to be bold, simple, and low-friction from day one.</span>
+            <span style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>GG10 was a freelance contract to design a competitive gaming platform from scratch — covering team formation, tournaments, and stat tracking, built for mobile web. I was the sole designer, working remotely with a business owner, PM, and two developers. No existing design, no design system, no visual language — everything started from zero. The target users were teenage gamers as young as 12, which meant the experience had to be bold, simple, and low-friction from day one.</span>
           </div>
           <img 
             style={{ width: '24.32%', objectFit: 'contain', marginLeft: 'auto' }} 
@@ -183,11 +183,11 @@ export default function CaseStudy() {
       <section className="py-12 md:py-16 px-12 max-w-[1280px] mx-auto w-full overflow-hidden">
         <div style={{ width: '100%', position: 'relative' }}>
           <div style={{ width: '100%' }}>
-            <span style={{ color: '#242424', fontSize: '20px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>PROBLEM</span>
+            <span style={{ color: '#242424', fontSize: '24px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>PROBLEM</span>
             <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>
               <br/>Building a gaming platform from zero — no existing design, no validated direction, no blueprint<br/>
             </span>
-            <span style={{ color: '#656161', fontSize: '20px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
+            <span style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
               <br/>GG10 started with a business hypothesis, not a broken experience to fix. The business owner had a vision, early sketches, and reference docs — but no defined scope, no design direction, and no visual identity. The challenge was threefold: translating a raw business idea into structured user flows, designing for teenagers as young as 12 whose visual bar is set by global gaming platforms, and keeping two developers continuously unblocked with ready-to-build specs throughout. The real risk was misalignment — a direction that drifted from business intent, a component library that couldn't scale, or documentation too vague to implement accurately.
             </span><span style={{ color: 'black', fontSize: '20px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
               <br/></span>
@@ -200,15 +200,15 @@ export default function CaseStudy() {
         <div className="max-w-[1280px] mx-auto px-12 w-full">
           <div style={{ width: '100%', position: 'relative' }}>
             <div style={{ width: '100%' }}>
-              <span style={{ color: 'black', fontSize: '20px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>APPROACH</span>
+              <span style={{ color: 'black', fontSize: '24px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>APPROACH</span>
               <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}><br/>01 — Immerse in the domain before touching Figma<br/></span>
               <span style={{ color: '#242424', fontSize: '20px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}><br/></span>
-              <span style={{ color: '#656161', fontSize: '20px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>I began by reading the business owner's product documentation in full and annotating it with questions and assumptions. This back-and-forth helped me build a mental model of what GG10 actually needed to be before any design decisions were made. I also reviewed the three main competitors the business owner identified — studying their flows, screenshotting key screens, and documenting what worked and what didn't in a dedicated Competitors page in Figma.<br/></span>
+              <span style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>I began by reading the business owner's product documentation in full and annotating it with questions and assumptions. This back-and-forth helped me build a mental model of what GG10 actually needed to be before any design decisions were made. I also reviewed the three main competitors the business owner identified — studying their flows, screenshotting key screens, and documenting what worked and what didn't in a dedicated Competitors page in Figma.<br/></span>
               <span style={{ color: 'black', fontSize: '32px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
               <br/></span>
               <div style={{ flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: '20px', display: 'flex', marginTop: '20px' }}>
                 <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src="https://res.cloudinary.com/dujb86o8g/image/upload/v1779194610/Comp_Analysis_s0yyvt.png" alt="Competitor Analysis" />
-                <div style={{ alignSelf: 'stretch', textAlign: 'center', color: '#656161', fontSize: '20px', fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word' }}>Competitor analysis board in Figma — key screens and UX patterns from rival platforms</div>
+                <div style={{ alignSelf: 'stretch', textAlign: 'center', color: '#656161', fontSize: '14px', fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word' }}>Competitor analysis board in Figma — key screens and UX patterns from rival platforms</div>
               </div>
                 <div style={{ flexDirection: 'column', display: 'flex', gap: '150px', marginTop: '150px', width: '100%' }}>
                   {/* Step 02 */}
@@ -298,9 +298,9 @@ export default function CaseStudy() {
       <section className="py-16 md:py-24 px-12 max-w-[1280px] mx-auto">
         <div style={{ width: '100%', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: '24px', display: 'flex' }}>
           <div style={{ alignSelf: 'stretch' }}>
-            <span style={{ color: 'black', fontSize: '20px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>IMPACT<br/></span>
+            <span style={{ color: 'black', fontSize: '24px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>IMPACT<br/></span>
             <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>Delivering a production-ready design solo, at scale, without a blueprint<br/></span>
-            <span style={{ color: '#656161', fontSize: '20px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}><br/>GG10 was a greenfield freelance engagement where I operated as designer, creative director, and documentation lead simultaneously. Over five months, the work remained organized, scalable, and developer-ready throughout — without a design lead or review process to fall back on.<br/></span>
+            <span style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}><br/>GG10 was a greenfield freelance engagement where I operated as designer, creative director, and documentation lead simultaneously. Over five months, the work remained organized, scalable, and developer-ready throughout — without a design lead or review process to fall back on.<br/></span>
           </div>
           <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src="https://res.cloudinary.com/dujb86o8g/image/upload/v1779198585/impact2_whxkpm.png" alt="Impact" />
         </div>
@@ -309,12 +309,12 @@ export default function CaseStudy() {
       {/* Takeaway Section */}
       <section className="py-16 md:py-24 px-12 max-w-[1280px] mx-auto">
         <div style={{ width: '100%' }}>
-          <span style={{ color: 'black', fontSize: '20px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>TAKEAWAY<br/></span>
+          <span style={{ color: 'black', fontSize: '24px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>TAKEAWAY<br/></span>
           <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>Designing alone sharpens your judgment<br/></span>
-          <span style={{ color: '#656161', fontSize: '20px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}><br/>Every decision had to be self-justified — no designer to bounce ideas off. Uncomfortable at first, but it built the ability to commit to a direction, document the reasoning, and defend it clearly to non-designers. AI assistants partly filled the thinking-partner gap, but the judgment calls were always mine.<br/></span>
+          <span style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}><br/>Every decision had to be self-justified — no designer to bounce ideas off. Uncomfortable at first, but it built the ability to commit to a direction, document the reasoning, and defend it clearly to non-designers. AI assistants partly filled the thinking-partner gap, but the judgment calls were always mine.<br/></span>
           <span style={{ color: '#656161', fontSize: '32px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}><br/></span>
           <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>Know your user's world, not just their tasks<br/></span>
-          <span style={{ color: '#656161', fontSize: '20px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}><br/>For teenage gamers, the visual bar isn't set by UX best practices — it's set by the games they play. Letting that context shape every decision, from typography to color to interaction energy, was what made the design feel right rather than just functional.<br/></span>
+          <span style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}><br/>For teenage gamers, the visual bar isn't set by UX best practices — it's set by the games they play. Letting that context shape every decision, from typography to color to interaction energy, was what made the design feel right rather than just functional.<br/></span>
         </div>
       </section>
 
