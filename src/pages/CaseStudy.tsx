@@ -101,10 +101,10 @@ export default function CaseStudy() {
                 transition={{ duration: 1, delay: 0.2 }}
                 className="relative flex justify-center"
               >
-                  {project.heroMockup && (
-                    <img 
-                      src={project.heroMockup} 
-                      alt="Mockup" 
+                  {typeof project.heroMockup === 'string' && (
+                    <img
+                      src={project.heroMockup}
+                      alt="Mockup"
                       className="w-full lg:w-[150%] h-auto drop-shadow-2xl"
                       referrerPolicy="no-referrer"
                     />
@@ -163,8 +163,8 @@ export default function CaseStudy() {
 
       {/* Background Section */}
       <section className="py-24 md:py-32 px-12 max-w-[1280px] mx-auto overflow-hidden">
-        <div style={{ display: 'flex', alignItems: 'center', width: '100%', gap: '40px' }}>
-          <div style={{ width: '62%' }}>
+        <div className="flex flex-col md:flex-row items-center w-full gap-10">
+          <div className="w-full md:w-[62%]">
             <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>BACKGROUND</span>
             <br />
             <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>A greenfield gaming platform targeting teenage Call of Duty players in the Iranian market<br /></span>
@@ -172,7 +172,7 @@ export default function CaseStudy() {
             <span style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>GG10 was a freelance contract to design a competitive gaming platform from scratch — covering team formation, tournaments, and stat tracking, built for mobile web. I was the sole designer, working remotely with a business owner, PM, and two developers. No existing design, no design system, no visual language — everything started from zero. The target users were teenage gamers as young as 12, which meant the experience had to be bold, simple, and low-friction from day one.</span>
           </div>
           <img 
-            style={{ width: '24.32%', objectFit: 'contain', marginLeft: 'auto' }} 
+            className="w-full md:w-[24.32%] object-contain mt-8 md:mt-0 md:ml-auto"
             src="https://res.cloudinary.com/dujb86o8g/image/upload/v1779191252/home_ui_screen_nvphq8.png" 
             alt="Foreground"
           />
