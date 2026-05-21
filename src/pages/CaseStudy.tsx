@@ -64,7 +64,7 @@ export default function CaseStudy() {
                 {project.title}
               </h1>
               {project.heroSubtitle && (
-                <p className="text-xl text-[#656161] leading-relaxed mb-12">
+                <p className="text-[18px] text-[#656161] leading-relaxed mb-12">
                   {project.heroSubtitle}
                 </p>
               )}
@@ -124,13 +124,13 @@ export default function CaseStudy() {
             viewport={{ once: true }}
             className="space-y-6"
           >
-            <h2 className="text-[32px] font-sans font-medium uppercase text-[#242424]">ROLE & RESPONSIBILITIES</h2>
+            <h2 className="text-[20px] font-sans font-medium uppercase text-[#242424]">ROLE & RESPONSIBILITIES</h2>
             <div className="prose prose-sm md:prose-base max-w-none text-[#656161]">
               <ReactMarkdown 
                 remarkPlugins={[remarkGfm]}
                 components={{
                   ul: ({ node, ...props }) => <ul className="list-disc list-outside pl-4 space-y-1" {...props} />,
-                  li: ({ node, ...props }) => <li className="mb-2 text-[20px]" {...props} />
+                  li: ({ node, ...props }) => <li className="mb-2 text-[16px]" {...props} />
                 }}
               >
                 {project.roleResponsibilities || ""}
@@ -145,13 +145,13 @@ export default function CaseStudy() {
             transition={{ delay: 0.2 }}
             className="space-y-6"
           >
-            <h2 className="text-[32px] font-sans font-medium uppercase text-[#242424]">OUTCOME</h2>
+            <h2 className="text-[20px] font-sans font-medium uppercase text-[#242424]">OUTCOME</h2>
             <div className="prose prose-sm md:prose-base max-w-none text-[#656161]">
               <ReactMarkdown 
                 remarkPlugins={[remarkGfm]}
                 components={{
                   ul: ({ node, ...props }) => <ul className="list-disc list-outside pl-4 space-y-1" {...props} />,
-                  li: ({ node, ...props }) => <li className="mb-2 text-[20px]" {...props} />
+                  li: ({ node, ...props }) => <li className="mb-2 text-[16px]" {...props} />
                 }}
               >
                 {project.outcome || ""}
@@ -165,9 +165,9 @@ export default function CaseStudy() {
       <section className="py-24 md:py-32 px-12 max-w-[1280px] mx-auto overflow-hidden">
         <div style={{ display: 'flex', alignItems: 'center', width: '100%', gap: '40px' }}>
           <div style={{ width: '62%' }}>
-            <span style={{ color: '#242424', fontSize: '32px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>BACKGROUND</span>
-            <br /><br />
-            <span style={{ color: '#242424', fontSize: '20px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>A greenfield gaming platform targeting teenage Call of Duty players in the Iranian market<br /></span>
+            <span style={{ color: '#242424', fontSize: '20px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>BACKGROUND</span>
+            <br />
+            <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>A greenfield gaming platform targeting teenage Call of Duty players in the Iranian market<br /></span>
             <br />
             <span style={{ color: '#656161', fontSize: '20px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>GG10 was a freelance contract to design a competitive gaming platform from scratch — covering team formation, tournaments, and stat tracking, built for mobile web. I was the sole designer, working remotely with a business owner, PM, and two developers. No existing design, no design system, no visual language — everything started from zero. The target users were teenage gamers as young as 12, which meant the experience had to be bold, simple, and low-friction from day one.</span>
           </div>
@@ -183,8 +183,8 @@ export default function CaseStudy() {
       <section className="py-12 md:py-16 px-12 max-w-[1280px] mx-auto w-full overflow-hidden">
         <div style={{ width: '100%', position: 'relative' }}>
           <div style={{ width: '100%' }}>
-            <span style={{ color: '#242424', fontSize: '32px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>PROBLEM</span>
-            <span style={{ color: '#242424', fontSize: '20px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>
+            <span style={{ color: '#242424', fontSize: '20px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>PROBLEM</span>
+            <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>
               <br/>Building a gaming platform from zero — no existing design, no validated direction, no blueprint<br/>
             </span>
             <span style={{ color: '#656161', fontSize: '20px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
@@ -200,8 +200,8 @@ export default function CaseStudy() {
         <div className="max-w-[1280px] mx-auto px-12 w-full">
           <div style={{ width: '100%', position: 'relative' }}>
             <div style={{ width: '100%' }}>
-              <span style={{ color: 'black', fontSize: '32px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>APPROACH</span>
-              <span style={{ color: '#242424', fontSize: '28px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}><br/>01 — Immerse in the domain before touching Figma<br/></span>
+              <span style={{ color: 'black', fontSize: '20px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>APPROACH</span>
+              <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}><br/>01 — Immerse in the domain before touching Figma<br/></span>
               <span style={{ color: '#242424', fontSize: '20px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}><br/></span>
               <span style={{ color: '#656161', fontSize: '20px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>I began by reading the business owner's product documentation in full and annotating it with questions and assumptions. This back-and-forth helped me build a mental model of what GG10 actually needed to be before any design decisions were made. I also reviewed the three main competitors the business owner identified — studying their flows, screenshotting key screens, and documenting what worked and what didn't in a dedicated Competitors page in Figma.<br/></span>
               <span style={{ color: 'black', fontSize: '32px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
@@ -214,78 +214,78 @@ export default function CaseStudy() {
                   {/* Step 02 */}
                   <div style={{ flexDirection: 'column', display: 'flex', gap: '32px', width: '100%' }}>
                     <div>
-                      <span style={{ color: '#242424', fontSize: '28px', fontWeight: '700', fontFamily: 'Inter' }}>02 — Define platform, audience, and visual direction</span>
+                      <span style={{ color: '#242424', fontSize: '18px', fontWeight: '700', fontFamily: 'Inter' }}>02 — Define platform, audience, and visual direction</span>
                       <br/><br/>
-                      <span style={{ color: '#656161', fontSize: '20px', fontWeight: '400', fontFamily: 'Inter' }}>Before wireframing, several foundational decisions needed to be made. I facilitated discussions with the business owner and PM to nail down: platform (mobile web, with desktop mirroring mobile layout in phase one, given 90%+ mobile usage), user age range (12 and up, skewing young — which ruled out complex flows), and visual identity direction. GG10 needed to feel like a gaming product — dark, bold, high-energy. We landed on a black and red color system, Russo One as the logo typeface for its gaming character, and Estedaad as the app typeface for its modern feel and Persian language support.</span>
+                      <span style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>Before wireframing, several foundational decisions needed to be made. I facilitated discussions with the business owner and PM to nail down: platform (mobile web, with desktop mirroring mobile layout in phase one, given 90%+ mobile usage), user age range (12 and up, skewing young — which ruled out complex flows), and visual identity direction. GG10 needed to feel like a gaming product — dark, bold, high-energy. We landed on a black and red color system, Russo One as the logo typeface for its gaming character, and Estedaad as the app typeface for its modern feel and Persian language support.</span>
                     </div>
                     <div style={{ flexDirection: 'column', display: 'flex', gap: '20px', width: '100%', alignItems: 'center' }}>
                       <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src="https://res.cloudinary.com/dujb86o8g/image/upload/v1779197819/02_fych6c.png" alt="02 — Define platform, audience, and visual direction" />
-                      <span style={{ color: '#656161', fontSize: '20px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>Variables alongside color system and typography choices — black/red palette with Russo One and Estedaad-FD font family</span>
+                      <span style={{ color: '#656161', fontSize: '14px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>Variables alongside color system and typography choices — black/red palette with Russo One and Estedaad-FD font family</span>
                     </div>
                   </div>
 
                   {/* Step 03 */}
                   <div style={{ flexDirection: 'column', display: 'flex', gap: '32px', width: '100%' }}>
                     <div>
-                      <span style={{ color: '#242424', fontSize: '28px', fontWeight: '700', fontFamily: 'Inter' }}>03 — Build the information architecture</span>
+                      <span style={{ color: '#242424', fontSize: '18px', fontWeight: '700', fontFamily: 'Inter' }}>03 — Build the information architecture</span>
                       <br/><br/>
-                      <span style={{ color: '#656161', fontSize: '20px', fontWeight: '400', fontFamily: 'Inter' }}>With platform and audience clear, I mapped the full site structure — identifying all pages, primary flows, and the relationships between them. This sitemap became the shared reference point that kept the business owner, PM, and engineering team aligned on scope throughout the project.</span>
+                      <span style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>With platform and audience clear, I mapped the full site structure — identifying all pages, primary flows, and the relationships between them. This sitemap became the shared reference point that kept the business owner, PM, and engineering team aligned on scope throughout the project.</span>
                     </div>
                     <div style={{ flexDirection: 'column', display: 'flex', gap: '20px', width: '100%', alignItems: 'center' }}>
                       <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src="https://res.cloudinary.com/dujb86o8g/image/upload/v1779197809/03_nyxjqs.png" alt="03 — Build the information architecture" />
-                      <span style={{ color: '#656161', fontSize: '20px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>Partial view of the site map — pages, flows, and structural relationships</span>
+                      <span style={{ color: '#656161', fontSize: '14px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>Partial view of the site map — pages, flows, and structural relationships</span>
                     </div>
                   </div>
 
                   {/* Step 04 */}
                   <div style={{ flexDirection: 'column', display: 'flex', gap: '32px', width: '100%' }}>
                     <div>
-                      <span style={{ color: '#242424', fontSize: '28px', fontWeight: '700', fontFamily: 'Inter' }}>04 — AI-assisted ideation for wireframing</span>
+                      <span style={{ color: '#242424', fontSize: '18px', fontWeight: '700', fontFamily: 'Inter' }}>04 — AI-assisted ideation for wireframing</span>
                       <br/><br/>
-                      <span style={{ color: '#656161', fontSize: '20px', fontWeight: '400', fontFamily: 'Inter' }}>Before moving to high-fidelity UI, I wireframed each feature using Lovable, Vercel v0, and Stitch to generate layout concepts from prompts — treating the output as a starting point to react to, not a final answer. A custom GPT set up at the project start helped with scoping features and writing effective prompts throughout. Wireframes and interaction rationale were then shared with the business owner and PM via Telegram for alignment before any UI work began.</span>
+                      <span style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>Before moving to high-fidelity UI, I wireframed each feature using Lovable, Vercel v0, and Stitch to generate layout concepts from prompts — treating the output as a starting point to react to, not a final answer. A custom GPT set up at the project start helped with scoping features and writing effective prompts throughout. Wireframes and interaction rationale were then shared with the business owner and PM via Telegram for alignment before any UI work began.</span>
                     </div>
                     <div style={{ flexDirection: 'column', display: 'flex', gap: '20px', width: '100%', alignItems: 'center' }}>
                       <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src="https://res.cloudinary.com/dujb86o8g/image/upload/v1779197860/04_rmee9a.png" alt="04 — AI-assisted ideation for wireframing" />
-                      <span style={{ color: '#656161', fontSize: '20px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>Iterating on layout concepts in Stitch before committing to high-fidelity UI</span>
+                      <span style={{ color: '#656161', fontSize: '14px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>Iterating on layout concepts in Stitch before committing to high-fidelity UI</span>
                     </div>
                   </div>
 
                   {/* Step 05 */}
                   <div style={{ flexDirection: 'column', display: 'flex', gap: '32px', width: '100%' }}>
                     <div>
-                      <span style={{ color: '#242424', fontSize: '28px', fontWeight: '700', fontFamily: 'Inter' }}>05 — Build the design system in parallel</span>
+                      <span style={{ color: '#242424', fontSize: '18px', fontWeight: '700', fontFamily: 'Inter' }}>05 — Build the design system in parallel</span>
                       <br/><br/>
-                      <span style={{ color: '#656161', fontSize: '20px', fontWeight: '400', fontFamily: 'Inter' }}>Rather than designing screens ad hoc and extracting components later, I built the design system progressively alongside the UI. Material Design 3 was chosen as the foundation — appropriate for a mobile-first product — and then adapted to GG10's visual language. Variables and styles were defined early and applied consistently, with components built atomically so they could be composed predictably across all screens. The system eventually grew to 480+ components and 70+ variables and styles.</span>
+                      <span style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>Rather than designing screens ad hoc and extracting components later, I built the design system progressively alongside the UI. Material Design 3 was chosen as the foundation — appropriate for a mobile-first product — and then adapted to GG10's visual language. Variables and styles were defined early and applied consistently, with components built atomically so they could be composed predictably across all screens. The system eventually grew to 480+ components and 70+ variables and styles.</span>
                     </div>
                     <div style={{ flexDirection: 'column', display: 'flex', gap: '20px', width: '100%', alignItems: 'center' }}>
                       <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src="https://res.cloudinary.com/dujb86o8g/image/upload/v1779197825/05_yesaob.png" alt="05 — Build the design system in parallel" />
-                      <span style={{ color: '#656161', fontSize: '20px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>A section of the component library — built atomically on Material Design 3</span>
+                      <span style={{ color: '#656161', fontSize: '14px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>A section of the component library — built atomically on Material Design 3</span>
                     </div>
                   </div>
 
                   {/* Step 06 */}
                   <div style={{ flexDirection: 'column', display: 'flex', gap: '32px', width: '100%' }}>
                     <div>
-                      <span style={{ color: '#242424', fontSize: '28px', fontWeight: '700', fontFamily: 'Inter' }}>06 — Document for developers, not just designers</span>
+                      <span style={{ color: '#242424', fontSize: '18px', fontWeight: '700', fontFamily: 'Inter' }}>06 — Document for developers, not just designers</span>
                       <br/><br/>
-                      <span style={{ color: '#656161', fontSize: '20px', fontWeight: '400', fontFamily: 'Inter' }}>After each feature was finalized, I created wireflows annotating every screen with interaction rules, edge cases, conditional states, and responsive behavior — the primary handoff artifact, not a supplement. Before implementation, I walked developers through each flow live to align on expectations. After development, I reviewed the output against specs and compiled a fix list for anything that diverged.</span>
+                      <span style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>After each feature was finalized, I created wireflows annotating every screen with interaction rules, edge cases, conditional states, and responsive behavior — the primary handoff artifact, not a supplement. Before implementation, I walked developers through each flow live to align on expectations. After development, I reviewed the output against specs and compiled a fix list for anything that diverged.</span>
                     </div>
                     <div style={{ flexDirection: 'column', display: 'flex', gap: '20px', width: '100%', alignItems: 'center' }}>
                       <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src="https://res.cloudinary.com/dujb86o8g/image/upload/v1779197823/06_gb4rr5.png" alt="06 — Document for developers, not just designers" />
-                      <span style={{ color: '#656161', fontSize: '20px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>Annotated interaction notes for a feature flow — edge cases and behavior specs for the dev team</span>
+                      <span style={{ color: '#656161', fontSize: '14px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>Annotated interaction notes for a feature flow — edge cases and behavior specs for the dev team</span>
                     </div>
                   </div>
 
                   {/* Step 07 */}
                   <div style={{ flexDirection: 'column', display: 'flex', gap: '32px', width: '100%' }}>
                     <div>
-                      <span style={{ color: '#242424', fontSize: '28px', fontWeight: '700', fontFamily: 'Inter' }}>07 — Icon system resolution</span>
+                      <span style={{ color: '#242424', fontSize: '18px', fontWeight: '700', fontFamily: 'Inter' }}>07 — Icon system resolution</span>
                       <br/><br/>
-                      <span style={{ color: '#656161', fontSize: '20px', fontWeight: '400', fontFamily: 'Inter' }}>One recurring challenge was sourcing icons that matched the gaming aesthetic of the product. Rather than waiting for a dedicated icon designer, I systematically searched, curated, and unified icons in Figma — building a custom icon set that maintained visual consistency across the product.</span>
+                      <span style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>One recurring challenge was sourcing icons that matched the gaming aesthetic of the product. Rather than waiting for a dedicated icon designer, I systematically searched, curated, and unified icons in Figma — building a custom icon set that maintained visual consistency across the product.</span>
                     </div>
                     <div style={{ flexDirection: 'column', display: 'flex', gap: '20px', width: '100%', alignItems: 'center' }}>
                       <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src="https://res.cloudinary.com/dujb86o8g/image/upload/v1779197826/07_gsaoz4.png" alt="07 — Icon system resolution" />
-                      <span style={{ color: '#656161', fontSize: '20px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>Custom icon set — curated and unified for visual consistency across the product</span>
+                      <span style={{ color: '#656161', fontSize: '14px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>Custom icon set — curated and unified for visual consistency across the product</span>
                     </div>
                   </div>
                 </div>
@@ -298,8 +298,8 @@ export default function CaseStudy() {
       <section className="py-16 md:py-24 px-12 max-w-[1280px] mx-auto">
         <div style={{ width: '100%', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: '24px', display: 'flex' }}>
           <div style={{ alignSelf: 'stretch' }}>
-            <span style={{ color: 'black', fontSize: '32px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>IMPACT<br/></span>
-            <span style={{ color: '#242424', fontSize: '28px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>Delivering a production-ready design solo, at scale, without a blueprint<br/></span>
+            <span style={{ color: 'black', fontSize: '20px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>IMPACT<br/></span>
+            <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>Delivering a production-ready design solo, at scale, without a blueprint<br/></span>
             <span style={{ color: '#656161', fontSize: '20px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}><br/>GG10 was a greenfield freelance engagement where I operated as designer, creative director, and documentation lead simultaneously. Over five months, the work remained organized, scalable, and developer-ready throughout — without a design lead or review process to fall back on.<br/></span>
           </div>
           <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src="https://res.cloudinary.com/dujb86o8g/image/upload/v1779198585/impact2_whxkpm.png" alt="Impact" />
@@ -309,11 +309,11 @@ export default function CaseStudy() {
       {/* Takeaway Section */}
       <section className="py-16 md:py-24 px-12 max-w-[1280px] mx-auto">
         <div style={{ width: '100%' }}>
-          <span style={{ color: 'black', fontSize: '32px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>TAKEAWAY<br/></span>
-          <span style={{ color: '#242424', fontSize: '28px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}><br/>Designing alone sharpens your judgment<br/></span>
+          <span style={{ color: 'black', fontSize: '20px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>TAKEAWAY<br/></span>
+          <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>Designing alone sharpens your judgment<br/></span>
           <span style={{ color: '#656161', fontSize: '20px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}><br/>Every decision had to be self-justified — no designer to bounce ideas off. Uncomfortable at first, but it built the ability to commit to a direction, document the reasoning, and defend it clearly to non-designers. AI assistants partly filled the thinking-partner gap, but the judgment calls were always mine.<br/></span>
           <span style={{ color: '#656161', fontSize: '32px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}><br/></span>
-          <span style={{ color: '#242424', fontSize: '28px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>Know your user's world, not just their tasks<br/></span>
+          <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>Know your user's world, not just their tasks<br/></span>
           <span style={{ color: '#656161', fontSize: '20px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}><br/>For teenage gamers, the visual bar isn't set by UX best practices — it's set by the games they play. Letting that context shape every decision, from typography to color to interaction energy, was what made the design feel right rather than just functional.<br/></span>
         </div>
       </section>
