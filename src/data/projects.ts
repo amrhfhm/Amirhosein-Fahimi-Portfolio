@@ -382,38 +382,38 @@ export const PROJECTS: Project[] = [
     "approachSteps": [
       {
         "body": "I began by reading the business owner's product documentation in full and annotating it with questions and assumptions. This back-and-forth helped me build a mental model of what GG10 actually needed to be before any design decisions were made. I also reviewed the three main competitors the business owner identified — studying their flows, screenshotting key screens, and documenting what worked and what didn't in a dedicated Competitors page in Figma.\n",
-        "image": "",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779194610/Comp_Analysis_s0yyvt.png",
         "title": "01 — Immerse in the domain before touching Figma",
-        "subtitle": ""
+        "subtitle": "Competitor analysis board in Figma — key screens and UX patterns from rival platforms"
       },
       {
         "body": "Before wireframing, several foundational decisions needed to be made. I facilitated discussions with the business owner and PM to nail down: platform (mobile web, with desktop mirroring mobile layout in phase one, given 90%+ mobile usage), user age range (12 and up, skewing young — which ruled out complex flows), and visual identity direction. GG10 needed to feel like a gaming product — dark, bold, high-energy. We landed on a black and red color system, Russo One as the logo typeface for its gaming character, and Estedaad as the app typeface for its modern feel and Persian language support.\n",
-        "image": "",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197819/02_fych6c.png",
         "title": "02 — Define platform, audience, and visual direction",
-        "subtitle": ""
+        "subtitle": "Variables alongside color system and typography choices — black/red palette with Russo One and Estedaad-FD font family"
       },
       {
         "title": "03 — Build the information architecture",
-        "subtitle": "",
+        "subtitle": "Partial view of the site map — pages, flows, and structural relationships",
         "body": "With platform and audience clear, I mapped the full site structure — identifying all pages, primary flows, and the relationships between them. This sitemap became the shared reference point that kept the business owner, PM, and engineering team aligned on scope throughout the project.\n",
-        "image": ""
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197809/03_nyxjqs.png"
       },
       {
-        "subtitle": "",
+        "subtitle": "Iterating on layout concepts in Stitch before committing to high-fidelity UI",
         "title": "04 — AI-assisted ideation for wireframing",
         "body": "For each feature, I began with wireframing before moving to high-fidelity UI. To accelerate ideation, I used Lovable, Vercel v0, and custom GPTs to generate early layout concepts from prompts — describing the screen I needed and using the output as a starting point to react to, not a final answer. This approach compressed the ideation phase significantly and helped me explore layout directions faster than sketching alone. The wireframes, along with written interaction rationale, were shared with the business owner and PM via Telegram for review and discussion before any UI work began.\n",
-        "image": ""
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197860/04_rmee9a.png"
       },
       {
         "title": "05 — Build the design system in parallel",
-        "subtitle": "",
-        "image": "",
+        "subtitle": "A section of the component library — built atomically on Material Design 3",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197825/05_yesaob.png",
         "body": "Rather than designing screens ad hoc and extracting components later, I built the design system progressively alongside the UI. Material Design 3 was chosen as the foundation — appropriate for a mobile-first product — and then adapted to GG10's visual language. Variables and styles were defined early and applied consistently, with components built atomically so they could be composed predictably across all screens. The system eventually grew to 480+ components and 70+ variables and styles.\n"
       },
       {
         "title": "06 — Document for developers, not just designers",
-        "subtitle": "",
-        "image": "",
+        "subtitle": "Annotated interaction notes for a feature flow — edge cases and behavior specs for the dev team",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197823/06_gb4rr5.png",
         "body": "After each feature reached final UI, I created wireflows — annotating every screen with interaction rules, edge cases, conditional states, and responsive behavior. These weren't supplementary notes; they were the primary handoff artifact. Before a developer started implementing a flow, I walked them through the design in a live review session, answered questions, and aligned on implementation expectations. After development, I reviewed the output against specs and compiled a fix list for anything that diverged from the design.\n"
       },
       {
@@ -450,10 +450,11 @@ export const PROJECTS: Project[] = [
     "problem": "Amateur tournaments are often fragmented, difficult to navigate, and lack the professional feel that elite esports events provide.",
     "overview": "GG10 is a comprehensive platform designed to revolutionize how amateur gamers participate in tournaments and engage with their favorite games.",
     "createdAt": "2026-05-13T08:23:14.003Z",
-    "heroMockup": "https://res.cloudinary.com/dujb86o8g/image/upload/v1779107010/Mockup_umtmh9.png",
+    "heroMockup": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779107010/Mockup_umtmh9.png",
+    "impactImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779198585/impact2_whxkpm.png",
     "backgroundText": "GG10 was a freelance product design contract for a startup building a competitive gaming engagement platform centered around Call of Duty. The platform was designed to let players register, form teams, join tournaments, track stats, and engage with the broader gaming community — all within a mobile-first web experience.\nI was brought in as the sole product designer, working remotely with the business owner, a product manager, and two developers. The product was greenfield — no existing design, no prior design system, no established visual language. Everything needed to be built from zero.\nThe primary users were teenage gamers, starting from age 12 upward, which shaped every design decision: the experience had to be visually bold, immediately legible, and low-friction. The business goal was to capture an underserved market opportunity in competitive gaming infrastructure for the Iranian market.",
-    "backgroundImage": "",
-    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/v1778652853/vnwchqlvmrqf2vhg0dsb.png",
+    "backgroundImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779191252/home_ui_screen_nvphq8.png",
+    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1778652853/vnwchqlvmrqf2vhg0dsb.png",
     "takeawayTitle": "Structure is a design deliverable too",
     "sections": [
       {
