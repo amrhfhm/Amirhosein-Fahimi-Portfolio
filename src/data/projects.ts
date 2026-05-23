@@ -454,7 +454,7 @@ export const PROJECTS: Project[] = [
     "impactImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779198585/impact2_whxkpm.png",
     "backgroundText": "GG10 was a freelance contract to design a competitive gaming platform from scratch — covering team formation, tournaments, and stat tracking, built for mobile web. I was the sole designer, working remotely with a business owner, PM, and two developers. No existing design, no design system, no visual language — everything started from zero. The target users were teenage gamers as young as 12, which meant the experience had to be bold, simple, and low-friction from day one.",
     "backgroundImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779191252/home_ui_screen_nvphq8.png",
-    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1778652853/vnwchqlvmrqf2vhg0dsb.png",
+    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779536909/02_equfqh.jpg",
     "takeawayTitle": "Structure is a design deliverable too",
     "sections": [
       {
@@ -476,7 +476,7 @@ export const PROJECTS: Project[] = [
   {
     "id": "personal-portfolio",
     "heroSubtitle": "Design and ship a personal portfolio end-to-end with zero coding experience — using AI as the only developer Prompt, iterate, and deploy a full-stack portfolio with a CMS, admin panel, and behavioral analytics in 3 days using Google AI Studio, Firebase, and Vercel",
-    "roleResponsibilities": "- Defined the product vision, design direction, and feature scope independently\n\n- Designed the full UI through iterative AI prompting, referencing real portfolio inspirations as style anchors\n\n- Architected and implemented a content management system via a custom admin panel backed by Firebase\n\n- Integrated Microsoft Clarity for behavioral analytics and future design iteration\n\n- Managed deployment pipeline through GitHub and Vercel\n\n- Debugged integration failures and authentication issues across multiple tools with the help of AI assistants\n\n- Defined the case study content template and wired it into the admin panel for ongoing content updates",
+    "roleResponsibilities": "- Defined the product vision, UX direction, and feature scope independently\n\n- Designed and iterated the full UI using AI-assisted workflows and real-world portfolio references\n\n- Built a custom Firebase-backed admin panel for content and case study management\n\n- Integrated Microsoft Clarity and Firebase Analytics for behavioral tracking\n\n- Managed deployment, debugging, authentication flows, and production setup across GitHub and Vercel\n\n- Structured scalable case study templates for future content updates",
     "thinking": [
       {
         "content": "By treating AI as a pair-programmer rather than a tool, I can iterate on complex layouts in minutes instead of hours. This allows for a more experimental approach to web design.",
@@ -551,7 +551,7 @@ export const PROJECTS: Project[] = [
     ],
     "problemSections": [
       {
-        "body": "Template-based tools like Framer or Webflow weren't ruled out because of a specific failure. They were ruled out because of **a ceiling** — a sense that at some point, the tool would stop doing what I needed and I'd have no way around it. More importantly, I wanted to learn. Building on top of someone else's infrastructure meant I'd never understand what was actually happening under the hood.\nThe bigger unknown was **whether I could pull it off at all**. I had no mental model for how frontend code, databases, and deployment pipelines fit together. The risk wasn't just wasted time — it was **not knowing if the gap was even closable without formal engineering training**. That uncertainty was the real problem to solve.",
+        "body": "The challenge wasn't only technical — it was learning how modern product systems fit together without an engineering background. I had no prior experience with frontend architecture, databases, authentication, or deployment pipelines. The core question became: could AI reduce the barrier between design intent and implementation enough for a designer to build independently?",
         "title": "The real problem wasn't technical — it was psychological"
       }
     ],
@@ -561,9 +561,9 @@ export const PROJECTS: Project[] = [
     "problem": "Traditional portfolio building is time-consuming and often involves complex handoffs between design and code.",
     "createdAt": "2026-05-13T08:32:39.389Z",
     "heroMockup": "",
-    "backgroundText": "This was a personal project with a clear ambition: build a portfolio that didn't just showcase work, but **demonstrated a new kind of capability**. Most designers use Framer or Notion-based templates — polished, but constrained. I wanted **full control over interactions, structure, and content management**, and I wanted to prove that AI could close the gap between design thinking and technical execution.\nI had **virtually no coding experience** going in. No HTML, no JavaScript, no deployment knowledge. The only tool I'd decided to bet on was Google AI Studio — a platform I'd never used before either. The goal wasn't just a portfolio. It was to find out whether vibe coding with AI was a real workflow, and whether I could own it.",
+    "backgroundText": "This project started as more than a portfolio. The goal was to test whether AI could bridge the gap between product thinking and technical execution. Instead of relying on no-code templates, I wanted **full control over interactions, structure, and content management** — despite having **virtually no coding background**. Using Google AI Studio as the primary tool, I explored whether AI-assisted development could become a real product workflow rather than just a prototyping shortcut.",
     "backgroundImage": "",
-    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/v1778654348/vpqilhgrosjjcxy23fw0.jpg",
+    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779536873/01_fyikvs.jpg",
     "takeawayTitle": "",
     "problemText": "Template-based tools like Framer or Webflow weren't ruled out because of a specific failure. They were ruled out because of a ceiling — a sense that at some point, the tool would stop doing what I needed and I'd have no way around it. More importantly, I wanted to learn. Building on top of someone else's infrastructure meant I'd never understand what was actually happening under the hood.\nThe bigger unknown was whether I could pull it off at all. I had no mental model for how frontend code, databases, and deployment pipelines fit together. The risk wasn't just wasted time — it was not knowing if the gap was even closable without formal engineering training. That uncertainty was the real problem to solve.",
     "sections": [
@@ -575,7 +575,7 @@ export const PROJECTS: Project[] = [
       }
     ],
     "problemTitle": "The real problem wasn't technical — it was psychological",
-    "outcome": "- Shipped a fully functional, publicly deployed portfolio in 3 days with zero prior coding experience\n\n- Built a working admin panel with Firebase backend — enabling content updates, project publishing, and testimonial management without touching code\n\n- Integrated Firebase event tracking and Microsoft Clarity for future data-driven design iterations\n\n- Proved a complete product development cycle — design, frontend, backend, CMS, analytics, and deployment — is achievable solo with AI\n\n- Shifted personal identity from pixel-pusher to AI-first product builder capable of taking ideas from concept to live product",
+    "outcome": "- Shipped a fully functional, publicly deployed portfolio in 3 days with zero prior coding experience\n\n- Built a working CMS and admin panel for managing projects and testimonials without code changes\n\n- Integrated Firebase event tracking and Microsoft Clarity for future data-driven design iterations\n\n- Executed the complete product lifecycle solo — from concept and UX to frontend, backend, and deployment\n\n- Transitioned from traditional product designer to AI-first product builder",
     "figmaLink": "",
     "takeawayText": "",
     "solution": "Leveraging Antigravity and Gemini to bridge the gap between creative prompt and functional UI, resulting in a unique editorial aesthetic.",
@@ -583,7 +583,7 @@ export const PROJECTS: Project[] = [
     "timeline": "Ongoing • 2024",
     "impactSections": [
       {
-        "body": "The most significant outcome wasn't the portfolio itself — it was what building it proved. **Three days, zero coding background, one AI tool, and a live full-stack product**. That's a different kind of confidence than finishing a Figma file.\nIt reframed how I see my own role. I'm not a designer who hands off to developers and waits. I'm someone who can **take an idea from sketch to deployed product** — and that changes what's possible in every project going forward.\nIt also changed how I work. I now think of myself as **AI-first**: I don't open Figma reflexively. I start with thinking — sketching, ideating, pressure-testing ideas — before committing to any tool. AI is part of that thinking process, not just an execution shortcut.",
+        "body": "The biggest outcome wasn't the portfolio itself, but the shift in capability it created. **Three days, zero coding background, one AI tool, and a live full-stack product**. Building and deploying a full-stack product in three days fundamentally changed how I approach product design. Instead of stopping at interfaces, I now think across the full product lifecycle — from idea and interaction design to implementation, analytics, and iteration. It reshaped my workflow into a more **AI-first**, systems-oriented approach to product building.",
         "title": "From pixel-pusher to AI-first product builder"
       }
     ],
@@ -591,7 +591,7 @@ export const PROJECTS: Project[] = [
     "backgroundTitle": "What if a Product Designer with no coding background could ship a full product alone?",
     "takeawaySections": [
       {
-        "body": "The most counterintuitive lesson from this project was that confusion is **part of the process, not a sign you're doing it wrong**. I didn't understand Firebase, or how routing worked, or what deployment actually meant — and I built all of it anyway. Every blocker became a prompt. Every error became a conversation.\nWhat made this work wasn't technical knowledge. It was **knowing how to describe what I wanted**, recognizing when something was wrong, and being persistent enough to keep asking until it was fixed. Those are research skills. They transferred completely.\nThe bigger shift is in how I think about the boundary between design and engineering. **That boundary is much more permeable than I thought — and AI is what made it permeable**. I won't pretend I'm an engineer. But I'm no longer someone who has to wait for one.",
+        "body": "This project reinforced that shipping real products no longer requires mastering every technical layer upfront. What mattered most was problem framing, iteration, and the ability to communicate intent clearly through AI tools. Many of the same skills used in UX research — asking better questions, identifying gaps, and refining direction — translated directly into building software. AI didn't replace product thinking; it expanded what product thinkers can execute independently.",
         "title": "You don't need to understand everything to build something real"
       }
     ],
