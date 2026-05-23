@@ -344,7 +344,7 @@ export const PROJECTS: Project[] = [
     "timeline": "6 Months • 2023",
     "impactSections": [
       {
-        "body": "GG10 demonstrated what a single designer can own end-to-end when the process is structured well. Over roughly five months, I delivered 100+ screens across 10+ pages, a 480+ component design system, a full visual identity, and developer documentation detailed enough to support accurate implementation — without a design lead, design review process, or second designer to catch mistakes.\nThe most meaningful outcome wasn't a metric — the product hadn't launched by the time this case study was written. It was the process itself: a freelance engagement where I operated as designer, researcher, creative director, and documentation lead simultaneously, and delivered work that was organized, scalable, and developer-ready throughout.\nFor me personally, this project was a step-change in Figma craft. Atomic component design, systematic variable management, clean file organization, and production-grade naming conventions — all of these became real skills through the pressure of being the only person responsible for getting them right.",
+        "body": "GG10 was a greenfield freelance engagement where I operated as **designer, creative director, and documentation lead simultaneously**. Over five months, I delivered 100+ screens across 10+ pages, a 480+ component design system, a full visual identity, and developer documentation detailed enough for accurate implementation — without a design lead or review process to fall back on. The product hadn't launched by the time this case study was written, but the process itself was the proof: **organized, scalable, and developer-ready** throughout.",
         "title": "Delivering a production-ready design solo, at scale, without a blueprint"
       }
     ],
@@ -427,7 +427,7 @@ export const PROJECTS: Project[] = [
     "role": "Lead Product Designer",
     "problemSections": [
       {
-        "body": "Unlike most design projects that start with a broken experience to diagnose, GG10 started with a business hypothesis: there's an opportunity in the competitive gaming space, and it needs a product. The business owner arrived with a vision, early sketches, and a set of reference documents — but no validated design direction, no defined scope, and no visual identity.\nThe core design challenge was threefold. First, translating a business idea into a structured product with clear user flows, without the safety net of an existing product to reference. Second, designing for a user base — teenagers as young as 12 — whose expectations for visual quality and interaction fluency are shaped by global gaming platforms. Third, doing all of this alone, without another designer to pressure-test decisions, while staying in tight sync with a PM and two developers who needed ready-to-build specs continuously.\nThe risk wasn't a single friction point. It was the compounding risk of misalignment — a design direction that didn't match business intent, a component library that couldn't scale, or documentation too vague for developers to implement accurately.",
+        "body": "GG10 started with a business hypothesis, not a broken experience to fix. The business owner had a vision, early sketches, and reference docs — but **no defined scope, no design direction, and no visual identity**. The challenge was threefold: **translating a raw business idea into structured user flows**, designing for teenagers as young as 12 **whose visual bar is set by global gaming platforms**, and **keeping two developers continuously unblocked** with ready-to-build specs throughout. The real risk was misalignment — a direction that drifted from business intent, a component library that couldn't scale, or documentation too vague to implement accurately.",
         "title": "No product existed yet — the challenge was building the right thing, not fixing the wrong one"
       }
     ],
@@ -452,7 +452,7 @@ export const PROJECTS: Project[] = [
     "createdAt": "2026-05-13T08:23:14.003Z",
     "heroMockup": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779107010/Mockup_umtmh9.png",
     "impactImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779198585/impact2_whxkpm.png",
-    "backgroundText": "GG10 was a freelance product design contract for a startup building a competitive gaming engagement platform centered around Call of Duty. The platform was designed to let players register, form teams, join tournaments, track stats, and engage with the broader gaming community — all within a mobile-first web experience.\nI was brought in as the sole product designer, working remotely with the business owner, a product manager, and two developers. The product was greenfield — no existing design, no prior design system, no established visual language. Everything needed to be built from zero.\nThe primary users were teenage gamers, starting from age 12 upward, which shaped every design decision: the experience had to be visually bold, immediately legible, and low-friction. The business goal was to capture an underserved market opportunity in competitive gaming infrastructure for the Iranian market.",
+    "backgroundText": "GG10 was a freelance contract to design a competitive gaming platform from scratch — covering team formation, tournaments, and stat tracking, built for mobile web. I was the sole designer, working remotely with a business owner, PM, and two developers. No existing design, no design system, no visual language — everything started from zero. The target users were teenage gamers as young as 12, which meant the experience had to be bold, simple, and low-friction from day one.",
     "backgroundImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779191252/home_ui_screen_nvphq8.png",
     "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1778652853/vnwchqlvmrqf2vhg0dsb.png",
     "takeawayTitle": "Structure is a design deliverable too",
@@ -488,12 +488,12 @@ export const PROJECTS: Project[] = [
         "title": "01 — Discovering the tool before committing to it",
         "subtitle": "",
         "image": "",
-        "body": "I opened Google AI Studio without a plan — just curiosity. I tested a pre-built app from its gallery, saw the quality of the output, and immediately started a new project with a single portfolio prompt. I linked two portfolios I admired as style references. The first iteration was good enough to convince me this was worth pursuing seriously."
+        "body": "I opened Google AI Studio without a plan — just curiosity. I tested a pre-built app from its gallery, saw the quality of the output, and **immediately started a new project** with a single portfolio prompt. I linked two portfolios I admired as style references. The first iteration was **good enough to convince me this was worth pursuing seriously**."
       },
       {
         "title": "02 — Designing the home page through iterative prompting",
         "subtitle": "",
-        "body": "The entire home page was built through prompt, review, and refine cycles. When text descriptions weren't precise enough, I exported frames from Figma and uploaded them directly — telling the AI to use a specific layout as reference. Later I discovered the Focus feature, which let me select individual sections and make targeted changes without rewriting the whole thing. Watching the code update live alongside the design was the moment the workflow clicked.",
+        "body": "The entire home page was built through **prompt, review, and refine cycles**. When text descriptions weren't precise enough, I exported frames from Figma and uploaded them directly — telling the AI to use a specific layout as reference. Later I discovered the Focus feature, which let me select individual sections and make targeted changes without rewriting the whole thing. **Watching the code update live alongside the design** was the moment the workflow clicked.",
         "image": ""
       },
       {
@@ -506,7 +506,7 @@ export const PROJECTS: Project[] = [
         "subtitle": "",
         "title": "04 — Adding a CMS via admin panel",
         "image": "",
-        "body": "Hardcoding project content wasn't sustainable. I wanted to write case study content and publish it without touching code. I prompted for an admin panel — and AI Studio built one, complete with a UI. The catch: the data was fake, and the admin panel and the live site weren't connected. I prompted again to fix it. Firebase was introduced as the backend, the data was migrated, and from that point the admin panel was live and functional at /admin."
+        "body": "Hardcoding project content wasn't sustainable. I wanted to write case study content and publish it without touching code. I prompted for an admin panel **and AI Studio built one**, complete with a UI. The catch: the data was fake, and the admin panel and the live site weren't connected. I prompted again to fix it. **Firebase was introduced as the backend**, the data was migrated, and from that point the admin panel was live and functional at /admin."
       },
       {
         "title": "05 — Deploying and connecting everything",
@@ -517,11 +517,11 @@ export const PROJECTS: Project[] = [
       {
         "title": "06 — Debugging under pressure",
         "subtitle": "",
-        "body": "The hardest moment came when GitHub disconnected from AI Studio and the integration broke entirely. For several hours, my workaround was downloading updated code files manually and uploading them directly to the GitHub repository to trigger Vercel redeployments. It was tedious, but it worked — and it forced me to understand what the integration was actually doing. I eventually restored it. Authentication setup for the admin login also threw repeated errors, resolved through back-and-forth sessions with Claude and ChatGPT until the credentials were properly configured.",
+        "body": "The hardest moment came when GitHub disconnected from AI Studio and the integration broke entirely. For several hours, my workaround was **downloading updated code files manually** and uploading them directly to the GitHub repository to trigger Vercel redeployments. It was tedious, but it worked — and it forced me to **understand what the integration was actually doing**. I eventually restored it. Authentication setup for the admin login also threw repeated errors, resolved through back-and-forth sessions with Claude and ChatGPT until the credentials were properly configured.",
         "image": ""
       },
       {
-        "body": "With the site live, I created a Clarity account, grabbed the project ID and script, and added it to the site header. Behavioral data — heatmaps, session recordings, scroll depth — would now accumulate over time, giving me a feedback loop for future design decisions.",
+        "body": "With the site live, I created a Clarity account, grabbed the project ID and script, and added it to the site header. Behavioral data — **heatmaps, session recordings, scroll depth** — would now accumulate over time, giving me a feedback loop for future design decisions.",
         "image": "",
         "subtitle": "",
         "title": "07 — Wiring in analytics"
@@ -551,7 +551,7 @@ export const PROJECTS: Project[] = [
     ],
     "problemSections": [
       {
-        "body": "Template-based tools like Framer or Webflow weren't ruled out because of a specific failure. They were ruled out because of a ceiling — a sense that at some point, the tool would stop doing what I needed and I'd have no way around it. More importantly, I wanted to learn. Building on top of someone else's infrastructure meant I'd never understand what was actually happening under the hood.\nThe bigger unknown was whether I could pull it off at all. I had no mental model for how frontend code, databases, and deployment pipelines fit together. The risk wasn't just wasted time — it was not knowing if the gap was even closable without formal engineering training. That uncertainty was the real problem to solve.",
+        "body": "Template-based tools like Framer or Webflow weren't ruled out because of a specific failure. They were ruled out because of **a ceiling** — a sense that at some point, the tool would stop doing what I needed and I'd have no way around it. More importantly, I wanted to learn. Building on top of someone else's infrastructure meant I'd never understand what was actually happening under the hood.\nThe bigger unknown was **whether I could pull it off at all**. I had no mental model for how frontend code, databases, and deployment pipelines fit together. The risk wasn't just wasted time — it was **not knowing if the gap was even closable without formal engineering training**. That uncertainty was the real problem to solve.",
         "title": "The real problem wasn't technical — it was psychological"
       }
     ],
@@ -561,7 +561,7 @@ export const PROJECTS: Project[] = [
     "problem": "Traditional portfolio building is time-consuming and often involves complex handoffs between design and code.",
     "createdAt": "2026-05-13T08:32:39.389Z",
     "heroMockup": "",
-    "backgroundText": "This was a personal project with a clear ambition: build a portfolio that didn't just showcase work, but demonstrated a new kind of capability. Most designers use Framer or Notion-based templates — polished, but constrained. I wanted full control over interactions, structure, and content management, and I wanted to prove that AI could close the gap between design thinking and technical execution.\nI had virtually no coding experience going in. No HTML, no JavaScript, no deployment knowledge. The only tool I'd decided to bet on was Google AI Studio — a platform I'd never used before either. The goal wasn't just a portfolio. It was to find out whether vibe coding with AI was a real workflow, and whether I could own it.",
+    "backgroundText": "This was a personal project with a clear ambition: build a portfolio that didn't just showcase work, but **demonstrated a new kind of capability**. Most designers use Framer or Notion-based templates — polished, but constrained. I wanted **full control over interactions, structure, and content management**, and I wanted to prove that AI could close the gap between design thinking and technical execution.\nI had **virtually no coding experience** going in. No HTML, no JavaScript, no deployment knowledge. The only tool I'd decided to bet on was Google AI Studio — a platform I'd never used before either. The goal wasn't just a portfolio. It was to find out whether vibe coding with AI was a real workflow, and whether I could own it.",
     "backgroundImage": "",
     "image": "https://res.cloudinary.com/dujb86o8g/image/upload/v1778654348/vpqilhgrosjjcxy23fw0.jpg",
     "takeawayTitle": "",
@@ -575,7 +575,7 @@ export const PROJECTS: Project[] = [
       }
     ],
     "problemTitle": "The real problem wasn't technical — it was psychological",
-    "outcome": "- Shipped a fully functional, publicly deployed portfolio at amirhosein-fahimi.vercel.app in 3 days with zero prior coding experience\n\n- Built a working admin panel with Firebase backend — enabling content updates, project publishing, and testimonial management without touching code\n\nIntegrated Firebase event tracking and Microsoft Clarity for future data-driven design iterations\n\n- Proved a complete product development cycle — design, frontend, backend, CMS, analytics, and deployment — is achievable solo with AI\n\n- Shifted personal identity from pixel-pushing designer to AI-first product builder capable of taking ideas from concept to live product",
+    "outcome": "- Shipped a fully functional, publicly deployed portfolio in 3 days with zero prior coding experience\n\n- Built a working admin panel with Firebase backend — enabling content updates, project publishing, and testimonial management without touching code\n\n- Integrated Firebase event tracking and Microsoft Clarity for future data-driven design iterations\n\n- Proved a complete product development cycle — design, frontend, backend, CMS, analytics, and deployment — is achievable solo with AI\n\n- Shifted personal identity from pixel-pusher to AI-first product builder capable of taking ideas from concept to live product",
     "figmaLink": "",
     "takeawayText": "",
     "solution": "Leveraging Antigravity and Gemini to bridge the gap between creative prompt and functional UI, resulting in a unique editorial aesthetic.",
@@ -583,7 +583,7 @@ export const PROJECTS: Project[] = [
     "timeline": "Ongoing • 2024",
     "impactSections": [
       {
-        "body": "The most significant outcome wasn't the portfolio itself — it was what building it proved. Three days, zero coding background, one AI tool, and a live full-stack product. That's a different kind of confidence than finishing a Figma file.\nIt reframed how I see my own role. I'm not a designer who hands off to developers and waits. I'm someone who can take an idea from sketch to deployed product — and that changes what's possible in every project going forward.\nIt also changed how I work. I now think of myself as AI-first: I don't open Figma reflexively. I start with thinking — sketching, ideating, pressure-testing ideas — before committing to any tool. AI is part of that thinking process, not just an execution shortcut.",
+        "body": "The most significant outcome wasn't the portfolio itself — it was what building it proved. **Three days, zero coding background, one AI tool, and a live full-stack product**. That's a different kind of confidence than finishing a Figma file.\nIt reframed how I see my own role. I'm not a designer who hands off to developers and waits. I'm someone who can **take an idea from sketch to deployed product** — and that changes what's possible in every project going forward.\nIt also changed how I work. I now think of myself as **AI-first**: I don't open Figma reflexively. I start with thinking — sketching, ideating, pressure-testing ideas — before committing to any tool. AI is part of that thinking process, not just an execution shortcut.",
         "title": "From pixel-pusher to AI-first product builder"
       }
     ],
@@ -591,7 +591,7 @@ export const PROJECTS: Project[] = [
     "backgroundTitle": "What if a Product Designer with no coding background could ship a full product alone?",
     "takeawaySections": [
       {
-        "body": "The most counterintuitive lesson from this project was that confusion is part of the process, not a sign you're doing it wrong. I didn't understand Firebase, or how routing worked, or what deployment actually meant — and I built all of it anyway. Every blocker became a prompt. Every error became a conversation.\nWhat made this work wasn't technical knowledge. It was knowing how to describe what I wanted, recognizing when something was wrong, and being persistent enough to keep asking until it was fixed. Those are research skills. They transferred completely.\nThe bigger shift is in how I think about the boundary between design and engineering. That boundary is much more permeable than I thought — and AI is what made it permeable. I won't pretend I'm an engineer. But I'm no longer someone who has to wait for one.",
+        "body": "The most counterintuitive lesson from this project was that confusion is **part of the process, not a sign you're doing it wrong**. I didn't understand Firebase, or how routing worked, or what deployment actually meant — and I built all of it anyway. Every blocker became a prompt. Every error became a conversation.\nWhat made this work wasn't technical knowledge. It was **knowing how to describe what I wanted**, recognizing when something was wrong, and being persistent enough to keep asking until it was fixed. Those are research skills. They transferred completely.\nThe bigger shift is in how I think about the boundary between design and engineering. **That boundary is much more permeable than I thought — and AI is what made it permeable**. I won't pretend I'm an engineer. But I'm no longer someone who has to wait for one.",
         "title": "You don't need to understand everything to build something real"
       }
     ],

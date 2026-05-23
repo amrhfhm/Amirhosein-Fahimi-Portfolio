@@ -165,13 +165,15 @@ export default function CaseStudy() {
       {project.backgroundTitle && (
         <section className="py-24 md:py-32 px-12 max-w-[1280px] mx-auto overflow-hidden">
           <div className="flex flex-col md:flex-row items-center w-full gap-10">
-            <div className="w-full md:w-[62%]">
-              <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>BACKGROUND</span>
-              <br />
-              <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>{project.backgroundTitle}<br /></span>
-              <br />
-              <span style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>{project.backgroundText}</span>
-            </div>
+              <div className="w-full md:w-[62%]">
+                <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>BACKGROUND</span>
+                <br />
+                <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>{project.backgroundTitle}<br /></span>
+                <br />
+                <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.backgroundText}</ReactMarkdown>
+                </div>
+              </div>
             {project.backgroundImage && (
               <img 
                 className="w-full md:w-[19.46%] object-contain mt-8 md:mt-0 md:ml-auto"
@@ -190,14 +192,14 @@ export default function CaseStudy() {
             <div style={{ width: '100%' }}>
               <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>PROBLEM</span>
               {project.problemSections.map((section, index) => (
-                <div key={index} className="mt-8">
-                  <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>
-                    <br/>{section.title}<br/>
-                  </span>
-                  <span style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
-                    <br/>{section.body}
-                  </span>
-                </div>
+                  <div key={index} className="mt-8">
+                    <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>
+                      <br/>{section.title}<br/>
+                    </span>
+                    <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body}</ReactMarkdown>
+                    </div>
+                  </div>
               ))}
             </div>
           </div>
@@ -217,7 +219,9 @@ export default function CaseStudy() {
                       <div>
                         <span style={{ color: '#242424', fontSize: '18px', fontWeight: '700', fontFamily: 'Inter' }}>{step.title}</span>
                         <br/><br/>
-                        <span style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>{step.body}</span>
+                        <div style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>{step.body}</ReactMarkdown>
+                        </div>
                       </div>
                       {step.image && (
                         <div style={{ flexDirection: 'column', display: 'flex', gap: '20px', width: '100%', alignItems: 'center' }}>
@@ -245,7 +249,9 @@ export default function CaseStudy() {
               {project.impactSections.map((section, index) => (
                 <div key={index} className="mt-4">
                   <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>{section.title}<br/></span>
-                  <span style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}><br/>{section.body}<br/></span>
+                  <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body}</ReactMarkdown>
+                  </div>
                 </div>
               ))}
             </div>
@@ -264,7 +270,9 @@ export default function CaseStudy() {
             {project.takeawaySections.map((section, index) => (
               <div key={index} className="mt-8">
                 <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>{section.title}<br/></span>
-                <span style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}><br/>{section.body}<br/></span>
+                <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body}</ReactMarkdown>
+                </div>
               </div>
             ))}
           </div>
