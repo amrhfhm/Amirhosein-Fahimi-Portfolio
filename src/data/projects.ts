@@ -152,7 +152,7 @@ export const PROJECTS: Project[] = [
         "title": "Perceived vs. Actual Effort"
       }
     ],
-    "roleResponsibilities": "- Identified the root causes of user drop-off through funnel analysis in Google Analytics and Microsoft Clarity\n\n- Conducted stakeholder interviews across product, design, engineering, and business to build a complete picture of the problem\n\n- Audited the existing registration flow against UX principles to surface usability gaps\n\n- Benchmarked competitor onboarding and KYC flows to identify opportunities and set direction\n\n- Synthesized findings into clear problem statements and actionable design recommendations\n\n- Delivered low-fidelity wireframes with annotated before/after comparisons for stakeholder alignment\n\n- Reported data infrastructure gaps (missing events, duplicate URLs) to the product manager for future tracking improvement\n\n- Collaborated cross-functionally to align design decisions with legal, business, and product constraints",
+    "roleResponsibilities": "- Analyzed registration drop-off using funnel data from Google Analytics and Microsoft Clarity\n\n- Conducted stakeholder interviews across product, design, engineering, and business\n\n- Audited the existing KYC flow against UX principles to surface friction points\n\n- Benchmarked competitor onboarding and KYC flows to identify gaps and opportunities\n\n- Synthesized findings into problem statements, design recommendations, and annotated before/after wireframes\n\n- Reported data infrastructure gaps to the PM and collaborated cross-functionally to align decisions with legal and business constraints",
     "impactStats": [],
     "takeawaySections": [
       {
@@ -174,7 +174,7 @@ export const PROJECTS: Project[] = [
     "timeline": "4 Months • 2023",
     "description": "Turning a leaky onboarding funnel into a 25% conversion lift",
     "figmaLink": "",
-    "outcome": "- ~25% increase in overall registration conversion rate following redesign\n\n- ~30% improvement in Step 5 conversion, the previously highest drop-off point in the funnel\n\n- Reduced user effort in the information form step by minimizing required fields and adding contextual explanations\n\n- Surfaced and escalated marketing targeting issues causing artificial drop-off at Step 2\n\n- Identified critical data infrastructure gaps and established a roadmap for improved funnel tracking in future phases\n\n- Proposed transition to a more capable identity verification service to eliminate manual video review bottleneck",
+    "outcome": "- ~25% increase in overall registration conversion rate\n\n- ~30% improvement in Step 5 conversion — the previously highest drop-off point\n\n- Reduced form friction by minimizing mandatory fields and adding contextual explanations\n\n- Surfaced mistargeted ad campaigns artificially inflating drop-off at Step 2\n\n- Identified data infrastructure gaps and established a tracking roadmap for future phases\n\n- Recommended transition to a more capable identity verification service to eliminate manual video review",
     "takeawayText": "",
     "ctaEnabled": true,
     "ctaLabel": "KYC LANDING PAGE",
