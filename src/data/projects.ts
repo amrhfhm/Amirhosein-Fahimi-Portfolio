@@ -130,7 +130,7 @@ export const PROJECTS: Project[] = [
       }
     ],
     "role": "UX Researcher",
-    "heroSubtitle": "Reduce registration drop-off and boost KYC conversion rate to accelerate user acquisition at Bit24 Analyze the registration and identity verification funnel using data and multi-method research to identify friction points, redesign the flow, and increase conversion rate by 25%",
+    "heroSubtitle": "Reduce registration drop-off and boost KYC conversion rate to accelerate user acquisition at Bit24. Analyze the registration and identity verification funnel using data and multi-method research to identify friction points, redesign the flow, and increase conversion rate by 25%.",
     "collaborators": [
       "Product Manager",
       "Marketing Team",
@@ -175,7 +175,10 @@ export const PROJECTS: Project[] = [
     "description": "Turning a leaky onboarding funnel into a 25% conversion lift",
     "figmaLink": "",
     "outcome": "- ~25% increase in overall registration conversion rate following redesign\n\n- ~30% improvement in Step 5 conversion, the previously highest drop-off point in the funnel\n\n- Reduced user effort in the information form step by minimizing required fields and adding contextual explanations\n\n- Surfaced and escalated marketing targeting issues causing artificial drop-off at Step 2\n\n- Identified critical data infrastructure gaps and established a roadmap for improved funnel tracking in future phases\n\n- Proposed transition to a more capable identity verification service to eliminate manual video review bottleneck",
-    "takeawayText": ""
+    "takeawayText": "",
+    "ctaEnabled": true,
+    "ctaLabel": "KYC LANDING PAGE",
+    "ctaLink": "https://bit24.cash/auth/"
   },
   {
     "id": "bit24-spot",
@@ -255,8 +258,8 @@ export const PROJECTS: Project[] = [
     ],
     "status": "Published",
     "role": "Senior Product Designer",
-    "heroSubtitle": "Uncover why active Spot traders aren't engaging enough to drive the revenue Bit24 expected Run a two-phase research process combining UX audit, behavioral data analysis, and moderated usability testing with 9 users to identify friction points and reduce UX-related support complaints",
-    "roleResponsibilities": "- Led the full two-phase research process from discovery through delivery, independently managing scope, methods, and timelines\n\n- Conducted stakeholder interviews with the CEO, Head of Product Design, Product Manager, Support Lead, and a domain expert to build a multi-perspective view of the problem\n\n- Performed a UX audit of the Spot product flow, identifying and prioritizing usability issues against design principles\n\n- Analyzed behavioral data using Microsoft Clarity (heatmaps, session recordings) to observe real user interactions\n\n- Benchmarked competitor Spot trading products to identify market patterns and missing features\n\n- Designed and executed the full usability testing pipeline: segmentation, recruiting, screener design, logistics, discussion guide, pilot testing, and session facilitation\n\n- Coordinated cross-functionally with the data, CRM, and finance teams to support participant recruiting and session logistics\n\n- Built a structured analysis framework with KPIs (error rate, task completion, time on task, task ease score) and synthesized findings into an actionable presentation\n\n- Established a recurring CRM reporting cadence to measure post-launch UX improvement over time",
+    "heroSubtitle": "Uncover why active Spot traders aren't engaging enough to drive the revenue Bit24 expected. Run a two-phase research process combining UX audit, behavioral data analysis, and moderated usability testing with 9 users to identify friction points and reduce UX-related support complaints.",
+    "roleResponsibilities": "- Led a two-phase research process from discovery through delivery, managing scope, methods, and timelines independently\n\n- Conducted stakeholder interviews with the CEO, Head of Product Design, PM, Support Lead, and a domain expert\n\n- Performed a UX audit and behavioral analysis using Microsoft Clarity to identify and prioritize friction points\n\n- Benchmarked competitor Spot trading products to surface missing features and UX gaps\n\n- Designed and executed the full usability testing pipeline: segmentation, recruiting, facilitation, and analysis\n\n- Synthesized findings into a structured KPI framework and delivered an actionable presentation to cross-functional stakeholders\n\n- Established a recurring CRM reporting cadence to track post-launch UX improvement",
     "thinking": [
       {
         "content": "We discovered that most errors happened during high-volatility periods. By introducing 'Frictionless Confirmation'—a way to see the impact of a trade before hitting confirm—we reduced error rates by 24%.",
@@ -321,7 +324,7 @@ export const PROJECTS: Project[] = [
     "order": 2,
     "description": "Diagnosing low engagement through usability testing to cut support complaints by 15%",
     "timeline": "8 Months • 2022",
-    "outcome": "- ~15% reduction in monthly UX-related support complaints following the redesign, based on CRM tracking data\n\n- Pre-launch: up to 15 UX issues reported per month; post-launch: reduced to 10–12 issues per month\n\n- Successfully ran 9 moderated remote usability tests across 2 user segments (mobile beginner and desktop), reaching result saturation\n\n- Delivered a comprehensive presentation to the CEO, Head of Product, PM, designers, and engineers with KPI dashboards and a user journey map\n\n- Surfaced data infrastructure gaps and marketing targeting issues as contributing factors to low engagement beyond UX\n\n- Established a reusable usability testing framework — the first of its kind at Bit24 — as a foundation for future research cycles",
+    "outcome": "- ~15% reduction in monthly UX-related support complaints following the redesign\n\n- Ran 9 moderated remote usability tests across 2 user segments, reaching result saturation\n\n- Delivered KPI dashboards and a user journey map to the CEO, Head of Product, PM, designers, and engineers\n\n- Established Bit24's first reusable usability testing framework for future research cycles\n\n- Surfaced data infrastructure gaps and marketing targeting issues contributing to low engagement",
     "figmaLink": "",
     "takeawayText": "",
     "takeawaySections": [
@@ -333,7 +336,10 @@ export const PROJECTS: Project[] = [
     "impactStats": [],
     "title": "Bit24 Spot Trading",
     "category": "Fintech / User Research",
-    "backgroundTitle": "A trading product with traffic but no traction — diagnosing low engagement in Bit24's Spot feature"
+    "backgroundTitle": "A trading product with traffic but no traction — diagnosing low engagement in Bit24's Spot feature",
+    "ctaEnabled": true,
+    "ctaLabel": "SPOT LANDING PAGE",
+    "ctaLink": "https://bit24.cash/trade/usdt_irt?type=spot"
   },
   {
     "id": "gg10",
@@ -368,7 +374,7 @@ export const PROJECTS: Project[] = [
     "impactStats": [],
     "title": "GG10 Gaming Platform",
     "category": "Gaming / Product Design",
-    "heroSubtitle": "Designed a gaming engagement platform from scratch as the sole designer, spanning 100+ screens and 10+ pages. Led end-to-end product design for GG10 — a Call of Duty-focused competitive platform for teenage gamers — delivering a scalable design system, developer documentation, and a complete UI in under 5 months",
+    "heroSubtitle": "Designed a gaming engagement platform from scratch as the sole designer, spanning 100+ screens and 10+ pages. Led end-to-end product design for GG10 — a Call of Duty-focused competitive platform for teenage gamers — delivering a scalable design system, developer documentation, and a complete UI in under 5 months.",
     "roleResponsibilities": "- Led end-to-end product design as the sole designer, collaborating with a business owner, PM, and two engineers\n\n- Conducted competitor analysis to identify UX patterns and inform design direction\n\n- Defined information architecture, visual identity, and design system from scratch\n\n- Designed end-to-end flows across 10+ pages, from AI-assisted wireframing to high-fidelity UI\n\n- Delivered developer-facing wireflows, interaction specs, and edge case documentation",
     "thinking": [
       {
@@ -477,7 +483,7 @@ export const PROJECTS: Project[] = [
   },
   {
     "id": "personal-portfolio",
-    "heroSubtitle": "Design and ship a personal portfolio end-to-end with zero coding experience — using AI as the only developer Prompt, iterate, and deploy a full-stack portfolio with a CMS, admin panel, and behavioral analytics in 3 days using Google AI Studio, Firebase, and Vercel",
+    "heroSubtitle": "Design and ship a personal portfolio end-to-end with zero coding experience — using AI as the only developer. Prompt, iterate, and deploy a full-stack portfolio with a CMS, admin panel, and behavioral analytics in 3 days using Google AI Studio, Firebase, and Vercel.",
     "roleResponsibilities": "- Defined the product vision, UX direction, and feature scope independently\n\n- Designed and iterated the full UI using AI-assisted workflows and real-world portfolio references\n\n- Built a custom Firebase-backed admin panel for content and case study management\n\n- Integrated Microsoft Clarity and Firebase Analytics for behavioral tracking\n\n- Managed deployment, debugging, authentication flows, and production setup across GitHub and Vercel\n\n- Structured scalable case study templates for future content updates",
     "thinking": [
       {
@@ -487,52 +493,34 @@ export const PROJECTS: Project[] = [
     ],
     "approachSteps": [
       {
-        "title": "01 — Discovering the tool before committing to it",
-        "subtitle": "",
-        "image": "",
-        "body": "I opened Google AI Studio without a plan — just curiosity. I tested a pre-built app from its gallery, saw the quality of the output, and **immediately started a new project** with a single portfolio prompt. I linked two portfolios I admired as style references. The first iteration was **good enough to convince me this was worth pursuing seriously**."
+        "title": "",
+        "subtitle": "End-to-end workflow — from tool selection to behavioral analytics setup",
+        "body": "",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779611297/portfolio_workflow_scmysc.png"
       },
       {
-        "title": "02 — Designing the home page through iterative prompting",
-        "subtitle": "",
-        "body": "The entire home page was built through **prompt, review, and refine cycles**. When text descriptions weren't precise enough, I exported frames from Figma and uploaded them directly — telling the AI to use a specific layout as reference. Later I discovered the Focus feature, which let me select individual sections and make targeted changes without rewriting the whole thing. **Watching the code update live alongside the design** was the moment the workflow clicked.",
-        "image": ""
+        "title": "01 — Choosing the right AI tool",
+        "subtitle": "Google AI Studio interface — where the first portfolio prompt was tested and the build began",
+        "body": "I didn't start with Google AI Studio. I'd already worked with Lovable, Stitch, and Vercel v0 on other projects and knew what AI-assisted development felt like. What pushed me toward AI Studio for this project was a single test session — I dropped in a portfolio reference, ran a prompt, and the output felt **immediately closer to what I had in mind**. The aesthetic was more modern, the layout interpretation was tighter, and the usage limits were less restrictive for a multi-day build. That first impression was enough to commit.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779612409/GAI_panel_kgbo17.png"
       },
       {
-        "title": "03 — Extending to inner pages",
-        "subtitle": "",
-        "body": "Once the home page was done, the question was how to handle individual project pages. Rather than guessing, I prompted AI Studio directly: how do I add inner pages without starting a new project? It handled the routing and structure automatically and delivered a template I could refine further — a pattern I'd use repeatedly throughout the build.",
-        "image": ""
+        "title": "02 — Building through prompting",
+        "subtitle": "Google AI Studio for prompting, Cloudinary for image hosting, GitHub for version control, and Vercel for deployment",
+        "body": "The entire build happened through a continuous loop of **prompting, reviewing, and refining**. When text descriptions weren't precise enough, I exported frames from Figma and uploaded them directly as visual references. For sections that needed targeted changes, I used AI Studio's Focus feature to isolate specific components without rewriting everything. Images were uploaded to Cloudinary and referenced by URL. Deployment happened through GitHub and Vercel.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779612951/optimized_by_opt.imum.ir__2026-05-24_12-18-20_hze1lz.jpg"
       },
       {
-        "subtitle": "",
-        "title": "04 — Adding a CMS via admin panel",
-        "image": "",
-        "body": "Hardcoding project content wasn't sustainable. I wanted to write case study content and publish it without touching code. I prompted for an admin panel **and AI Studio built one**, complete with a UI. The catch: the data was fake, and the admin panel and the live site weren't connected. I prompted again to fix it. **Firebase was introduced as the backend**, the data was migrated, and from that point the admin panel was live and functional at /admin."
+        "title": "03 — Adding a CMS — and rethinking it",
+        "subtitle": "The custom admin panel — managing testimonials, analytics, and SEO without touching code",
+        "body": "I started by building a full admin panel — a place to manage projects, testimonials, a lightweight analytics dashboard, and SEO settings, all without touching code. That part worked. But **after deployment, I noticed projects were loading slowly** due to backend fetch times over Iran's network conditions. For a portfolio, **slow load is a risk I couldn't accept**. So I made a decision: **hardcode the projects directly into the codebase** using a structured template that AI could maintain consistently across future case studies, while keeping everything else — testimonials, analytics, SEO — in the CMS. The result is a hybrid: **static where speed matters, dynamic where flexibility does**.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779613002/admin_panel_jybqr2.png"
       },
       {
-        "title": "05 — Deploying and connecting everything",
-        "subtitle": "",
-        "image": "",
-        "body": "I didn't know how to deploy. A YouTube tutorial pointed me to GitHub + Vercel. I connected my repository, triggered a deploy, and got a live URL. Returning to AI Studio with that URL unlocked the admin panel properly — and made the Firebase connection real rather than local."
-      },
-      {
-        "title": "06 — Debugging under pressure",
-        "subtitle": "",
-        "body": "The hardest moment came when GitHub disconnected from AI Studio and the integration broke entirely. For several hours, my workaround was **downloading updated code files manually** and uploading them directly to the GitHub repository to trigger Vercel redeployments. It was tedious, but it worked — and it forced me to **understand what the integration was actually doing**. I eventually restored it. Authentication setup for the admin login also threw repeated errors, resolved through back-and-forth sessions with Claude and ChatGPT until the credentials were properly configured.",
-        "image": ""
-      },
-      {
-        "body": "With the site live, I created a Clarity account, grabbed the project ID and script, and added it to the site header. Behavioral data — **heatmaps, session recordings, scroll depth** — would now accumulate over time, giving me a feedback loop for future design decisions.",
-        "image": "",
-        "subtitle": "",
-        "title": "07 — Wiring in analytics"
-      },
-      {
-        "title": "08 — Standardizing the case study template",
-        "subtitle": "",
-        "image": "",
-        "body": "The final step was defining a content structure for project pages that matched the eight-section case study format I'd already developed. I prompted AI Studio to build that template into the admin panel, so each new case study could be written and published directly from the CMS."
+        "title": "04 — Setting up Clarity",
+        "subtitle": "Clarity dashboard at launch — data collection begins from the first real visitor",
+        "body": "With the site live, I created a Clarity account, grabbed the project ID and tracking script, and added it to the site header. From that point, every visitor session generates **heatmaps, scroll data, and session recordings**. The goal wasn't to have data for its own sake — it was to have a signal for iteration. If a section consistently gets ignored, or if visitors drop off before reaching case studies, that's a design problem worth solving. Clarity makes those patterns visible.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779613025/Clarity_airxz1.png"
       }
     ],
     "status": "Published",
@@ -553,7 +541,7 @@ export const PROJECTS: Project[] = [
     ],
     "problemSections": [
       {
-        "body": "The challenge wasn't only technical — it was learning how modern product systems fit together without an engineering background. I had no prior experience with frontend architecture, databases, authentication, or deployment pipelines. The core question became: could AI reduce the barrier between design intent and implementation enough for a designer to build independently?",
+        "body": "The challenge wasn't only technical — it was learning how modern product systems fit together without an engineering background. I had no prior experience with frontend architecture, databases, authentication, or deployment pipelines. The core question became: **could AI reduce the barrier between design intent and implementation enough for a designer to build independently?**",
         "title": "The real problem wasn't technical — it was psychological"
       }
     ],
@@ -599,6 +587,9 @@ export const PROJECTS: Project[] = [
     ],
     "impactStats": [],
     "title": "PERSONAL PORTFOLIO",
-    "category": "AI / Vibe Coding"
+    "category": "AI / Vibe Coding",
+    "ctaEnabled": true,
+    "ctaLabel": "AMIRHOSEIN-FAHIMI.VERCEL.APP",
+    "ctaLink": "https://amirhosein-fahimi.vercel.app"
   }
 ];

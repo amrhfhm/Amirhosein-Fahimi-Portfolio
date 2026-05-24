@@ -11,8 +11,10 @@ export default function CaseStudy() {
   const { id } = useParams();
   
   const project = PROJECTS.find((p) => p.id === id);
-  const currentIndex = PROJECTS.findIndex((p) => p.id === id);
-  const nextProject = currentIndex !== -1 ? PROJECTS[(currentIndex + 1) % PROJECTS.length] : null;
+  const currentProject = project;
+  const nextProject = currentProject 
+    ? (PROJECTS.find(p => p.order === currentProject.order + 1) || PROJECTS.find(p => p.order === 0))
+    : null;
 
   const getAccent = (category: string) => {
     if (category.toLowerCase().includes('gaming')) return "bg-purple-100 text-purple-900";
@@ -71,8 +73,8 @@ export default function CaseStudy() {
               {project.ctaEnabled && project.ctaLabel && project.ctaLink ? (
                 <a 
                   href={project.ctaLink} 
-                  target="_blank" 
-                  rel="noreferrer"
+                  target={project.id === "personal-portfolio" ? undefined : "_blank"} 
+                  rel={project.id === "personal-portfolio" ? undefined : "noreferrer"}
                   className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest border-b border-black/10 pb-2 hover:border-black transition-all mb-12"
                 >
                   {project.ctaLabel}
@@ -165,7 +167,7 @@ export default function CaseStudy() {
       {project.backgroundTitle && (
         <section className="py-24 md:py-32 px-12 max-w-[1280px] mx-auto overflow-hidden">
           <div className="flex flex-col md:flex-row items-center w-full gap-10">
-              <div className="w-full md:w-[62%]">
+              <div className={project.backgroundImage ? 'w-full md:w-[62%]' : 'w-full'}>
                 <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>BACKGROUND</span>
                 <br />
                 <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>{project.backgroundTitle}<br /></span>
@@ -285,11 +287,13 @@ export default function CaseStudy() {
       {project.takeawaySections && project.takeawaySections.length > 0 && (
         <section className="px-12 max-w-[1280px] mx-auto" style={{ paddingTop: '64px', paddingBottom: '120px', paddingLeft: '48px', paddingRight: '48px' }}>
           <div style={{ width: '100%' }}>
-            <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>TAKEAWAY<br/></span>
+            <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>TAKEAWAY</span>
+            <br/>
             {project.takeawaySections.map((section, index) => (
-              <div key={index} className="mt-8">
-                <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>{section.title}<br/></span>
-                <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
+              <div key={index}>
+                <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700' }}>{section.title}<br/></span>
+                <br/>
+                <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400' }}>
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body}</ReactMarkdown>
                 </div>
               </div>
