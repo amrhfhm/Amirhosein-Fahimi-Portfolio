@@ -21,7 +21,7 @@ export default function Hero() {
             >
               <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-medium leading-[1.1] tracking-tighter">
                 <span style={{ color: '#F8F8F8' }} className="block">Crafted from user insight,</span>
-                <span style={{ color: '#25a9b3' }} className="block">Validated by data,</span>
+                <span style={{ color: '#057B85' }} className="block">Validated by data,</span>
                 <span style={{ color: '#b48864' }} className="block text-balance">Aligned with business</span>
               </h2>
             </motion.div>

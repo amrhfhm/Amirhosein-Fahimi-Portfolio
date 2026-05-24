@@ -123,25 +123,25 @@ export function ImageUpload({ label, value, onChange }: ImageUploadProps) {
             ${uploading 
               ? "border-black/5 bg-black/5 cursor-wait" 
               : dragging
-              ? "border-[#25A9B3] bg-[#25A9B3]/5"
-              : "border-black/10 hover:border-[#25A9B3]/40 hover:bg-[#25A9B3]/5 group cursor-pointer"
+              ? "border-[#057B85] bg-[#057B85]/5"
+              : "border-black/10 hover:border-[#057B85]/40 hover:bg-[#057B85]/5 group cursor-pointer"
             }
           `}
         >
           {uploading ? (
             <>
-              <Loader2 className="animate-spin text-[#25A9B3]" />
+              <Loader2 className="animate-spin text-[#057B85]" />
               <div className="text-center">
                 <div className="text-[10px] font-black text-black/40 uppercase tracking-widest">Uploading...</div>
               </div>
             </>
           ) : (
             <>
-              <div className="p-3 rounded-full bg-black/5 group-hover:bg-[#25A9B3]/10 transition-colors">
-                <Upload size={20} className="text-black/30 group-hover:text-[#25A9B3] transition-colors" />
+              <div className="p-3 rounded-full bg-black/5 group-hover:bg-[#057B85]/10 transition-colors">
+                <Upload size={20} className="text-black/30 group-hover:text-[#057B85] transition-colors" />
               </div>
               <div className="text-center px-4">
-                <div className="text-[10px] font-black text-black/60 uppercase tracking-widest group-hover:text-[#25A9B3] transition-colors">Click to Upload</div>
+                <div className="text-[10px] font-black text-black/60 uppercase tracking-widest group-hover:text-[#057B85] transition-colors">Click to Upload</div>
                 <div className="text-[9px] text-black/30 uppercase tracking-wider mt-1">PNG, JPG up to 10MB</div>
               </div>
             </>

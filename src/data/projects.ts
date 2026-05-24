@@ -22,7 +22,8 @@ export interface Project {
   problemText: string;
   problemSections: { title: string; body: string }[];
   problemImages: string[];
-  approachSteps: { title: string; subtitle: string; body: string; image: string }[];
+  approachSteps: { title: string; subtitle: string; body: string; image: string; isVideo?: boolean }[];
+  impactImage?: string;
   impactSections: { title: string; body: string }[];
   takeawaySections: { title: string; body: string }[];
   takeawayText: string;
@@ -43,7 +44,7 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     "id": "bit24-kyc",
-    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/v1778656543/er8vktfg439f1atyhcdo.png",
+    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779552368/04_ykz366.jpg",
     "problemTitle": "",
     "problemText": "",
     "takeawayTitle": "",
@@ -262,7 +263,7 @@ export const PROJECTS: Project[] = [
         "title": "Trading Psychology"
       }
     ],
-    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/v1778656101/y1v8cgug50mpfuee0dxz.jpg",
+    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779552316/03_v2unfz.png",
     "problemText": "Six months after launch, the Spot product had visitors but not the trading volume the business needed. The gap between page traffic and actual completed trades pointed to a friction problem somewhere in the experience — but the exact causes were unknown, and the product was complex enough that guessing and shipping fixes would have been costly.",
     "sections": [
       {
@@ -381,46 +382,47 @@ export const PROJECTS: Project[] = [
     ],
     "approachSteps": [
       {
-        "body": "I began by reading the business owner's product documentation in full and annotating it with questions and assumptions. This back-and-forth helped me build a mental model of what GG10 actually needed to be before any design decisions were made. I also reviewed the three main competitors the business owner identified — studying their flows, screenshotting key screens, and documenting what worked and what didn't in a dedicated Competitors page in Figma.\n",
-        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779194610/Comp_Analysis_s0yyvt.png",
-        "title": "01 — Immerse in the domain before touching Figma",
-        "subtitle": "Competitor analysis board in Figma — key screens and UX patterns from rival platforms"
+        "title": "",
+        "subtitle": "End-to-end design workflow for GG10 — from domain immersion to cross-functional handoff",
+        "body": "",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779599893/GG10_workflow_v2_qijwbn.png"
       },
       {
-        "body": "Before wireframing, several foundational decisions needed to be made. I facilitated discussions with the business owner and PM to nail down: platform (mobile web, with desktop mirroring mobile layout in phase one, given 90%+ mobile usage), user age range (12 and up, skewing young — which ruled out complex flows), and visual identity direction. GG10 needed to feel like a gaming product — dark, bold, high-energy. We landed on a black and red color system, Russo One as the logo typeface for its gaming character, and Estedaad as the app typeface for its modern feel and Persian language support.\n",
-        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197819/02_fych6c.png",
-        "title": "02 — Define platform, audience, and visual direction",
-        "subtitle": "Variables alongside color system and typography choices — black/red palette with Russo One and Estedaad-FD font family"
+        "title": "01 — Domain immersion and AI setup",
+        "subtitle": "",
+        "body": "Before opening Figma, I read the business owner's product documentation in full, annotating questions and assumptions throughout. To keep the thinking structured across a multi-month engagement, I set up a **dedicated custom GPT** at the start of the project — giving it full context on the product, users, and goals. It served as a **thinking partner for scoping features, pressure-testing decisions, and writing prompts** for vibe coding tools throughout.",
+        "image": "https://res.cloudinary.com/dujb86o8g/video/upload/v1779599078/Record_2026_05_23_20_30_28_945-1_ginp1l.mp4",
+        "isVideo": true
       },
       {
-        "title": "03 — Build the information architecture",
+        "title": "02 — UX benchmarking",
+        "subtitle": "Competitor analysis board in Figma — key screens and UX patterns from rival platforms",
+        "body": "I reviewed the three main competitors the business owner identified — studying their flows, screenshotting key screens, and **documenting strengths and weaknesses** in a dedicated Competitors page in Figma. The goal wasn't to copy; it was to **understand what patterns users already expected** and where we could build something better.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779194610/Comp_Analysis_s0yyvt.png"
+      },
+      {
+        "title": "03 — Visual identity and design constraints",
+        "subtitle": "Variables alongside color system and typography choices — black/red palette with Russo One and Estedaad-FD font family",
+        "body": "Before any UI work began, I facilitated discussions with the business owner to lock in foundational design decisions: platform (mobile web, with desktop mirroring in phase one), **color system (black and red, built for a dark gaming aesthetic)**, logo typeface (Russo One for its gaming character), and app typeface (Estedaad for its modern feel and Persian language support). Each decision was grounded in the target audience and the product's competitive positioning.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197819/02_fych6c.png"
+      },
+      {
+        "title": "04. Sitemapping",
         "subtitle": "Partial view of the site map — pages, flows, and structural relationships",
-        "body": "With platform and audience clear, I mapped the full site structure — identifying all pages, primary flows, and the relationships between them. This sitemap became the shared reference point that kept the business owner, PM, and engineering team aligned on scope throughout the project.\n",
+        "body": "With platform and audience locked, I mapped the full site structure — identifying all pages, primary flows, and relationships between them. The sitemap became the **shared reference point for the business owner, PM, and engineering team** throughout the project. From there, the PM and I aligned on a prioritized design backlog, defining which features to tackle first and in what order.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197809/03_nyxjqs.png"
       },
       {
+        "title": "05 — AI-assisted wireframing to high-fidelity UI",
         "subtitle": "Iterating on layout concepts in Stitch before committing to high-fidelity UI",
-        "title": "04 — AI-assisted ideation for wireframing",
-        "body": "For each feature, I began with wireframing before moving to high-fidelity UI. To accelerate ideation, I used Lovable, Vercel v0, and custom GPTs to generate early layout concepts from prompts — describing the screen I needed and using the output as a starting point to react to, not a final answer. This approach compressed the ideation phase significantly and helped me explore layout directions faster than sketching alone. The wireframes, along with written interaction rationale, were shared with the business owner and PM via Telegram for review and discussion before any UI work began.\n",
+        "body": "For each feature, I started with wireframing using **Lovable, Vercel v0, and Stitch** — prompting for layout concepts and using the output as a starting point to react to, not a final answer. Wireframes and interaction rationale were shared with the business owner and PM via Telegram for alignment before any UI work began. Once approved, I moved to high-fidelity UI, building the design system progressively in parallel — **components built atomically on Material Design 3**, adapted to GG10's visual language, eventually reaching **480+ components and 70+ variables and styles**.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197860/04_rmee9a.png"
       },
       {
-        "title": "05 — Build the design system in parallel",
-        "subtitle": "A section of the component library — built atomically on Material Design 3",
-        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197825/05_yesaob.png",
-        "body": "Rather than designing screens ad hoc and extracting components later, I built the design system progressively alongside the UI. Material Design 3 was chosen as the foundation — appropriate for a mobile-first product — and then adapted to GG10's visual language. Variables and styles were defined early and applied consistently, with components built atomically so they could be composed predictably across all screens. The system eventually grew to 480+ components and 70+ variables and styles.\n"
-      },
-      {
-        "title": "06 — Document for developers, not just designers",
+        "title": "06. Handoff documentation and live review",
         "subtitle": "Annotated interaction notes for a feature flow — edge cases and behavior specs for the dev team",
-        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197823/06_gb4rr5.png",
-        "body": "After each feature reached final UI, I created wireflows — annotating every screen with interaction rules, edge cases, conditional states, and responsive behavior. These weren't supplementary notes; they were the primary handoff artifact. Before a developer started implementing a flow, I walked them through the design in a live review session, answered questions, and aligned on implementation expectations. After development, I reviewed the output against specs and compiled a fix list for anything that diverged from the design.\n"
-      },
-      {
-        "title": "07 — Icon system resolution",
-        "subtitle": "",
-        "body": "One recurring challenge was sourcing icons that matched the gaming aesthetic of the product. Rather than waiting for a dedicated icon designer, I systematically searched, curated, and unified icons in Figma — building a custom icon set that maintained visual consistency across the product.\n",
-        "image": ""
+        "body": "After each feature reached final UI, I created wireflows annotating every screen with interaction rules, edge cases, conditional states, and responsive behavior — the **primary handoff artifact, not a supplement**. Before implementation, I walked developers through each flow live to align on expectations. After development, I reviewed the output against specs and **compiled a fix list for anything that diverged**.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197823/06_gb4rr5.png"
       }
     ],
     "status": "Published",
@@ -454,7 +456,7 @@ export const PROJECTS: Project[] = [
     "impactImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779198585/impact2_whxkpm.png",
     "backgroundText": "GG10 was a freelance contract to design a competitive gaming platform from scratch — covering team formation, tournaments, and stat tracking, built for mobile web. I was the sole designer, working remotely with a business owner, PM, and two developers. No existing design, no design system, no visual language — everything started from zero. The target users were teenage gamers as young as 12, which meant the experience had to be bold, simple, and low-friction from day one.",
     "backgroundImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779191252/home_ui_screen_nvphq8.png",
-    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779536909/02_equfqh.jpg",
+    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779552315/01_olzubb.jpg",
     "takeawayTitle": "Structure is a design deliverable too",
     "sections": [
       {
@@ -563,7 +565,7 @@ export const PROJECTS: Project[] = [
     "heroMockup": "",
     "backgroundText": "This project started as more than a portfolio. The goal was to test whether AI could bridge the gap between product thinking and technical execution. Instead of relying on no-code templates, I wanted **full control over interactions, structure, and content management** — despite having **virtually no coding background**. Using Google AI Studio as the primary tool, I explored whether AI-assisted development could become a real product workflow rather than just a prototyping shortcut.",
     "backgroundImage": "",
-    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779536873/01_fyikvs.jpg",
+    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779552315/02_f1gaqd.jpg",
     "takeawayTitle": "",
     "problemText": "Template-based tools like Framer or Webflow weren't ruled out because of a specific failure. They were ruled out because of a ceiling — a sense that at some point, the tool would stop doing what I needed and I'd have no way around it. More importantly, I wanted to learn. Building on top of someone else's infrastructure meant I'd never understand what was actually happening under the hood.\nThe bigger unknown was whether I could pull it off at all. I had no mental model for how frontend code, databases, and deployment pipelines fit together. The risk wasn't just wasted time — it was not knowing if the gap was even closable without formal engineering training. That uncertainty was the real problem to solve.",
     "sections": [

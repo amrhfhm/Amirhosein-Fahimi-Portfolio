@@ -30,7 +30,7 @@ export default function CaseStudy() {
       <div className="min-h-screen flex items-center justify-center bg-[#EBEDE9]">
         <div className="text-center">
           <h1 className="text-4xl font-display mb-4">Project not found</h1>
-          <Link to="/" className="text-[#25A9B3] hover:underline">Back to Home</Link>
+          <Link to="/" className="text-[#057B85] hover:underline">Back to Home</Link>
         </div>
       </div>
     );
@@ -217,15 +217,32 @@ export default function CaseStudy() {
                   {project.approachSteps.map((step, index) => (
                     <div key={index} style={{ flexDirection: 'column', display: 'flex', gap: '32px', width: '100%' }}>
                       <div>
-                        <span style={{ color: '#242424', fontSize: '18px', fontWeight: '700', fontFamily: 'Inter' }}>{step.title}</span>
-                        <br/><br/>
-                        <div style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>
-                          <ReactMarkdown remarkPlugins={[remarkGfm]}>{step.body}</ReactMarkdown>
-                        </div>
+                        {step.title && (
+                          <>
+                            <span style={{ color: '#242424', fontSize: '18px', fontWeight: '700', fontFamily: 'Inter' }}>{step.title}</span>
+                            <br/><br/>
+                          </>
+                        )}
+                        {step.body && (
+                          <div style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{step.body}</ReactMarkdown>
+                          </div>
+                        )}
                       </div>
                       {step.image && (
                         <div style={{ flexDirection: 'column', display: 'flex', gap: '20px', width: '100%', alignItems: 'center' }}>
-                          <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src={step.image} alt={step.title} />
+                          {step.isVideo ? (
+                            <video 
+                              src={step.image} 
+                              autoPlay 
+                              loop 
+                              muted 
+                              playsInline 
+                              style={{ width: '100%', borderRadius: '8px' }} 
+                            />
+                          ) : (
+                            <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src={step.image} alt={step.title} />
+                          )}
                           {step.subtitle && (
                             <span style={{ color: '#656161', fontSize: '14px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>{step.subtitle}</span>
                           )}
@@ -246,7 +263,7 @@ export default function CaseStudy() {
           <div style={{ width: '100%', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: '24px', display: 'flex' }}>
             <div style={{ alignSelf: 'stretch' }}>
               <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>IMPACT</span>
-              {project.impactSections.map((section, index) => (
+              {project.impactSections?.map((section, index) => (
                 <div key={index} className="mt-4">
                   <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>{section.title}<br/></span>
                   <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>

@@ -133,7 +133,7 @@ export default function Admin() {
             <button 
               onClick={handleMigrate} 
               disabled={isMigrating}
-              className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#25A9B3] hover:text-[#25A9B3]/80 transition-colors disabled:opacity-50"
+              className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#057B85] hover:text-[#057B85]/80 transition-colors disabled:opacity-50"
             >
               {isMigrating ? "Migrating..." : "Seed Data"}
             </button>
@@ -232,7 +232,7 @@ function OverviewView({ onGoToAnalytics }: { onGoToAnalytics: () => void, key?: 
         <div className="bg-white p-8 rounded-[32px] border border-black/5 space-y-6">
           <div className="flex lg:items-center justify-between">
             <h3 className="text-lg font-display font-medium">Recent Activity</h3>
-            <button onClick={onGoToAnalytics} className="text-[10px] font-black uppercase tracking-widest text-[#25A9B3]">View Analytics</button>
+            <button onClick={onGoToAnalytics} className="text-[10px] font-black uppercase tracking-widest text-[#057B85]">View Analytics</button>
           </div>
           <div className="space-y-4">
              {loading ? (
@@ -252,7 +252,7 @@ function StatCard({ label, value, change, icon }: { label: string, value: string
     <div className="bg-white p-6 rounded-[28px] border border-black/5 space-y-4 hover:shadow-sm transition-all duration-300">
       <div className="flex items-center justify-between">
         <div className="p-2.5 bg-[#F3F4F6] rounded-xl text-black/40">{icon}</div>
-        <span className="text-[10px] font-black uppercase text-[#25A9B3]">{change}</span>
+        <span className="text-[10px] font-black uppercase text-[#057B85]">{change}</span>
       </div>
       <div>
         <h4 className="text-2xl font-display font-medium tracking-tight leading-none">{value}</h4>
@@ -648,7 +648,7 @@ function AnalyticsView() {
           <div className="space-y-4">
              {/* ... device display logic ... */}
              <div className="space-y-2"><div className="flex justify-between text-xs font-bold uppercase tracking-widest"><span>Desktop</span><span>{data.deviceSplit.desktop}%</span></div><div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden"><div className="h-full bg-black" style={{ width: `${data.deviceSplit.desktop}%` }} /></div></div>
-             <div className="space-y-2"><div className="flex justify-between text-xs font-bold uppercase tracking-widest"><span>Mobile</span><span>{data.deviceSplit.mobile}%</span></div><div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden"><div className="h-full bg-[#25A9B3]" style={{ width: `${data.deviceSplit.mobile}%` }} /></div></div>
+             <div className="space-y-2"><div className="flex justify-between text-xs font-bold uppercase tracking-widest"><span>Mobile</span><span>{data.deviceSplit.mobile}%</span></div><div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden"><div className="h-full bg-[#057B85]" style={{ width: `${data.deviceSplit.mobile}%` }} /></div></div>
           </div>
         </div>
       </div>
@@ -662,7 +662,7 @@ function AnalyticsView() {
               <XAxis dataKey="date" hide />
               <YAxis hide />
               <Tooltip />
-              <Line type="monotone" dataKey="visits" stroke="#25A9B3" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="visits" stroke="#057B85" strokeWidth={2} dot={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -674,7 +674,7 @@ function AnalyticsView() {
           {data.avgScroll.map((p: any, i: number) => (
              <div key={i} className="flex justify-between items-center py-3 border-b border-black/5">
                <span className="text-sm font-bold uppercase tracking-widest">{p.title}</span>
-               <span className="text-sm font-black text-[#25A9B3]">{p.avgDepth}%</span>
+               <span className="text-sm font-black text-[#057B85]">{p.avgDepth}%</span>
              </div>
           ))}
         </div>

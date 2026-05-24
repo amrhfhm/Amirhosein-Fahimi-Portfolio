@@ -108,7 +108,7 @@ export default function Testimonials() {
                     relative w-full md:w-[450px] flex-shrink-0 rounded-[44px] p-8 md:p-12 transition-all duration-500 flex flex-col justify-between 
                     min-h-[480px] md:min-h-[520px]
                     ${isActive 
-                      ? "bg-[#25A9B3] text-white shadow-2xl shadow-[#25A9B3]/20 border-[#25A9B3]" 
+                      ? "bg-[#057B85] text-white shadow-2xl shadow-[#057B85]/20 border-[#057B85]" 
                       : "bg-[#F9F9F9] text-[#121212] hidden md:flex border-black/5"
                     }
                     border
@@ -121,7 +121,7 @@ export default function Testimonials() {
                   }}
                 >
                   <div className="relative">
-                    <div className={`absolute -top-4 -left-2 ${isActive ? "text-white/10" : "text-[#25A9B3]/10"}`}>
+                    <div className={`absolute -top-4 -left-2 ${isActive ? "text-white/10" : "text-[#057B85]/10"}`}>
                       <Quote className="w-12 h-12 fill-current" />
                     </div>
                     <p className={`text-lg md:text-xl leading-relaxed font-sans font-medium tracking-tight mt-8 ${isActive ? "text-white" : "text-black/70"}`}>
@@ -137,7 +137,7 @@ export default function Testimonials() {
                         referrerPolicy="no-referrer"
                         className={`w-14 h-14 rounded-full object-cover border-2 ${isActive ? "border-white/30" : "border-black/5"}`}
                         onError={(e) => {
-                          (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=${isActive ? 'FFFFFF' : '25A9B3'}&color=${isActive ? '25A9B3' : 'FFFFFF'}&bold=true`;
+                          (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=${isActive ? 'FFFFFF' : '057B85'}&color=${isActive ? '057B85' : 'FFFFFF'}&bold=true`;
                         }}
                       />
                     )}
@@ -161,7 +161,7 @@ export default function Testimonials() {
           <button
             key={i}
             onClick={() => setActive(i)}
-            className={`h-1.5 rounded-full transition-all duration-500 ${active === i ? "w-10 bg-[#25A9B3]" : "w-1.5 bg-white/20"}`}
+            className={`h-1.5 rounded-full transition-all duration-500 ${active === i ? "w-10 bg-[#057B85]" : "w-1.5 bg-white/20"}`}
             aria-label={`Go to testimonial ${i + 1}`}
           />
         ))}
