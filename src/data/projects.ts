@@ -263,7 +263,7 @@ export const PROJECTS: Project[] = [
         "title": "Trading Psychology"
       }
     ],
-    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779552316/03_v2unfz.png",
+    "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779606350/03_V2_g12y3z.png",
     "problemText": "Six months after launch, the Spot product had visitors but not the trading volume the business needed. The gap between page traffic and actual completed trades pointed to a friction problem somewhere in the experience — but the exact causes were unknown, and the product was complex enough that guessing and shipping fixes would have been costly.",
     "sections": [
       {
@@ -337,7 +337,7 @@ export const PROJECTS: Project[] = [
   },
   {
     "id": "gg10",
-    "outcome": "- Delivered a complete, developer-ready design across 100+ screens in under 5 months\n\n- Built a 480+ component design system on Material Design 3, enabling scalable and consistent UI development\n\n- Established full visual identity — logo, typography, dark-mode color system — tailored to a teenage gaming audience\n\n- Reduced developer ambiguity through structured documentation, enabling faster and more accurate implementation",
+    "outcome": "- Delivered a complete, developer-ready product design in under 5 months as the sole designer\n\n- Built a 480+ component design system on Material Design 3, enabling scalable and consistent UI development\n\n- Established full visual identity — logo, iconography, typography, dark-mode color system — tailored to a teenage gaming audience\n\n- Reduced developer ambiguity through structured documentation, enabling faster and more accurate implementation",
     "figmaLink": "https://www.figma.com/design/RnyozvrlnFgOY9FIoGfu9Y/GG10--A-Game-Engagement-Platform?node-id=11-1833&t=VdVTx03n3VMdHmeM-1",
     "takeawayText": "The biggest lesson from GG10 was that a well-organized Figma file is not a nice-to-have — it's part of the product. When you're the only designer and you're handing off to developers who need to move fast, disorganized layers, inconsistent naming, and ad hoc components become blockers. The discipline of atomic design and systematic file structure directly affected how quickly developers could work and how accurately they could implement.\n",
     "solution": "We built a centralized hub using Material 3 principles that simplifies registration, provides real-time bracket updates, and fosters community engagement.",
@@ -369,7 +369,7 @@ export const PROJECTS: Project[] = [
     "title": "GG10 Gaming Platform",
     "category": "Gaming / Product Design",
     "heroSubtitle": "Designed a gaming engagement platform from scratch as the sole designer, spanning 100+ screens and 10+ pages. Led end-to-end product design for GG10 — a Call of Duty-focused competitive platform for teenage gamers — delivering a scalable design system, developer documentation, and a complete UI in under 5 months",
-    "roleResponsibilities": "- Led end-to-end product design as the sole designer, collaborating with a business owner, PM, and two engineers\n\n- Conducted competitor analysis to identify UX patterns and inform design direction\n\n- Defined information architecture, visual identity, and design system from scratch\n\n- Designed 100+ screens across 10+ pages, from AI-assisted wireframing to high-fidelity UI\n\n- Delivered developer-facing wireflows, interaction specs, and edge case documentation",
+    "roleResponsibilities": "- Led end-to-end product design as the sole designer, collaborating with a business owner, PM, and two engineers\n\n- Conducted competitor analysis to identify UX patterns and inform design direction\n\n- Defined information architecture, visual identity, and design system from scratch\n\n- Designed end-to-end flows across 10+ pages, from AI-assisted wireframing to high-fidelity UI\n\n- Delivered developer-facing wireflows, interaction specs, and edge case documentation",
     "thinking": [
       {
         "content": "While professional esports gets all the attention, 99.9% of the gaming population is amateur. By providing them with professional-grade tools, we create a high-retention ecosystem where players feel valued and competitive.",
@@ -389,8 +389,8 @@ export const PROJECTS: Project[] = [
       },
       {
         "title": "01 — Domain immersion and AI setup",
-        "subtitle": "",
-        "body": "Before opening Figma, I read the business owner's product documentation in full, annotating questions and assumptions throughout. To keep the thinking structured across a multi-month engagement, I set up a **dedicated custom GPT** at the start of the project — giving it full context on the product, users, and goals. It served as a **thinking partner for scoping features, pressure-testing decisions, and writing prompts** for vibe coding tools throughout.",
+        "subtitle": "Setting up a dedicated custom GPT — briefed with full product context to serve as a thinking partner throughout the project",
+        "body": "Before opening Figma, **I read the business owner's product documentation in full**, annotating questions and assumptions throughout. To keep the thinking structured across a multi-month engagement, **I set up a** **dedicated custom GPT** at the start of the project — giving it full context on the product, users, and goals. It served as a **thinking partner for scoping features, pressure-testing decisions, and writing prompts** for vibe coding tools throughout.",
         "image": "https://res.cloudinary.com/dujb86o8g/video/upload/v1779599078/Record_2026_05_23_20_30_28_945-1_ginp1l.mp4",
         "isVideo": true
       },
@@ -403,7 +403,7 @@ export const PROJECTS: Project[] = [
       {
         "title": "03 — Visual identity and design constraints",
         "subtitle": "Variables alongside color system and typography choices — black/red palette with Russo One and Estedaad-FD font family",
-        "body": "Before any UI work began, I facilitated discussions with the business owner to lock in foundational design decisions: platform (mobile web, with desktop mirroring in phase one), **color system (black and red, built for a dark gaming aesthetic)**, logo typeface (Russo One for its gaming character), and app typeface (Estedaad for its modern feel and Persian language support). Each decision was grounded in the target audience and the product's competitive positioning.",
+        "body": "Before any UI work began, I facilitated discussions with the business owner to lock in foundational design decisions: **platform (mobile web, with desktop mirroring in phase one)**, **color system (black and red, built for a dark gaming aesthetic)**, **logo typeface (Russo One for its gaming character)**, and **app typeface (Estedaad for its modern feel and Persian language support)**. Each decision was grounded in the target audience and the product's competitive positioning.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197819/02_fych6c.png"
       },
       {
@@ -429,7 +429,7 @@ export const PROJECTS: Project[] = [
     "role": "Lead Product Designer",
     "problemSections": [
       {
-        "body": "GG10 started with a business hypothesis, not a broken experience to fix. The business owner had a vision, early sketches, and reference docs — but **no defined scope, no design direction, and no visual identity**. The challenge was threefold: **translating a raw business idea into structured user flows**, designing for teenagers as young as 12 **whose visual bar is set by global gaming platforms**, and **keeping two developers continuously unblocked** with ready-to-build specs throughout. The real risk was misalignment — a direction that drifted from business intent, a component library that couldn't scale, or documentation too vague to implement accurately.",
+        "body": "GG10 started with a business hypothesis, not a broken experience to fix. The business owner had a vision, early sketches, and reference docs — but **no defined scope, no design direction, and no visual identity**. The challenge was threefold: **translating a raw business idea into structured user flows**, **designing for teenagers as young as 12** **whose visual bar is set by global gaming platforms**, and **keeping two developers continuously unblocked** with ready-to-build specs throughout. The real risk was misalignment — a direction that drifted from business intent, a component library that couldn't scale, or documentation too vague to implement accurately.",
         "title": "No product existed yet — the challenge was building the right thing, not fixing the wrong one"
       }
     ],

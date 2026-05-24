@@ -187,15 +187,15 @@ export default function CaseStudy() {
 
       {/* Problem Section */}
       {project.problemSections && project.problemSections.length > 0 && (
-        <section className="py-12 md:py-16 px-12 max-w-[1280px] mx-auto w-full overflow-hidden">
+        <section className="px-12 max-w-[1280px] mx-auto w-full overflow-hidden" style={{ paddingTop: '64px', paddingBottom: '120px', paddingLeft: '48px', paddingRight: '48px' }}>
           <div style={{ width: '100%', position: 'relative' }}>
             <div style={{ width: '100%' }}>
               <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>PROBLEM</span>
+              <br />
               {project.problemSections.map((section, index) => (
-                  <div key={index} className="mt-8">
-                    <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>
-                      <br/>{section.title}<br/>
-                    </span>
+                  <div key={index}>
+                    <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>{section.title}<br /></span>
+                    <br />
                     <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body}</ReactMarkdown>
                     </div>
@@ -259,13 +259,15 @@ export default function CaseStudy() {
 
       {/* Impact Section */}
       {(project.impactSections && project.impactSections.length > 0) || project.impactImage ? (
-        <section className="py-16 md:py-24 px-12 max-w-[1280px] mx-auto">
+        <section className="py-20 md:py-28 px-12 max-w-[1280px] mx-auto">
           <div style={{ width: '100%', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: '24px', display: 'flex' }}>
             <div style={{ alignSelf: 'stretch' }}>
               <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>IMPACT</span>
+              <br />
               {project.impactSections?.map((section, index) => (
-                <div key={index} className="mt-4">
+                <div key={index}>
                   <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>{section.title}<br/></span>
+                  <br />
                   <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body}</ReactMarkdown>
                   </div>
@@ -281,7 +283,7 @@ export default function CaseStudy() {
 
       {/* Takeaway Section */}
       {project.takeawaySections && project.takeawaySections.length > 0 && (
-        <section className="py-16 md:py-24 px-12 max-w-[1280px] mx-auto">
+        <section className="px-12 max-w-[1280px] mx-auto" style={{ paddingTop: '64px', paddingBottom: '120px', paddingLeft: '48px', paddingRight: '48px' }}>
           <div style={{ width: '100%' }}>
             <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>TAKEAWAY<br/></span>
             {project.takeawaySections.map((section, index) => (
