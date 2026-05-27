@@ -507,7 +507,7 @@ export const PROJECTS: Project[] = [
       {
         "title": "02 — Building through prompting",
         "subtitle": "Google AI Studio for prompting, Cloudinary for image hosting, GitHub for version control, and Vercel for deployment",
-        "body": "The entire build happened through a continuous loop of **prompting, reviewing, and refining**. When text descriptions weren't precise enough, I exported frames from Figma and uploaded them directly as visual references. For sections that needed targeted changes, I used AI Studio's Focus feature to isolate specific components without rewriting everything. Images were uploaded to Cloudinary and referenced by URL. Deployment happened through GitHub and Vercel.",
+        "body": "The entire build happened through a continuous loop of **prompting, reviewing, and refining**. When text descriptions weren't precise enough, I exported frames from Figma and uploaded them directly as visual references. For some UI sections, **I also used Anima to convert Figma designs into starter code**, then refined and integrated the output through Google AI Studio instead of rebuilding components from scratch. For sections that needed targeted changes, I used AI Studio's Focus feature to isolate specific components without rewriting everything. **Images were uploaded to Cloudinary and referenced by URL. Deployment happened through GitHub and Vercel.**",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779612951/optimized_by_opt.imum.ir__2026-05-24_12-18-20_hze1lz.jpg"
       },
       {

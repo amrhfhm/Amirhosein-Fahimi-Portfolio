@@ -96,13 +96,13 @@ export default function CaseStudyPortfolio() {
                  initial={{ opacity: 0, x: 20 }}
                  animate={{ opacity: 1, x: 0 }}
                  transition={{ duration: 1, delay: 0.2 }}
-                 className="relative flex justify-center"
+                 className="relative flex justify-center lg:justify-start w-full max-w-none"
               >
                   {typeof project.heroMockup === 'string' && (
                     <img
                       src={project.heroMockup}
                       alt="Mockup"
-                      className="w-full lg:w-[300%] h-auto drop-shadow-2xl"
+                      className="w-full lg:w-[155%] xl:w-[165%] max-w-none h-auto drop-shadow-2xl lg:-ml-8"
                       referrerPolicy="no-referrer"
                     />
                   )}
@@ -332,9 +332,8 @@ export default function CaseStudyPortfolio() {
               {project.impactSections?.map((section, index) => (
                 <div key={index}>
                   <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>{section.title}<br/></span>
-                  <br/>
                   <br />
-                  <div style={{ marginTop: '16px', color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
+                  <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body}</ReactMarkdown>
                   </div>
                 </div>
@@ -355,17 +354,10 @@ export default function CaseStudyPortfolio() {
             <div style={{ marginTop: '0' }}>
               {project.takeawaySections.map((section, index) => (
                 <div key={index} style={{ marginTop: index === 0 ? '0' : '48px' }}>
-                  <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', display: 'block', marginBottom: '12px' }}>{section.title}</span>
-                  <br/>
-                  <div style={{ marginTop: '16px', color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400' }}>
-                    <ReactMarkdown 
-                      remarkPlugins={[remarkGfm]}
-                      components={{
-                        p: ({ children }) => <p style={{ margin: '0 0 8px 0' }}>{children}</p>
-                      }}
-                    >
-                      {section.body}
-                    </ReactMarkdown>
+                  <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>{section.title}<br/></span>
+                  <br />
+                  <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body}</ReactMarkdown>
                   </div>
                 </div>
               ))}

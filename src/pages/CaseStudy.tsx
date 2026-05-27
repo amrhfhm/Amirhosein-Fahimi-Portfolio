@@ -101,13 +101,13 @@ export default function CaseStudy() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, delay: 0.2 }}
-                className="relative flex justify-center"
+                className="relative flex justify-center lg:justify-start w-full max-w-none"
               >
                   {typeof project.heroMockup === 'string' && (
                     <img
                       src={project.heroMockup}
                       alt="Mockup"
-                      className="w-full lg:w-[150%] h-auto drop-shadow-2xl"
+                      className="w-full lg:w-[155%] xl:w-[165%] max-w-none h-auto drop-shadow-2xl lg:-ml-8"
                       referrerPolicy="no-referrer"
                     />
                   )}
