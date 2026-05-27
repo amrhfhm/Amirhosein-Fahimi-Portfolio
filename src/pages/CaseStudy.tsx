@@ -217,7 +217,7 @@ export default function CaseStudy() {
               <div style={{ width: '100%' }}>
                 <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>APPROACH</span>
                 {(() => {
-                  const isTwoLevel = project.approachSteps.some(step => !step.title && step.subtitle);
+                  const isTwoLevel = project.id === 'bit24-spot';
                   if (isTwoLevel) {
                     return (
                       <div style={{ flexDirection: 'column', display: 'flex', marginTop: '50px', width: '100%' }}>
@@ -357,16 +357,23 @@ export default function CaseStudy() {
         <section className="px-12 max-w-[1280px] mx-auto" style={{ paddingTop: '64px', paddingBottom: '120px', paddingLeft: '48px', paddingRight: '48px' }}>
           <div style={{ width: '100%' }}>
             <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>TAKEAWAY</span>
-            <br/>
-            {project.takeawaySections.map((section, index) => (
-              <div key={index}>
-                <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700' }}>{section.title}<br/></span>
-                <br/>
-                <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400' }}>
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body}</ReactMarkdown>
+            <div style={{ marginTop: '0' }}>
+              {project.takeawaySections.map((section, index) => (
+                <div key={index} style={{ marginTop: index === 0 ? '0' : '48px' }}>
+                  <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', display: 'block', marginBottom: '12px' }}>{section.title}</span>
+                  <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400' }}>
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        p: ({ children }) => <p style={{ margin: '0 0 8px 0' }}>{children}</p>
+                      }}
+                    >
+                      {section.body}
+                    </ReactMarkdown>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
       )}

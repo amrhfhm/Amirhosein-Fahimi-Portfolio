@@ -8,6 +8,10 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import CaseStudy from "./pages/CaseStudy";
+import CaseStudyGG10 from "./pages/CaseStudyGG10";
+import CaseStudySpot from "./pages/CaseStudySpot";
+import CaseStudyKYC from "./pages/CaseStudyKYC";
+import CaseStudyPortfolio from "./pages/CaseStudyPortfolio";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -52,6 +56,42 @@ export default function App() {
               <Navigation />
               <main className="flex-grow">
                 <Home />
+              </main>
+              <Footer />
+            </div>
+          } />
+          <Route path="/project/gg10" element={
+            <div className="flex flex-col min-h-screen">
+              <Navigation />
+              <main className="flex-grow">
+                <CaseStudyGG10 />
+              </main>
+              <Footer />
+            </div>
+          } />
+          <Route path="/project/bit24-spot" element={
+            <div className="flex flex-col min-h-screen">
+              <Navigation />
+              <main className="flex-grow">
+                <CaseStudySpot />
+              </main>
+              <Footer />
+            </div>
+          } />
+          <Route path="/project/bit24-kyc" element={
+            <div className="flex flex-col min-h-screen">
+              <Navigation />
+              <main className="flex-grow">
+                <CaseStudyKYC />
+              </main>
+              <Footer />
+            </div>
+          } />
+          <Route path="/project/personal-portfolio" element={
+            <div className="flex flex-col min-h-screen">
+              <Navigation />
+              <main className="flex-grow">
+                <CaseStudyPortfolio />
               </main>
               <Footer />
             </div>

@@ -80,7 +80,7 @@ export const PROJECTS: Project[] = [
     ],
     "backgroundImage": "",
     "backgroundText": "Bit24 is a cryptocurrency exchange platform offering a range of services including spot trading, dual investments, and crypto-backed loans. For any user to access these services, they must complete the KYC (Know Your Customer) process — a multi-step flow covering registration, phone verification, password setup, personal information, and advanced identity verification.\nThis project focused on diagnosing and improving that end-to-end funnel. I was the UX researcher on a cross-functional team that included the KYC product manager, design lead, business analyst, and engineers. The business goal was clear: more completed registrations meant more active users, which directly drove revenue and growth. My role spanned discovery, multi-method research, funnel analysis, and design recommendation delivery.",
-    "heroMockup": "",
+    "heroMockup": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779721063/kyc_mockup_v6_x6estl.png",
     "createdAt": "2026-05-13T08:48:54.609Z",
     "problem": "The registration experience was fragmented across multiple services and devices. We needed to identify exactly what was causing abandonment before proposing expensive interface changes.",
     "overview": "Bit24 is a cryptocurrency exchange platform where identity verification (KYC) plays a critical role in acquisition. We noticed a major drop-off in the onboarding funnel and needed to understand if this was a UI failure or a deeper systemic issue.",
@@ -312,7 +312,7 @@ export const PROJECTS: Project[] = [
     "backgroundImage": "",
     "overview": "Bit24's Spot trading platform needed a complete overhaul to reduce user friction and decrease high support ticket volume related to trading confusion.",
     "problem": "Users found the trading interface intimidating and frequently made errors during order execution.",
-    "heroMockup": "",
+    "heroMockup": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779723838/spot_mockup_v8-optimized_lpg8tv.png",
     "createdAt": "2026-05-13T08:45:09.376Z",
     "solution": "A simplified, research-driven interface that emphasizes clarity, security, and real-time feedback for every user action.",
     "impactSections": [
@@ -394,38 +394,38 @@ export const PROJECTS: Project[] = [
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779599893/GG10_workflow_v2_qijwbn.png"
       },
       {
-        "title": "01 — Domain immersion and AI setup",
+        "title": "01 — Domain Immersion and AI Setup",
         "subtitle": "Setting up a dedicated custom GPT — briefed with full product context to serve as a thinking partner throughout the project",
         "body": "Before opening Figma, **I read the business owner's product documentation in full**, annotating questions and assumptions throughout. To keep the thinking structured across a multi-month engagement, **I set up a** **dedicated custom GPT** at the start of the project — giving it full context on the product, users, and goals. It served as a **thinking partner for scoping features, pressure-testing decisions, and writing prompts** for vibe coding tools throughout.",
         "image": "https://res.cloudinary.com/dujb86o8g/video/upload/v1779599078/Record_2026_05_23_20_30_28_945-1_ginp1l.mp4",
         "isVideo": true
       },
       {
-        "title": "02 — UX benchmarking",
+        "title": "02 — UX Benchmarking",
         "subtitle": "Competitor analysis board in Figma — key screens and UX patterns from rival platforms",
         "body": "I reviewed the three main competitors the business owner identified — studying their flows, screenshotting key screens, and **documenting strengths and weaknesses** in a dedicated Competitors page in Figma. The goal wasn't to copy; it was to **understand what patterns users already expected** and where we could build something better.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779194610/Comp_Analysis_s0yyvt.png"
       },
       {
-        "title": "03 — Visual identity and design constraints",
+        "title": "03 — Visual Identity and Design Constraints",
         "subtitle": "Variables alongside color system and typography choices — black/red palette with Russo One and Estedaad-FD font family",
         "body": "Before any UI work began, I facilitated discussions with the business owner to lock in foundational design decisions: **platform (mobile web, with desktop mirroring in phase one)**, **color system (black and red, built for a dark gaming aesthetic)**, **logo typeface (Russo One for its gaming character)**, and **app typeface (Estedaad for its modern feel and Persian language support)**. Each decision was grounded in the target audience and the product's competitive positioning.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197819/02_fych6c.png"
       },
       {
-        "title": "04. Sitemapping",
+        "title": "04 — Sitemapping",
         "subtitle": "Partial view of the site map — pages, flows, and structural relationships",
         "body": "With platform and audience locked, I mapped the full site structure — identifying all pages, primary flows, and relationships between them. The sitemap became the **shared reference point for the business owner, PM, and engineering team** throughout the project. From there, the PM and I aligned on a prioritized design backlog, defining which features to tackle first and in what order.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197809/03_nyxjqs.png"
       },
       {
-        "title": "05 — AI-assisted wireframing to high-fidelity UI",
+        "title": "05 — AI-Assisted Wireframing to High-Fi UI",
         "subtitle": "Iterating on layout concepts in Stitch before committing to high-fidelity UI",
         "body": "For each feature, I started with wireframing using **Lovable, Vercel v0, and Stitch** — prompting for layout concepts and using the output as a starting point to react to, not a final answer. Wireframes and interaction rationale were shared with the business owner and PM via Telegram for alignment before any UI work began. Once approved, I moved to high-fidelity UI, building the design system progressively in parallel — **components built atomically on Material Design 3**, adapted to GG10's visual language, eventually reaching **480+ components and 70+ variables and styles**.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197860/04_rmee9a.png"
       },
       {
-        "title": "06. Handoff documentation and live review",
+        "title": "06 — Hand-off Documentation and Live Review",
         "subtitle": "Annotated interaction notes for a feature flow — edge cases and behavior specs for the dev team",
         "body": "After each feature reached final UI, I created wireflows annotating every screen with interaction rules, edge cases, conditional states, and responsive behavior — the **primary handoff artifact, not a supplement**. Before implementation, I walked developers through each flow live to align on expectations. After development, I reviewed the output against specs and **compiled a fix list for anything that diverged**.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779197823/06_gb4rr5.png"
@@ -550,7 +550,7 @@ export const PROJECTS: Project[] = [
     "overview": "Exploring the boundaries of AI-assisted development by building a high-end portfolio using Google AI Studio and modern web technologies.",
     "problem": "Traditional portfolio building is time-consuming and often involves complex handoffs between design and code.",
     "createdAt": "2026-05-13T08:32:39.389Z",
-    "heroMockup": "",
+    "heroMockup": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779722223/PRT_mockup_v2_ox8mgu.png",
     "backgroundText": "This project started as more than a portfolio. The goal was to test whether AI could bridge the gap between product thinking and technical execution. Instead of relying on no-code templates, I wanted **full control over interactions, structure, and content management** — despite having **virtually no coding background**. Using Google AI Studio as the primary tool, I explored whether AI-assisted development could become a real product workflow rather than just a prototyping shortcut.",
     "backgroundImage": "",
     "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779552315/02_f1gaqd.jpg",
