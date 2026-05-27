@@ -5,10 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Amirhosein Fahimi Portfolio</title>
     <script type="text/javascript">
+      // Safety JSON.stringify override to prevent circular structure serialization crashes anywhere in the application
+      (function() {
+        var originalStringify = JSON.stringify;
+        JSON.stringify = function(value, replacer, space) {
+          var seen = new WeakSet();
+          var safeReplacer = function(key, val) {
+            if (typeof val === 'object' && val !== null) {
+              if (seen.has(val)) {
+                return "[Circular]";
+              }
+              seen.add(val);
+            }
+            if (typeof replacer === 'function') {
+              return replacer.call(this, key, val);
+            }
+            return val;
+          };
+
+          if (Array.isArray(replacer)) {
+            var whitelist = replacer;
+            safeReplacer = function(key, val) {
+              if (typeof val === 'object' && val !== null) {
+                if (seen.has(val)) {
+                  return "[Circular]";
+                }
+                seen.add(val);
+              }
+              if (key !== "" && whitelist.indexOf(key) === -1) {
+                return undefined;
+              }
+              return val;
+            };
+          }
+
+          try {
+            return originalStringify(value, safeReplacer, space);
+          } catch (err) {
+            return "[Circular/Error]";
+          }
+        };
+      })();
+
       // Silencing expected Vite websocket errors to prevent unhandled rejection popups
       window.addEventListener('unhandledrejection', (event) => {
         if (event.reason && event.reason.message && event.reason.message.includes('WebSocket')) {
           event.preventDefault();
+          return;
+        }
+
+        // Safety check against circular error structures (e.g. from early FirestoreError)
+        if (event.reason && typeof event.reason === 'object') {
+          try {
+            JSON.stringify(event.reason);
+          } catch (e) {
+            event.preventDefault();
+            var safeError = {
+              message: event.reason.message || String(event.reason),
+              name: event.reason.name || "Error",
+              code: event.reason.code,
+              stack: event.reason.stack
+            };
+            console.error("Early Unhandled Rejection (Safe Log):", safeError);
+          }
+        }
+      });
+
+      window.addEventListener('error', (event) => {
+        if (event.error && typeof event.error === 'object') {
+          try {
+            JSON.stringify(event.error);
+          } catch (e) {
+            event.preventDefault();
+            var safeError = {
+              message: event.error.message || event.message || String(event.error),
+              name: event.error.name || "Error",
+              code: event.error.code,
+              stack: event.error.stack
+            };
+            console.error("Early Unhandled Error (Safe Log):", safeError);
+          }
         }
       });
     </script>

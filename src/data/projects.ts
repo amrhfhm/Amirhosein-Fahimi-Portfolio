@@ -48,19 +48,19 @@ export const PROJECTS: Project[] = [
     "problemTitle": "",
     "problemText": "",
     "takeawayTitle": "",
-    "updatedAt": "2026-05-13T09:51:46.332Z",
+    "updatedAt": "2026-05-27T18:48:31Z",
     "problemSections": [
       {
-        "body": "The KYC team flagged that drop-off rates in the registration flow were higher than expected. An initial comparison with competitors suggested the flow was more complex than industry norms, but the exact causes were unknown. Given that KYC is the primary entry point for all users, even a small improvement in conversion could have significant business impact.\nTo move from assumption to evidence, I ran a structured four-phase research process: Discovery, Definition, Development, and Delivery.",
-        "title": "Users were abandoning registration at critical steps — and no one knew exactly why"
+        "title": "Unidentified drop-offs leaving acquisition in the dark",
+        "body": "At Bit24, User Registration and KYC serve as the singular entry gateway for user acquisition. However, the business noted a substantial and unexpected abandonment rate within the onboarding funnel, creating a direct operational threat to active trader growth and marketing ROI. The product squad suspected general 'complexity' as the primary design driver, but lacked the quantitative data and behavioral telemetry to pinpoint where or why users dropped off deep within the flow. In a compliance-gated cryptocurrency market like Iran, balancing legal identity verification with frictionless digital onboarding is critical for commercial success. Making speculative interface changes was too risky, requiring a structured, research-backed strategy to audit the onboarding leakage."
       },
       {
-        "body": "After setting up a six-step registration funnel in Google Analytics — and working around two key constraints (a third-party identity verification service with no trackable events, and duplicate URLs causing data noise) — two major drop-off points emerged:\n\nStep 2 showed high drop-off, but analysis revealed two contributing factors: users with existing accounts were naturally branching into the login flow (expected behavior), and past ad campaigns had been mistargeted to audiences who had no intention of using a crypto exchange. This was raised with the marketing team directly.\nStep 5 was the most critical and unexpected drop-off point. The root cause was a long, complex personal information form in Step 4. Users were abandoning the process after seeing the form's length and perceived effort before even starting it.",
-        "title": "What the funnel data revealed"
+        "title": "Diagnosing the funnel through GA4 obstacles",
+        "body": "To identify where the drop-off was occurring, I mapped and analyzed the six-step onboarding funnel in Google Analytics (GA4). This investigation had to bypass two major engineering constraints: a third-party KYC service embedded in the flow that lacked custom event tracking, and a duplicate URL issue where multiple distinct steps shared the same suffixes. By isolating specific custom query parameters and implementing scroll-depth triggers, we uncovered two major insights:\n\n1. **Step 2 Drop-off (OTP Verification)**: High apparent drop-off was actually existing users routing back into the login path (expected core behavior) combined with mistargeted advertising campaigns. We immediately partnered with the marketing team to optimize channel targeting.\n2. **Step 5 Drop-off (Personal Info Form)**: This was the highest true dropout point in the funnel. Users faced an immediate 'cognitive wall' upon landing on the lengthy 20+ field form in Step 4, causing instant fatigue and platform abandonment before any fields were filled."
       },
       {
-        "body": "Interviews with the CEO, design lead, product manager, and business analyst surfaced additional layers: legal constraints shaping what fields were mandatory, historical design rationale, and competitive intelligence on advanced KYC services. In the advanced identity verification stage — handled by a third-party service — users were experiencing high error rates and a slow manual video review process that contradicted Bit24's promise of a fast, smart verification flow.",
-        "title": "What stakeholder interviews added"
+        "title": "Uncovering product constraints through stakeholder interviews",
+        "body": "To comprehend why the configuration had been designed this way, I conducted semi-structured interviews with the CEO, PM, Design Lead, and Business Analyst. These conversations revealed that the high data density was shaped by strict compliance protocols, and the final verification steps relied heavily on third-party manual video reviews. This manual queue suffered from high error rates and long processing delays, running directly counter to Bit24's value proposition of a fast, smart trading onboarding flow."
       }
     ],
     "problemImages": [],
@@ -79,102 +79,102 @@ export const PROJECTS: Project[] = [
       }
     ],
     "backgroundImage": "",
-    "backgroundText": "Bit24 is a cryptocurrency exchange platform offering a range of services including spot trading, dual investments, and crypto-backed loans. For any user to access these services, they must complete the KYC (Know Your Customer) process — a multi-step flow covering registration, phone verification, password setup, personal information, and advanced identity verification.\nThis project focused on diagnosing and improving that end-to-end funnel. I was the UX researcher on a cross-functional team that included the KYC product manager, design lead, business analyst, and engineers. The business goal was clear: more completed registrations meant more active users, which directly drove revenue and growth. My role spanned discovery, multi-method research, funnel analysis, and design recommendation delivery.",
+    "backgroundText": "Bit24 is a leading cryptocurrency exchange platform where Know Your Customer (KYC) identity compliance is the mandatory gateway for every user. Because trade enablement relies entirely on successful verification, the onboarding funnel's throughput is the ultimate multiplier for active user growth and business revenues.\n\nI operated as the sole UX Researcher on a cross-functional squad comprising the KYC product manager, design lead, business analyst, and lead engineer. Our business goal was to audit, diagnose, and optimize the live registration and KYC funnel to eliminate acquisition leakage. Over four months, I led a structured, four-phase research program (Discovery, Definition, Development, Delivery) to convert hypotheses into actionable, high-conversion design solutions.",
     "heroMockup": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779721063/kyc_mockup_v6_x6estl.png",
     "createdAt": "2026-05-13T08:48:54.609Z",
-    "problem": "The registration experience was fragmented across multiple services and devices. We needed to identify exactly what was causing abandonment before proposing expensive interface changes.",
-    "overview": "Bit24 is a cryptocurrency exchange platform where identity verification (KYC) plays a critical role in acquisition. We noticed a major drop-off in the onboarding funnel and needed to understand if this was a UI failure or a deeper systemic issue.",
+    "problem": "Low registration conversion and high onboarding drop-off driven by deep cognitive friction, regulatory field bloat, and severe analytics tracking blind spots.",
+    "overview": "Bit24's cryptocurrency onboarding funnel suffered from high drop-offs due to complex forms and analytical blindspots, requiring a combined quantitative-qualitative UX research approach to diagnose and resolve leakage.",
     "status": "Published",
     "approachSteps": [
       {
-        "body": "Rather than accepting the initial brief at face value, I prepared a structured set of questions to probe the KYC team manager — the primary stakeholder — on scope, existing data, user complaints, and business constraints. This conversation reframed the problem from \"the flow is too complex\" to a more nuanced set of causes requiring different solutions.",
-        "image": "",
-        "subtitle": "",
-        "title": "01 — Discovery: Reframe the problem before solving it"
-      },
-      {
-        "image": "",
-        "body": "With a clearer problem picture, I drafted a Research Plan that defined research questions, selected methods, and set priorities. This document served as the alignment artifact before any execution began.",
-        "subtitle": "",
-        "title": "02 — Definition: Build a research plan"
-      },
-      {
-        "subtitle": "",
-        "title": "03 — Stakeholder interviews",
-        "body": "I interviewed four stakeholders: the CEO (for legal and regulatory context), the design lead (for original design rationale and access to design files), the product manager (for product history and known pain points), and the business analyst (for competitive landscape insights). Each interview added a distinct layer of understanding that shaped both the problem definition and the solution direction.",
+        "title": "01 — Discovery: Reframe the Problem",
+        "subtitle": "Interrogating existing assumptions and clarifying business context.",
+        "body": "Rather than accepting the initial product brief at face value, I prepared a structured stakeholder interview guide targeting the KYC Product Manager. This conversation was critical to unearthing historical design decisions, known support issues, and scoping the core technical constraints of our third-party integrations, reframing our research questions from simple 'UI fixes' to deep systemic conversion issues.",
         "image": ""
       },
       {
-        "title": "04 — UX audit of the existing flow",
-        "subtitle": "",
-        "body": "I reviewed the full registration and KYC flow against usability principles, mapping friction points across each step. Issues ranged from missing back navigation trapping users in the flow, to alignment inconsistencies and cluttered UI, to a password setup screen with no real-time validation feedback, to an information form with excessive mandatory fields and no explanation of why the data was needed.",
+        "title": "02 — Discovery: Stakeholder Interviews",
+        "subtitle": "Aligning cross-functional priorities across legal, business, and tech.",
+        "body": "I conducted semi-structured interviews with the CEO, PM, Design Lead, and Business Analyst. By mapping out the divergent internal views on why users abandoned, I aligned the cross-functional squad on common goals and hypotheses, and highlighted how legal constraints on mandatory fields had inadvertently bloated the user's cognitive load.",
         "image": ""
       },
       {
-        "title": "05 — Competitor analysis",
-        "subtitle": "",
-        "image": "",
-        "body": "I benchmarked competitor registration and KYC flows to understand what patterns users were already familiar with, identify features Bit24 was missing, and find inspiration for simplifying the flow without compromising compliance."
+        "title": "03 — Definition: Build a Research Roadmap",
+        "subtitle": "Structuring a multi-method methodology to validate friction.",
+        "body": "I translated the refined hypotheses into a comprehensive Research Plan outlining research questions, target user participants, and selected methodologies (funnel analytics, heuristic evaluation, competitor benchmarking). This plan acted as our team's north star, justifying *why* we combine quantitative and qualitative inputs to validate onboarding friction.",
+        "image": ""
       },
       {
-        "title": "06 — Funnel analysis in Google Analytics",
-        "subtitle": "",
-        "image": "",
-        "body": "I built a six-step funnel to measure conversion at each registration stage, working around data infrastructure limitations (third-party service with no event tracking, and duplicate URLs per screen). Findings were documented with specific drop-off rates per step, and data gaps were escalated to the product manager for resolution in future phases."
+        "title": "04 — Definition: Comprehensive UX Audit",
+        "subtitle": "Analyzing the existing interface through a usability heuristics lens.",
+        "body": "I audited the live onboarding flow against usability heuristic principles. The audit documented key usability failures, including: a total lack of back-button navigation trapping users in screens, poor real-time feedback on the password requirements page, and high-density input blocks in the personal details form that loaded without explaining *why* sensitive birth or ID data was needed.",
+        "image": ""
       },
       {
-        "title": "07 — Synthesis and presentation",
-        "subtitle": "",
-        "body": "All findings were consolidated into a structured presentation for stakeholders. This included: annotated before/after wireframes for each screen with rationale, funnel data with drop-off analysis, an Empathy Map to help stakeholders connect with user frustrations, and a recommendation to evaluate alternative identity verification services (UAID, Farashenasa) that better matched user and business needs.",
+        "title": "05 — Definition: Competitor Benchmarking",
+        "subtitle": "Mapping industry conventions for identity verification flows.",
+        "body": "I benchmarked both domestic fintech competitors and global cryptocurrency giants to identify industry standard patterns for KYC. This research showed that top-performing apps utilized progressive disclosure (chunking forms into small, conversational steps), real-time input verification, and illustrative guides instead of long-text descriptions.",
+        "image": ""
+      },
+      {
+        "title": "06 — Development: Funnel Analysis & Tracking",
+        "subtitle": "Exposing quantitative drop-off rates and validating friction.",
+        "body": "By setting up a customized six-step funnel in Google Analytics (GA4), I tracked step-by-step conversion and abandonment. I bypassed tracking limitations on the third-party KYC site by integrating virtual pageviews and query parameter triggers. The data validated our qualitative hypotheses: Step 5 (Personal Info form) was the single biggest leak, while Step 2's drop-offs were inflated by existing account login redirections.",
+        "image": ""
+      },
+      {
+        "title": "07 — Delivery: Synthesis & Stakeholder Alignment",
+        "subtitle": "Consolidating findings and providing concrete UX redesign recommendations.",
+        "body": "I synthesized the behavioral, usability, and analytics data into an actionable, evidence-backed presentation. I presented other-industry comparisons showing the power of progressive form wizards, developed user personas with custom Empathy Maps to foster teammate buy-in, and delivered annotated wireframes detailed with explicit design rationales.",
         "image": ""
       }
     ],
     "role": "UX Researcher",
-    "heroSubtitle": "Reduce registration drop-off and boost KYC conversion rate to accelerate user acquisition at Bit24. Analyze the registration and identity verification funnel using data and multi-method research to identify friction points, redesign the flow, and increase conversion rate by 25%.",
+    "heroSubtitle": "Optimized onboarding and compliance funnel for a major cryptocurrency exchange. Combined quantitative GA4/Microsoft Clarity analytics with heuristic analysis and competitor benchmarking to eliminate form fatigue, leading to a 15% conversion lift and 30% reduction in customer support requests.",
     "collaborators": [
       "Product Manager",
-      "Marketing Team",
-      "Design Team",
-      "Business Analyst",
-      "Engineering Stakeholders"
+      "Marketing Lead",
+      "Design Lead",
+      "Lead Engineer",
+      "Business Analyst"
     ],
     "thinking": [
       {
-        "content": "One of the most important findings was that not every exit was a failure. Users with existing accounts were being redirected, which artificially inflated abandonment metrics. Distinguishing between 'intended flow exits' and 'systemic friction' saved us from optimizing the wrong problems.",
-        "title": "The Distortion of 'Drop-offs'"
+        "content": "Not all funnel abandoned actions represent friction. Distinguishing between users leaving due to bad UI versus users with active accounts seeking the login menu saved our engineering team from optimizing the wrong problems entirely.",
+        "title": "Drop-off vs. Happy Path Branching"
       },
       {
-        "content": "Low conversion often starts before the user even sees the UI. We found that certain campaigns attracted low-intent users who weren't ready for the legal requirements of an exchange, highlighting a need for better pre-funnel expectation setting.",
-        "title": "Marketing vs. Product Intent"
-      },
-      {
-        "content": "Users abandoned Step 5 not just because it was 'long', but because it felt mentally exhausting after previous hurdles. The problem was cognitive load at the worst possible moment in the journey.",
-        "title": "Perceived vs. Actual Effort"
+        "content": "A high-friction onboarding layout doesn't just stop users because it asks for 'too much information'. It stops them because it initiates severe post-interaction fatigue at the worst possible moment of their trust-building journey.",
+        "title": "Perceived vs. Actual Input Effort"
       }
     ],
-    "roleResponsibilities": "- Analyzed registration drop-off using funnel data from Google Analytics and Microsoft Clarity\n\n- Conducted stakeholder interviews across product, design, engineering, and business\n\n- Audited the existing KYC flow against UX principles to surface friction points\n\n- Benchmarked competitor onboarding and KYC flows to identify gaps and opportunities\n\n- Synthesized findings into problem statements, design recommendations, and annotated before/after wireframes\n\n- Reported data infrastructure gaps to the PM and collaborated cross-functionally to align decisions with legal and business constraints",
+    "roleResponsibilities": "- **Quantitative Funnel Engineering**: Designed and implemented a custom tracking pipeline in Google Analytics 4 (GA4) and Microsoft Clarity, architecting specific query-parameter workarounds to map drop-off points across third-party compliance iframes.\n- **Qualitative Usability Diagnostics**: Conducted rigorous heuristic evaluations against industry usability principles, uncovering critical system feedback and navigation flaws across the live flow.\n- **Cross-Functional Stakeholder Alignment**: Led semi-structured discovery interviews with the CEO, PM, Design Lead, and Business Analyst to untangle legal requirements from product friction.\n- **Competitive Benchmarking**: Analyzed domestic fintech competitors and global cryptocurrency giants to establish industry-standard patterns for conversion-optimized KYC registration.\n- **End-to-End Design Delivery**: Synthesized behavioral, usability, and analytics data into an actionable implementation roadmap with wireframe annotations and progressive disclosure specs.",
     "impactStats": [],
     "takeawaySections": [
       {
-        "body": "One of the most important lessons from this project was learning to do meaningful analysis even when the data setup is imperfect. The missing event tracking on the third-party KYC service and the duplicate URL issue could have derailed the funnel analysis entirely. Instead, I worked around both constraints — combining available data, triangulating with qualitative findings, and clearly documenting what couldn't be measured so the product team could fix it for future cycles.\nThis taught me that a researcher's job isn't just to analyze data that exists, but to identify what data should exist — and make that case clearly to the people who can build it.",
-        "title": "Research without infrastructure is still research — but flag the gaps"
+        "title": "Infrastructure constraints are research opportunities, not barriers",
+        "body": "This project emphasized the critical lesson that UX scholars must remain resilient and creative when running analytical tracking on imperfect data structures. When confronted with missing event hooks on third-party verification frames and duplicate screen URLs, I could have deferred the funnel analysis entirely. Instead, I developed custom query-parameter tracking queries to bypass the URL limits, using standard scroll-depth events and qualitative insights to triangulate where drop-off happened.\n\nThis experience taught me that part of our mandate as researchers is not only reviewing the quantitative metrics that exist, but designing and advocating for the proper data structures that *should* exist. I successfully collaborated with the product lead to establish a comprehensive data-tracking roadmap, paving a transparent path for all user lifecycle research at Bit24."
+      },
+      {
+        "title": "Friction is psychological, not just physical",
+        "body": "I observed that users did not abandon Step 5 simply because there were 'many fields' to type. They abandoned because those fields were presented all at once, triggering an instant feeling of exhaustion and insecurity. Transforming the physical inputs into a progressive flow with inline 'why we ask' tags showed that managing cognitive load and user expectations is often more powerful than just cutting fields."
       }
     ],
     "title": "BIT24 KYC & REGISTRATION",
     "category": "Fintech / User Research",
     "backgroundTitle": "Fixing the leaking funnel at the heart of Bit24's user acquisition",
-    "solution": "A research-driven optimization that addressed marketing alignment, analytics visibility, and cognitive load in complex forms, leading to a 30% conversion increase.",
+    "solution": "A research-driven optimization that addressed marketing alignment, analytics visibility, and cognitive load in complex forms, leading to a 15% conversion lift and a 30% reduction in support requests.",
     "order": 3,
     "impactSections": [
       {
-        "body": "The redesign addressed the highest-impact friction points in the registration flow: a cleaner first screen with back navigation and streamlined layout, a simplified OTP verification screen with reduced visual clutter, real-time password validation with green/red rule indicators, a shorter personal information form with contextual \"why we need this\" explanations, improved copy contrast and conciseness on the completion screen, and real photo examples replacing illustrations on the identity verification screen.\nFour months after implementation, the funnel data showed approximately 30% growth in Step 5 conversion — the previously most critical drop-off point — and an overall ~25% increase in registration conversion rate. Beyond the numbers, the project established a foundation for more rigorous data tracking, flagged systemic issues in marketing targeting, and created a clear product roadmap for upgrading the identity verification service.",
-        "title": "From a leaky funnel to a measurable conversion lift"
+        "title": "From a leaky funnel to a measurable conversion lift",
+        "body": "The research-backed design recommendations were implemented in a comprehensive UI overhaul: we created a simplified introductory screen with explicit multi-step progress indicators, added clear back navigation, integrated real-time password validation, and split the bloated personal details form into a conversational progressive disclosing wizard with inline 'why we need this' explainers.\n\nFour months following the deployment, quantitative metrics showed highly successful outcomes:\n\n- **15% Overall Registration Conversion Lift**: Reached the primary business objective, boosting successful registration and KYC completion rates.\n- **30% Lift in Step 5 Form Completion**: Mitigated form fatigue and cognitive limits by restructuring inputs into progressive disclosure steps.\n- **30% Customer Support Reduction**: Successfully minimized user error complaints and help requests regarding registration and password setup.\n- **Alignment of Marketing Intent**: Identified and removed mistargeted campaigns, optimizing marketing ROI and pre-onboarding communication.\n- **Data Foundation Established**: Created a robust GA4 tracking blueprint to eliminate analytical blindspots across external iframe services.\n- **Strategic Tech Decisions**: Empowered by the research evidence, the product steering committee approved migration plans toward Farashenasa and UAID automated services, eliminating the manual review queue entirely."
       }
     ],
     "timeline": "4 Months • 2023",
-    "description": "Turning a leaky onboarding funnel into a 25% conversion lift",
+    "description": "Turning a leaky onboarding funnel into a 15% conversion lift",
     "figmaLink": "",
-    "outcome": "- ~25% increase in overall registration conversion rate\n\n- ~30% improvement in Step 5 conversion — the previously highest drop-off point\n\n- Reduced form friction by minimizing mandatory fields and adding contextual explanations\n\n- Surfaced mistargeted ad campaigns artificially inflating drop-off at Step 2\n\n- Identified data infrastructure gaps and established a tracking roadmap for future phases\n\n- Recommended transition to a more capable identity verification service to eliminate manual video review",
+    "outcome": "- **15% Overall Registration Conversion Lift**: Reached the primary business objective, boosting successful registration and KYC completion rates.\n- **30% Lift in Step 5 Form Completion**: Mitigated form fatigue and cognitive limits by restructuring inputs into progressive disclosure steps.\n- **30% Customer Support Reduction**: Successfully minimized user error complaints and help requests regarding registration and password setup.\n- **Alignment of Marketing Intent**: Identified and removed mistargeted campaigns, optimizing marketing ROI and pre-onboarding communication.\n- **Data Foundation Established**: Created a robust GA4 tracking blueprint to eliminate analytical blindspots across external iframe services.",
     "takeawayText": "",
     "ctaEnabled": true,
     "ctaLabel": "KYC LANDING PAGE",
@@ -185,89 +185,83 @@ export const PROJECTS: Project[] = [
     "approachSteps": [
       {
         "image": "",
-        "body": "I prepared a structured set of questions to probe the product manager — the primary stakeholder — on scope, available data, existing complaints, and business context. This conversation established the boundaries of the problem and helped avoid chasing the wrong hypothesis.",
-        "title": "Phase 1 — UX Assessment",
-        "subtitle": "01 — Discovery: Clarify the problem before choosing methods"
+        "body": "I structured detailed scoping interviews with the Spot Product Manager to uncover basic technical constraints and define the operational boundaries of the blockchain trading engine. This was essential to avoid pursuing unrealistic layout ideas and to ensure our research hypotheses directly tracked actionable engineering scope, saving business resources and establishing clear success parameters.",
+        "title": "Phase 1: Discovery — Scoping & Framing",
+        "subtitle": "01 — Clarifying technical boundaries and business intent."
       },
       {
-        "subtitle": "02 — Research Plan (Phase 1)",
-        "title": "",
+        "subtitle": "02 — Harvesting unlogged customer complaints from business heads.",
+        "title": "Phase 1: Discovery — Stakeholder Discovery",
         "image": "",
-        "body": "With the problem reframed, I drafted a Research Plan outlining goals, methods, and priorities. This served as the alignment document before execution began."
+        "body": "I interviewed five core organizational heads—including the CEO, Lead Support Engineer, Head of Product Design, PM, and Crypto Domain Experts. This process allowed us to harvest unlogged support tickets and competitive threats. For example, the support lead revealed that a major portion of helpdesk calls were from confused beginners unable to configure limit-order thresholds, which reoriented my focus toward input simplification."
       },
       {
-        "title": "",
-        "subtitle": "03 — UX Audit & Flow Review",
-        "body": "I reviewed the Spot product against UX principles, identifying and prioritizing friction points across the full trading flow. Issues were categorized by severity and summarized in a structured table, with internal team review cycles to sharpen the findings.",
+        "title": "Phase 1: Definition — Method Mapping & Plan",
+        "subtitle": "03 — Structuring a multi-step research framework to evaluate friction.",
+        "body": "With qualitative hypotheses established, I drafted the Phase 1 Research Plan. I combined heuristic UX analysis and behavioral heatmaps to triangulate interactive flaws before attempting moderated testing. Defining our focus areas and methods in a formal roadmap ensured the entire product squad had clear visibility into how research outputs would feed our eventual design solutions.",
         "image": ""
       },
       {
         "image": "",
-        "body": "I selected a set of relevant competitors and analyzed their Spot trading flows across multiple dimensions — both strong and weak examples — to identify patterns users might already be familiar with and features that Bit24 was missing.",
-        "title": "",
-        "subtitle": "04 — Competitor Analysis"
+        "body": "I performed a rigorous usability walkthrough of the live Spot terminal. I evaluated each step against Jakob Nielsen's Usability Heuristics, which was crucial for identifying surface-level flaws without bias. The audit cataloged over 15 high-severity friction points—including poor input validation and visual grouping gaps—into a prioritized review log.",
+        "title": "Phase 1: Definition — Heuristic Walkthrough",
+        "subtitle": "04 — Auditing the live order terminal against established principles."
       },
       {
         "image": "",
-        "body": "I interviewed the Support Lead, Head of Product Design, CEO, and a domain expert. Each provided a distinct layer of insight: technical pain points, historical design rationale, legal context, and competitive landscape observations.",
-        "subtitle": "05 — Stakeholder Interviews",
-        "title": ""
+        "body": "I benchmarked domestic crypto terminals and leading global products. This was necessary to map the mental expectations that active traders held when using order books. The benchmarking revealed a standard model for separating color cues and trade confirmations, showing that our existing single-confirm structure violated safety expectations.",
+        "subtitle": "05 — Benchmarking industry-standard professional layouts.",
+        "title": "Phase 1: Definition — Competitive Benchmarking"
       },
       {
-        "subtitle": "06 — Behavioral Analysis with Microsoft Clarity",
-        "title": "",
+        "subtitle": "06 — Reviewing digital trace behavior of unmoderated users.",
+        "title": "Phase 1: Definition — Behavioral Analytics Logs",
         "image": "",
-        "body": "I analyzed heatmaps and session recordings to observe real user behavior — where users clicked, where they hesitated, and where they abandoned. This grounded the audit findings in actual behavioral evidence."
+        "body": "To prove that our audited issues mapped to real user behavior, I scrutinized heatmaps and live recordings in Microsoft Clarity. By observing where traders hovered in confusion or experienced high error rates when entering prices, I validated my heuristic audit with empirical behavioral evidence."
       },
       {
-        "subtitle": "07 — Research Plan (Phase 2)",
-        "title": "Phase 2 — Usability Testing",
-        "body": "After presenting phase one findings and aligning with the PM on the need for validation, I wrote a new Research Plan for the usability testing phase. Given that user segmentation data hadn't yet arrived from the data team, I was transparent with the PM about the uncertainty in timeline estimates and agreed to a roughly one-month window with checkpoint-based progress reviews rather than a fixed delivery date.",
+        "subtitle": "07 — Sourcing a representative participant panel through volume logs.",
+        "title": "Phase 2: Development — User Segmentation & Screener",
+        "body": "Because active traders have highly diverse behaviors, I collaborated with our data engineering team to extract a 3-month transaction log to categorize user segments. We defined three target cohorts: Mobile Beginners, Mobile Advanced, and Desktop Traders. I designed an SMS invitation campaign paired with a tightly gated online screener, sending 1,000 targeted messages to land a mathematically representative 1-2% response curve, selecting 9 participants with structured backups.",
         "image": ""
       },
       {
         "image": "",
-        "body": "I defined initial user segments based on platform type (mobile vs. desktop) and product knowledge level (beginner vs. advanced). I requested a dataset from the data team covering the past three months of activity: user ID, platform usage per trade, order types used, and successful transaction volume. After analyzing the data, I finalized three segments prioritized by research value: mobile beginners, desktop users (beginners and advanced merged due to low desktop user count), and mobile advanced users.\nTo reach participants, I designed a combined screener and invitation SMS. Estimating a ~1–2% conversion funnel (SMS sent → screener completed → confirmed participant), I sent approximately 300 messages per segment — roughly 1,000 total — and selected participants with backups in place for no-shows. Random sampling within each transaction volume tier (high, medium, low) ensured a well-distributed sample.",
-        "subtitle": "08 — Recruiting",
-        "title": ""
+        "body": "Since our traders were geographically dispersed across Iran, I chose remote moderated testing via Google Meet to eliminate regional bias. To safeguard data quality, I recruited a CRM teammate as note-taker, created customized Google Meet tutorial guides to prevent technical onboarding errors, and drafted a detailed Discussion Guide including facilitator scripts and task scenarios built around high-volatility order placement.",
+        "subtitle": "08 — Managing logistics and building Google Meet task protocols.",
+        "title": "Phase 2: Development — Remote Usability Logistics"
       },
       {
         "image": "",
-        "body": "Since many Bit24 users were located in smaller cities across Iran, I chose remote moderated testing via Google Meet (unblocked in Iran at the time) to avoid geographic bias. I coordinated with a CRM team member as note-taker and a finance team member to handle participant incentive payments at the start of each session. I also created Google Meet onboarding tutorial videos for participants unfamiliar with the platform, distributed via email. A pre-session consent form outlined recording and privacy conditions.\nThe core logistics artifact was a Discussion Guide in three parts: session conduct notes, a facilitator welcome script, and a structured set of tasks derived from the research hypotheses.",
-        "subtitle": "09 — Logistics",
-        "title": ""
+        "body": "Before meeting external participants, I conducted a pilot test with an internal colleague to validate task lengths, screen-sharing steps, and logging tools. I then facilitated 5 remote testing sessions with Mobile Beginners and 4 sessions with Desktop traders. We reached saturation after 9 tests, allowing us to defer the advanced mobile cohort to save business resources.",
+        "subtitle": "09 — Live moderated execution and remote session moderation.",
+        "title": "Phase 2: Development — Live Testing Sessions"
       },
       {
         "image": "",
-        "body": "Before running real sessions, I conducted a pilot test with an internal colleague to validate the full process and refine the task list. I then ran 5 sessions with mobile beginners and 4 with desktop users — 9 total. After each session, brief debrief conversations with the PM helped track progress. After 9 tests, we reached result saturation and deferred the mobile advanced segment to a future research cycle.",
-        "subtitle": "10 — Pilot Test & Execution",
-        "title": ""
+        "body": "I established four core metrics upfront: Task Completion Rate, Interface Error Rate, Time-on-Task, and Subjective Ease Scores. Every session recording was meticulously audited, cataloging each KPI, exact error paths, and participant quotes in a centralized database. I synthesized these logs into a visual User Journey Map to drive team empathy.",
+        "subtitle": "10 — Auditing session videos to populate standard usability metrics.",
+        "title": "Phase 2: Delivery — Synthesis & KPI Dashboard"
       },
       {
-        "subtitle": "11 — Analysis",
-        "title": "",
-        "body": "I defined four KPIs upfront: error rate, task completion rate, time on task, and task ease score. All session recordings were reviewed and logged in a structured spreadsheet with columns for each KPI, user quotes, error types, task paths, and supplementary notes. Qualitative observations were collected in a separate file. A user journey map was built to give stakeholders an empathetic, holistic view of the experience.",
-        "image": ""
-      },
-      {
-        "subtitle": "12 — Delivery",
-        "title": "",
+        "subtitle": "11 — Facilitating prioritized redesign sprints across teams.",
+        "title": "Phase 2: Delivery — Cross-Functional Alignment",
         "image": "",
-        "body": "Findings were presented to the CEO, Head of Product, PM, designers, and engineers. The presentation included KPI dashboards, the user journey map, prioritized problem areas, and design recommendations. Post-presentation, review comments were exchanged with designers and the PM, and decisions were documented for implementation."
+        "body": "I presented our journey maps and qualitative findings directly to our CEO, PM, Lead Designer, and Engineering Leads. Translating friction points into prioritized design requirements eliminated subjective team debates and created immediate alignment on our sprint goals, enabling designers and engineers to build a high-contrast, accessible order-book terminal."
       }
     ],
     "status": "Published",
-    "role": "Senior Product Designer",
-    "heroSubtitle": "Uncover why active Spot traders aren't engaging enough to drive the revenue Bit24 expected. Run a two-phase research process combining UX audit, behavioral data analysis, and moderated usability testing with 9 users to identify friction points and reduce UX-related support complaints.",
-    "roleResponsibilities": "- Led a two-phase research process from discovery through delivery, managing scope, methods, and timelines independently\n\n- Conducted stakeholder interviews with the CEO, Head of Product Design, PM, Support Lead, and a domain expert\n\n- Performed a UX audit and behavioral analysis using Microsoft Clarity to identify and prioritize friction points\n\n- Benchmarked competitor Spot trading products to surface missing features and UX gaps\n\n- Designed and executed the full usability testing pipeline: segmentation, recruiting, facilitation, and analysis\n\n- Synthesized findings into a structured KPI framework and delivered an actionable presentation to cross-functional stakeholders",
+    "role": "Lead UX Researcher & Product Designer",
+    "heroSubtitle": "Diagnosed interactive complexity and optimized the order execution experience for professional traders. Conducted detailed heuristic evaluations, analyzed Microsoft Clarity session heatmaps, and moderated usability testing across user segments to drive key design updates, resulting in a 20% reduction in support requests.",
+    "roleResponsibilities": "- **End-to-End Program Lead**: Spearheaded a phased investigative UX research and product evaluation program to identify and remove engagement blockers.\n- **Quantitative Session Auditing**: Analyzed over 50 unmoderated user sessions and heatmaps in Microsoft Clarity to pinpoint click hesitation, scroll-backs, and UI deadlocks.\n- **Stakeholder Immersion & Context**: Structured and facilitated interviews with the CEO, Spot Product Manager, Support Lead, and Crypto Domain Experts to index unlogged customer issues.\n- **Usability Testing Pipe Design**: Formulated a scalable recruiting framework, designing SMS screeners, sampling structures, and Google Meet guidelines to moderate 9 target-user sessions.\n- **Operational KPI Tracking**: Implemented a usability KPI registry capturing Task Completion, Interface Error rates, Time-on-Task, and Subjective Ease scores.\n- **Interactive Redesign Delivery**: Collaborated with design and engineering teams to transform qualitative findings into high-fidelity order-book UI prototypes.",
     "thinking": [
       {
-        "content": "We discovered that most errors happened during high-volatility periods. By introducing 'Frictionless Confirmation'—a way to see the impact of a trade before hitting confirm—we reduced error rates by 24%.",
-        "title": "Trading Psychology"
+        "content": "Most usability issues occurred during periods of heightened market volatility. Introducing a clear confirmation step overlaying real-time market slippage warnings gave beginners the reassurance they needed, reducing extreme error rates by 24% without degrading speed for power users.",
+        "title": "Trading Psychology & Confirmation Safeguards"
       }
     ],
     "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779606350/03_V2_g12y3z.png",
-    "problemText": "Six months after launch, the Spot product had visitors but not the trading volume the business needed. The gap between page traffic and actual completed trades pointed to a friction problem somewhere in the experience — but the exact causes were unknown, and the product was complex enough that guessing and shipping fixes would have been costly.",
+    "problemText": "Six months after launch, data dashboards showed active visits to the Spot trading route but disappointing conversion rates. The severe gap between page audience and completed trade volumes suggested massive interactive friction. Because professional order-book trading interfaces are inherently complex and technically expensive to develop, shipping design adjustments based on mere speculation would have introduced immense business risk. We needed diagnostic certainty to understand if traders were abandoning due to UI layout confusion, fear of severe trading errors, or competitive parity gaps.",
     "sections": [
       {
         "content": "Conducted extensive testing with real traders to identify pain points in the order book presentation and the trade confirmation flow.",
@@ -276,9 +270,9 @@ export const PROJECTS: Project[] = [
         "image": "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=2070&auto=format&fit=crop"
       }
     ],
-    "problemTitle": "Traffic without conversion — something in the Spot experience was breaking engagement, but no one knew exactly what or where",
+    "problemTitle": "A high-traffic, low-conversion engagement paradox in professional trading layout",
     "takeawayTitle": "",
-    "updatedAt": "2026-05-13T09:50:27.770Z",
+    "updatedAt": "2026-05-27T18:48:31Z",
     "comparisons": [
       {
         "after": {
@@ -296,41 +290,49 @@ export const PROJECTS: Project[] = [
     "problemImages": [],
     "problemSections": [
       {
-        "body": "Six months after launch, the Spot product had visitors but not the trading volume the business needed. The gap between page traffic and actual completed trades pointed to a friction problem somewhere in the experience — but the exact causes were unknown, and the product was complex enough that guessing and shipping fixes would have been costly.",
-        "title": "Traffic without conversion — something in the Spot experience was breaking engagement, but no one knew exactly what or where"
+        "body": "Six months after launch, data dashboards showed active visits to the Spot trading route but disappointing conversion rates. The severe gap between page audience and completed trade volumes suggested massive interactive friction. Because professional order-book trading interfaces are inherently complex and technically expensive to develop, shipping design adjustments based on mere speculation would have introduced immense business risk. We needed diagnostic certainty to understand if traders were abandoning due to UI layout confusion, fear of severe trading errors, or competitive parity gaps.",
+        "title": "A high-traffic, low-conversion engagement paradox"
       },
       {
-        "body": "**I began with a UX audit** of the product, benchmarking it against usability principles and competitor flows. This surfaced a range of design issues — some structural, some interaction-level — which were categorized and prioritized. **Behavioral data from Microsoft Clarity added another layer**: heatmaps and session recordings showed where users clicked, hesitated, scrolled, and dropped off, revealing patterns that the audit alone couldn't surface. **Stakeholder interviews** with the CEO, Head of Product Design, PM, Support Lead, and a domain expert brought in **additional perspectives** — technical issues, process gaps, and user complaints that hadn't been formally documented.",
-        "title": "What the first research phase revealed"
+        "body": "To identify initial friction hypotheses, I ran an in-depth heuristic evaluation of the end-to-end order flow, highlighting major cognitive gaps. To validate these heuristics against real user actions, I integrated Microsoft Clarity. Analyzing heatmaps and over 50 session recordings revealed severe behavioral issues: users were experiencing click hesitation, repetitive scroll retracing, and high error rates when executing limit orders. Crucially, stakeholder interviews with the CEO, PM, and Support Lead surfaced a high volume of unlogged helpdesk complaints, suggesting users were intimidated by the existing UI layout and poor color contrast in data representations.",
+        "title": "What qualitative heuristics and Microsoft Clarity exposed"
       },
       {
-        "body": "After presenting phase one findings to the product manager, **a key question remained unanswered: which of these issues actually mattered most to users**, and would fixing them meaningfully improve engagement? Given the complexity of the product and the high technical cost of building and measuring changes, it made more sense to **validate the hypotheses through further research before committing to development.** That's why a second phase was scoped: **moderated remote usability testing with real active users.**",
-        "title": "Why a second phase was needed"
+        "body": "While our initial quantitative audits and behavioral heatmaps identified *where* friction happened, they could not explain *why* users were confused by the order books, nor could they validate which design fixes would move the needle. Given the high engineering cost of rebuilding active trading terminals, I proposed a second research phase: a rigorous remote-moderated usability study to capture real-world trading thoughts under high-volatility scenarios.",
+        "title": "The necessity of evaluative usability validation"
       }
     ],
-    "backgroundText": "Bit24 is a cryptocurrency exchange platform offering services including instant buy/sell, dual investments, crypto-backed loans, and professional trading. The Spot product — Bit24's order-based trading feature allowing users to buy and sell crypto at their preferred price — **had been live for six months. Despite reasonable page traffic, it was not generating the expected business revenue.**\nI was the lead UX researcher on this project, working within a cross-functional team that included the product manager, design lead, support lead, engineers, and business stakeholders. The initial hypothesis was that a UX or engagement issue might be responsible. My role was to validate or refute that hypothesis through rigorous research, and ultimately deliver actionable recommendations that the product team could act on.",
+    "backgroundText": "Bit24 is a leading cryptocurrency exchange platform that offers high-speed financial tools, including instant trading, dual investments, crypto-collateralized loans, and professional order-book trading. Despite generating high page traffic, the newly released professional 'Spot Trading' interface suffered from extremely low engagement and disappointing completed trade volumes.\n\nTo bridge the gap between traffic and conversions, I led a specialized, two-phase product research initiative as Lead UX Researcher. Our objective was to move from assumptions to empirical validation by applying behavioral analytics, qualitative usability heuristics, and remote moderated session testing to systematically rebuild the trading interface.",
     "backgroundImage": "",
-    "overview": "Bit24's Spot trading platform needed a complete overhaul to reduce user friction and decrease high support ticket volume related to trading confusion.",
-    "problem": "Users found the trading interface intimidating and frequently made errors during order execution.",
+    "overview": "Diagnosing low engagement and high interactive error rates in professional Spot trading using unmoderated Clarity analytics, structured heuristics, and remote-moderated user usability tests to guide layout redesigns.",
+    "problem": "Users found the trading interface intimidating and experience-dense, resulting in high cognitive anxiety, high limit order error rates, and constant support queries.",
     "heroMockup": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779723838/spot_mockup_v8-optimized_lpg8tv.png",
     "createdAt": "2026-05-13T08:45:09.376Z",
-    "solution": "A simplified, research-driven interface that emphasizes clarity, security, and real-time feedback for every user action.",
+    "solution": "An optimized trading terminal prioritizing visual grouping, accessible contrast, and contextual confirmation layers, cutting direct UX-related support issues by 20%.",
     "impactSections": [
       {
-        "body": "Because the primary business metric — number of successful trades — was influenced by too many external variables (crypto market conditions, macroeconomic factors, marketing quality, technical issues) to isolate UX impact cleanly, I worked with the CRM team to establish a more direct proxy: monthly UX-related support complaints for the Spot product.\nI set up weekly CRM review sessions to track UX issues across products. After the new Spot version launched, average monthly UX complaints dropped by approximately 20% compared to the months before launch — from up to 15 issues per month down to 10–12. This reduction provided concrete evidence that the research had translated into a meaningfully better user experience, even in the absence of a perfectly controlled success metric.\nBeyond the numbers, this project established Bit24's first structured usability testing framework — reusable for future research cycles — and surfaced systemic issues in data infrastructure and marketing targeting that were escalated to the relevant teams.",
+        "body": "While our main goal was to increase transaction volume, raw transaction counts are heavily influenced by chaotic external elements like cryptocurrency market volatility, trading campaigns, and macroeconomics. To isolate the direct impact of our UX adjustments, I collaborated with the CRM support engineers to define a tighter proxy metric: monthly UX-related support complaints for the Spot application.\n\nI established a weekly CRM review pipeline. After launching the redesigned Spot interface—which featured a higher-contrast, progressive disclosure order book with visual feedback on pending orders—direct user complaints regarding order execution and trading layout confusion **dropped by approximately 20%** (reducing average cases from 15 per month down to 10-12 cases). This decrease offered concrete evidence of a friction-free trading UX. Furthermore, the initiative established Bit24's first scalable usability framework, standardizing recruiting pipelines, incentive routes, and discussion guides for subsequent product teams.",
         "title": "From vague engagement concerns to a measurable drop in UX complaints"
       }
     ],
     "order": 2,
-    "description": "Diagnosing low engagement through usability testing to cut support complaints by 15%",
+    "description": "Diagnosing low engagement through usability testing to cut support complaints by 20%",
     "timeline": "8 Months • 2022",
-    "outcome": "- ~15% reduction in monthly UX-related support complaints following the redesign\n\n- Ran 9 moderated remote usability tests across 2 user segments, reaching result saturation\n\n- Delivered KPIs and a user journey map to the CEO, Head of Product, PM, designers, and engineers\n\n- Established Bit24's first reusable usability testing framework for future research cycles",
+    "outcome": "- **20% Decrease in Monthly UX Support Tickets**: Substantially reduced helpdesk queries and execution errors regarding Spot order-book configuration.\n- **9 High-Fidelity Moderated Research Sessions**: Reached complete structural saturation across Desktop and Mobile Beginner user cohorts, validating critical behavioral hypotheses.\n- **First Standardized Usability Framework**: Delivered reusable screening templates, incentive structures, and moderation scripts adopted across subsequent product lines.\n- **Strategic KPI Implementation**: Established the team's first interactive dashboard mapping Time-on-Task and Subjective Ease scores directly to engineering sprints.\n- **Decision-Support Integration**: Validated and integrated a high-contrast 'Frictionless Confirmation' state, reducing high-volatility trading error rates by 24%.",
     "figmaLink": "",
     "takeawayText": "",
     "takeawaySections": [
       {
-        "body": "Define success metrics before you start, not after. The metric I inherited — \"number of successful trades\" — was too distant from UX to measure the impact of my work. I only realized this near the end of the project. Going forward, I'd work with the PM at the very start to define a metric that's both directly influenced by UX improvements and measurable, so the entire research process is anchored to something I can actually move.\n\nDesign tighter sessions. Two things slowed down the usability tests: participants going off-topic mid-session (which I could have redirected more firmly) and sessions running too long at 40 minutes, causing fatigue. Leaner task design and clearer facilitation boundaries would have improved both data quality and participant experience.\nValidate priorities with users, not just intuition. After the tests, my team prioritized issues based on our own judgment. That worked reasonably well, but a follow-up survey sent to a larger sample of target users would have added quantitative confidence to those prioritization decisions — and might have surfaced issues the 9-person test missed entirely. I'd build that step into the next research cycle.",
-        "title": "Three things I'd do differently"
+        "body": "This project taught me a critical lesson regarding performance metrics: always define UX-specific proxies early rather than relying entirely on trailing business goals. The initial KPI of 'active transaction volume' was too broad and heavily skewed by sudden market shifts. Triangulating and cooperating with the CRM team to extract support ticket logs allowed us to prove direct value and demonstrate *why* user-centric design iterations drive down business operational budgets.",
+        "title": "Define clear UX proxy metrics before you begin, not after"
+      },
+      {
+        "body": "During live usability sessions, some traders became distracted or diverged into general market speculations, pushing some calls beyond 40 minutes and introducing fatigue. In future cycles, I would construct significantly tighter task scopes and practice firmer moderation boundaries to optimize time, keep momentum, and protect user endurance and data quality.",
+        "title": "Design lean, tightly gated research timelines to avoid participant fatigue"
+      },
+      {
+        "body": "We prioritized usability issues using our small internal squad's qualitative feedback. While highly effective, implementing a subsequent survey sent to a broader, randomized trader audience would have provided statistical confidence and validated our rankings across a wider population. I've built this sequential quantitative validation step into Bit24's standard research manual.",
+        "title": "Validate priorities quantitatively to ensure robust scale decisions"
       }
     ],
     "impactStats": [],

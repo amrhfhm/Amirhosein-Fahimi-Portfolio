@@ -55,7 +55,7 @@ export default function CaseStudyKYC() {
             Back to Home
           </Link>
 
-          <div className="grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-24 items-center">
+          <div className="grid lg:grid-cols-[1fr_1.25fr] gap-12 lg:gap-20 items-center">
             <div>
               <div className={`inline-block px-3 py-1 rounded-full text-[12px] font-bold tracking-widest ${getAccent(project.category)} mb-6`}>
                 {project.category.toUpperCase()}
@@ -102,7 +102,7 @@ export default function CaseStudyKYC() {
                     <img
                       src={project.heroMockup}
                       alt="Mockup"
-                      className="w-full lg:w-[155%] xl:w-[165%] max-w-none h-auto drop-shadow-2xl lg:-ml-8"
+                      className="w-full lg:w-[175%] xl:w-[190%] max-w-none h-auto drop-shadow-2xl lg:-ml-12 xl:-ml-16"
                       referrerPolicy="no-referrer"
                     />
                   )}

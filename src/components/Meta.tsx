@@ -32,9 +32,11 @@ export default function Meta() {
               document.head.appendChild(link);
            }
            link.href = data.favicon;
-        }
-        */
+         }
+         */
       }
+    }, (error) => {
+      console.error("Meta settings fetch error:", error instanceof Error ? error.message : String(error));
     });
 
     return () => unsub();
