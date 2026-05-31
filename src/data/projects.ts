@@ -184,70 +184,52 @@ export const PROJECTS: Project[] = [
     "id": "bit24-spot",
     "approachSteps": [
       {
-        "image": "",
-        "body": "I structured detailed scoping interviews with the Spot Product Manager to uncover basic technical constraints and define the operational boundaries of the blockchain trading engine. This was essential to avoid pursuing unrealistic layout ideas and to ensure our research hypotheses directly tracked actionable engineering scope, saving business resources and establishing clear success parameters.",
-        "title": "Phase 1: Discovery — Scoping & Framing",
-        "subtitle": "01 — Clarifying technical boundaries and business intent."
+        "title": "",
+        "subtitle": "End-to-end research workflow for Bit24 Spot — from discovery and scoping to usability testing and delivery",
+        "body": "",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780222601/OVERVIEW_V1_vc7iqk.png"
       },
       {
-        "subtitle": "02 — Harvesting unlogged customer complaints from business heads.",
-        "title": "Phase 1: Discovery — Stakeholder Discovery",
-        "image": "",
-        "body": "I interviewed five core organizational heads—including the CEO, Lead Support Engineer, Head of Product Design, PM, and Crypto Domain Experts. This process allowed us to harvest unlogged support tickets and competitive threats. For example, the support lead revealed that a major portion of helpdesk calls were from confused beginners unable to configure limit-order thresholds, which reoriented my focus toward input simplification."
+        "title": "Phase 1: Discovery — Scoping & Framing",
+        "subtitle": "Initial scoping questions for the Spot PM — covering problem scope, available data, market context, and early hypotheses",
+        "body": "01 — Clarifying technical boundaries and business intent.\n\nI structured detailed scoping interviews with the Spot Product Manager to uncover basic technical constraints and define the operational boundaries of the trading engine. This was essential to avoid pursuing unrealistic layout ideas and to ensure our research hypotheses directly tracked actionable engineering scope, saving business resources and establishing clear success parameters.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780209411/PM_INTERVIEW_jjgtrk.png"
       },
       {
         "title": "Phase 1: Definition — Method Mapping & Plan",
-        "subtitle": "03 — Structuring a multi-step research framework to evaluate friction.",
-        "body": "With qualitative hypotheses established, I drafted the Phase 1 Research Plan. I combined heuristic UX analysis and behavioral heatmaps to triangulate interactive flaws before attempting moderated testing. Defining our focus areas and methods in a formal roadmap ensured the entire product squad had clear visibility into how research outputs would feed our eventual design solutions.",
-        "image": ""
+        "subtitle": "The Phase 1 Research Plan",
+        "body": "02 — Structuring a multi-step research framework to evaluate friction.\n\nWith qualitative hypotheses established, I drafted the Phase 1 Research Plan. I combined heuristic UX analysis and behavioral heatmaps to triangulate interactive flaws before attempting moderated testing. Defining our focus areas and methods in a formal roadmap ensured the entire product squad had clear visibility into how research outputs would feed our eventual design solutions.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780209584/RP1_hbelcm.png"
       },
       {
-        "image": "",
-        "body": "I performed a rigorous usability walkthrough of the live Spot terminal. I evaluated each step against Jakob Nielsen's Usability Heuristics, which was crucial for identifying surface-level flaws without bias. The audit cataloged over 15 high-severity friction points—including poor input validation and visual grouping gaps—into a prioritized review log.",
-        "title": "Phase 1: Definition — Heuristic Walkthrough",
-        "subtitle": "04 — Auditing the live order terminal against established principles."
+        "title": "Phase 1: Development — Executing Research & Synthesizing Findings",
+        "subtitle": "",
+        "body": "03 — Running the UX Assessment.\n\nAs outlined in the research plan, we began the execution phase with a specialized UX Assessment of the product.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780210019/UX_Assessment_dow9g9.png"
       },
       {
-        "image": "",
-        "body": "I benchmarked domestic crypto terminals and leading global products. This was necessary to map the mental expectations that active traders held when using order books. The benchmarking revealed a standard model for separating color cues and trade confirmations, showing that our existing single-confirm structure violated safety expectations.",
-        "subtitle": "05 — Benchmarking industry-standard professional layouts.",
-        "title": "Phase 1: Definition — Competitive Benchmarking"
+        "title": "Phase 1: Development — Heuristic Walkthrough",
+        "subtitle": "Heuristic evaluation of the live Spot terminal — 15+ friction points mapped against Nielsen's principles",
+        "body": "04 — Auditing the live order terminal against established principles.\n\nI performed a rigorous usability walkthrough of the live Spot terminal. I evaluated each step against Jakob Nielsen's Usability Heuristics, which was crucial for identifying surface-level flaws without bias. The audit cataloged over 15 high-severity friction points — including poor input validation and visual grouping gaps — into a prioritized review log.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780210510/01_yqlzww.png"
       },
       {
-        "subtitle": "06 — Reviewing digital trace behavior of unmoderated users.",
-        "title": "Phase 1: Definition — Behavioral Analytics Logs",
-        "image": "",
-        "body": "To prove that our audited issues mapped to real user behavior, I scrutinized heatmaps and live recordings in Microsoft Clarity. By observing where traders hovered in confusion or experienced high error rates when entering prices, I validated my heuristic audit with empirical behavioral evidence."
+        "title": "Phase 1: Development — Competitive Benchmarking",
+        "subtitle": "Competitor analysis — domestic and global crypto terminals benchmarked",
+        "body": "05 — Benchmarking industry-standard professional layouts.\n\nI benchmarked domestic crypto terminals and leading global products. This was necessary to map the mental expectations that active traders held when using order books. The benchmarking revealed a standard model for separating color cues and trade confirmations, showing that our existing single-confirm structure violated safety expectations.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780210519/02_bgzplq.png"
       },
       {
-        "subtitle": "07 — Sourcing a representative participant panel through volume logs.",
-        "title": "Phase 2: Development — User Segmentation & Screener",
-        "body": "Because active traders have highly diverse behaviors, I collaborated with our data engineering team to extract a 3-month transaction log to categorize user segments. We defined three target cohorts: Mobile Beginners, Mobile Advanced, and Desktop Traders. I designed an SMS invitation campaign paired with a tightly gated online screener, sending 1,000 targeted messages to land a mathematically representative 1-2% response curve, selecting 9 participants with structured backups.",
-        "image": ""
+        "title": "Phase 1: Development — Stakeholder Discovery",
+        "subtitle": "Stakeholder interviews — unlogged complaints and competitive threats surfaced from five organizational heads",
+        "body": "06 — Harvesting unlogged customer complaints from business heads.\n\nI interviewed five core organizational heads — including the CEO, Lead Support Engineer, Head of Product Design, PM, and Crypto Domain Experts. This process allowed us to harvest unlogged support tickets and competitive threats. For example, the support lead revealed that a major portion of helpdesk calls were from confused beginners unable to configure limit-order thresholds, which reoriented my focus toward input simplification.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780210528/03_zktdbq.png"
       },
       {
-        "image": "",
-        "body": "Since our traders were geographically dispersed across Iran, I chose remote moderated testing via Google Meet to eliminate regional bias. To safeguard data quality, I recruited a CRM teammate as note-taker, created customized Google Meet tutorial guides to prevent technical onboarding errors, and drafted a detailed Discussion Guide including facilitator scripts and task scenarios built around high-volatility order placement.",
-        "subtitle": "08 — Managing logistics and building Google Meet task protocols.",
-        "title": "Phase 2: Development — Remote Usability Logistics"
-      },
-      {
-        "image": "",
-        "body": "Before meeting external participants, I conducted a pilot test with an internal colleague to validate task lengths, screen-sharing steps, and logging tools. I then facilitated 5 remote testing sessions with Mobile Beginners and 4 sessions with Desktop traders. We reached saturation after 9 tests, allowing us to defer the advanced mobile cohort to save business resources.",
-        "subtitle": "09 — Live moderated execution and remote session moderation.",
-        "title": "Phase 2: Development — Live Testing Sessions"
-      },
-      {
-        "image": "",
-        "body": "I established four core metrics upfront: Task Completion Rate, Interface Error Rate, Time-on-Task, and Subjective Ease Scores. Every session recording was meticulously audited, cataloging each KPI, exact error paths, and participant quotes in a centralized database. I synthesized these logs into a visual User Journey Map to drive team empathy.",
-        "subtitle": "10 — Auditing session videos to populate standard usability metrics.",
-        "title": "Phase 2: Delivery — Synthesis & KPI Dashboard"
-      },
-      {
-        "subtitle": "11 — Facilitating prioritized redesign sprints across teams.",
-        "title": "Phase 2: Delivery — Cross-Functional Alignment",
-        "image": "",
-        "body": "I presented our journey maps and qualitative findings directly to our CEO, PM, Lead Designer, and Engineering Leads. Translating friction points into prioritized design requirements eliminated subjective team debates and created immediate alignment on our sprint goals, enabling designers and engineers to build a high-contrast, accessible order-book terminal."
+        "title": "Phase 1: Development — Behavioral Analytics",
+        "subtitle": "Microsoft Clarity heatmaps and session recordings — behavioral evidence validating the heuristic audit findings",
+        "body": "07 — Reviewing digital trace behavior of unmoderated users.\n\nTo prove that our audited issues mapped to real user behavior, I scrutinized heatmaps and live recordings in Microsoft Clarity. By observing where traders hovered in confusion or experienced high error rates when entering prices, I validated my heuristic audit with empirical behavioral evidence.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780210537/04_wkvu58.png"
       }
     ],
     "status": "Published",

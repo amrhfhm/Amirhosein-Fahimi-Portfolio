@@ -210,112 +210,44 @@ export default function CaseStudySpot() {
             <div style={{ width: '100%', position: 'relative' }}>
               <div style={{ width: '100%' }}>
                 <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>APPROACH</span>
-                {(() => {
-                  const isTwoLevel = project.id === 'bit24-spot';
-                  if (isTwoLevel) {
-                    return (
-                      <div style={{ flexDirection: 'column', display: 'flex', marginTop: '50px', width: '100%' }}>
-                        {project.approachSteps.map((step, index) => {
-                          const isPhaseHeader = step.title && step.title.startsWith("Phase");
-                          return (
-                            <div key={index} style={{ width: '100%' }}>
-                              {isPhaseHeader && (
-                                <div style={{ 
-                                  marginTop: index === 0 ? '0' : '80px',
-                                  marginBottom: '32px' 
-                                }}>
-                                  <span style={{ color: '#1A1A1A', fontSize: '22px', fontFamily: 'Inter', fontWeight: '700' }}>
-                                    {step.title}
-                                  </span>
-                                </div>
-                              )}
-                              <div style={{ 
-                                marginTop: isPhaseHeader ? '0' : '48px', 
-                                flexDirection: 'column', 
-                                display: 'flex', 
-                                gap: '32px', 
-                                width: '100%' 
-                              }}>
-                                <div>
-                                  {step.subtitle && (
-                                    <>
-                                      <span style={{ color: '#242424', fontSize: '18px', fontWeight: '700', fontFamily: 'Inter' }}>
-                                        {step.subtitle}
-                                      </span>
-                                      <br/><br/>
-                                    </>
-                                  )}
-                                  {step.body && (
-                                    <div style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>
-                                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{step.body}</ReactMarkdown>
-                                    </div>
-                                  )}
-                                </div>
-                                {step.image && (
-                                  <div style={{ flexDirection: 'column', display: 'flex', gap: '20px', width: '100%', alignItems: 'center' }}>
-                                    {step.isVideo ? (
-                                      <video 
-                                        src={step.image} 
-                                        autoPlay 
-                                        loop 
-                                        muted 
-                                        playsInline 
-                                        style={{ width: '100%', borderRadius: '8px' }} 
-                                      />
-                                    ) : (
-                                      <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src={step.image} alt={step.subtitle} />
-                                    )}
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <div style={{ flexDirection: 'column', display: 'flex', gap: '150px', marginTop: '50px', width: '100%' }}>
-                        {project.approachSteps.map((step, index) => (
-                          <div key={index} style={{ flexDirection: 'column', display: 'flex', gap: '32px', width: '100%' }}>
-                            <div>
-                              {step.title && (
-                                <>
-                                  <span style={{ color: '#242424', fontSize: '18px', fontWeight: '700', fontFamily: 'Inter' }}>{step.title}</span>
-                                  <br/><br/>
-                                </>
-                              )}
-                              {step.body && (
-                                <div style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>
-                                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{step.body}</ReactMarkdown>
-                                </div>
-                              )}
-                            </div>
-                            {step.image && (
-                              <div style={{ flexDirection: 'column', display: 'flex', gap: '20px', width: '100%', alignItems: 'center' }}>
-                                {step.isVideo ? (
-                                  <video 
-                                    src={step.image} 
-                                    autoPlay 
-                                    loop 
-                                    muted 
-                                    playsInline 
-                                    style={{ width: '100%', borderRadius: '8px' }} 
-                                  />
-                                ) : (
-                                  <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src={step.image} alt={step.title} />
-                                )}
-                                {step.subtitle && (
-                                  <span style={{ color: '#656161', fontSize: '14px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>{step.subtitle}</span>
-                                )}
-                              </div>
-                            )}
+                <div style={{ flexDirection: 'column', display: 'flex', gap: '150px', marginTop: '50px', width: '100%' }}>
+                  {project.approachSteps.map((step, index) => (
+                    <div key={index} style={{ flexDirection: 'column', display: 'flex', gap: '32px', width: '100%' }}>
+                      <div>
+                        {step.title && (
+                          <>
+                            <span style={{ color: '#242424', fontSize: '18px', fontWeight: '700', fontFamily: 'Inter' }}>{step.title}</span>
+                            <br/><br/>
+                          </>
+                        )}
+                        {step.body && (
+                          <div style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{step.body}</ReactMarkdown>
                           </div>
-                        ))}
+                        )}
                       </div>
-                    );
-                  }
-                })()}
+                      {step.image && (
+                        <div style={{ flexDirection: 'column', display: 'flex', gap: '20px', width: '100%', alignItems: 'center' }}>
+                          {step.isVideo ? (
+                            <video 
+                              src={step.image} 
+                              autoPlay 
+                              loop 
+                              muted 
+                              playsInline 
+                              style={{ width: '100%', borderRadius: '8px' }} 
+                            />
+                          ) : (
+                            <img style={{ width: '100%', height: 'auto', borderRadius: '8px' }} src={step.image} alt={step.title} />
+                          )}
+                          {step.subtitle && (
+                            <span style={{ color: '#656161', fontSize: '14px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>{step.subtitle}</span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
