@@ -322,6 +322,30 @@ export default function CaseStudyKYC() {
         </section>
       )}
 
+      {/* From Findings to Solutions Section */}
+      <section className="py-24 md:py-32 px-12 max-w-[1280px] mx-auto w-full overflow-hidden">
+        <div style={{ width: '100%', position: 'relative' }}>
+          <div style={{ width: '100%' }}>
+            <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>FROM FINDINGS TO SOLUTIONS</span>
+            <br/><br/>
+            <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>Selected design interventions developed from the research findings and prioritized for implementation.</span>
+            <br/><br/>
+            <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word', lineHeight: '1.6' }}>
+              Following the research phase, the findings were translated into a series of design improvements targeting the highest-impact usability issues. The examples below highlight a selection of the changes introduced to simplify critical workflows, reduce friction, and improve task completion confidence.
+            </div>
+            {project.findingsToSolutionsImage && (
+              <div style={{ marginTop: '48px', width: '100%' }}>
+                <img 
+                  src={project.findingsToSolutionsImage} 
+                  alt="From Findings to Solutions" 
+                  style={{ width: '100%', height: 'auto', borderRadius: '8px' }} 
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* Impact Section */}
       {(project.impactSections && project.impactSections.length > 0) || project.impactImage ? (
         <section className="py-20 md:py-28 px-12 max-w-[1280px] mx-auto">

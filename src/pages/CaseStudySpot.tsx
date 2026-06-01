@@ -222,7 +222,49 @@ export default function CaseStudySpot() {
                         )}
                         {step.body && (
                           <div style={{ color: '#656161', fontSize: '16px', fontWeight: '400', fontFamily: 'Inter' }}>
-                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{step.body}</ReactMarkdown>
+                            <ReactMarkdown 
+                              remarkPlugins={[remarkGfm]}
+                              components={{
+                                p: ({ children }) => {
+                                  const getStringText = (node: any): string => {
+                                    if (!node) return "";
+                                    if (typeof node === "string") return node;
+                                    if (typeof node === "number") return String(node);
+                                    if (Array.isArray(node)) {
+                                      return node.map(getStringText).join("");
+                                    }
+                                    if (node.props && node.props.children) {
+                                      return getStringText(node.props.children);
+                                    }
+                                    return "";
+                                  };
+
+                                  const textContent = getStringText(children).trim();
+
+                                  const targetStrings = [
+                                    "01 — Clarifying technical boundaries and business intent.",
+                                    "02 — Structuring a multi-step research framework to evaluate friction.",
+                                    "03 — Running the UX Assessment.",
+                                    "04 — Auditing the live order terminal against established principles.",
+                                    "05 — Benchmarking industry-standard professional layouts.",
+                                    "06 — Harvesting unlogged customer complaints from business heads.",
+                                    "07 — Reviewing digital trace behavior of unmoderated users."
+                                  ];
+
+                                  if (targetStrings.includes(textContent)) {
+                                    return (
+                                      <p style={{ fontFamily: 'Inter', fontSize: '18px', color: '#242424', fontWeight: '700' }}>
+                                        {children}
+                                      </p>
+                                    );
+                                  }
+
+                                  return <p>{children}</p>;
+                                }
+                              }}
+                            >
+                              {step.body}
+                            </ReactMarkdown>
                           </div>
                         )}
                       </div>
@@ -253,6 +295,28 @@ export default function CaseStudySpot() {
           </div>
         </section>
       )}
+
+      {/* From Findings to Solutions Section */}
+      <section className="py-24 md:py-32 px-12 max-w-[1280px] mx-auto w-full overflow-hidden">
+        <div style={{ width: '100%', position: 'relative' }}>
+          <div style={{ width: '100%' }}>
+            <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>FROM FINDINGS TO SOLUTIONS</span>
+            <br/><br/>
+            <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>Selected design interventions developed from the research findings and prioritized for implementation.</span>
+            <br/><br/>
+            <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word', lineHeight: '1.6' }}>
+              Following the research phase, the findings were translated into a series of design improvements targeting the highest-impact usability issues. The examples below highlight a selection of the changes introduced to simplify critical workflows, reduce friction, and improve task completion confidence.
+            </div>
+            <div style={{ marginTop: '48px', width: '100%' }}>
+              <img 
+                src="https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780316285/spot_before_after_sckgem.png" 
+                alt="From Findings to Solutions - Spot Trading Redesign" 
+                style={{ width: '100%', height: 'auto', borderRadius: '8px' }} 
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Impact Section */}
       {(project.impactSections && project.impactSections.length > 0) || project.impactImage ? (

@@ -39,6 +39,7 @@ export interface Project {
   ctaEnabled?: boolean;
   ctaLabel?: string;
   ctaLink?: string;
+  findingsToSolutionsImage?: string;
 }
 
 export const PROJECTS: Project[] = [
@@ -230,12 +231,60 @@ export const PROJECTS: Project[] = [
         "subtitle": "Microsoft Clarity heatmaps and session recordings — behavioral evidence validating the heuristic audit findings",
         "body": "07 — Reviewing digital trace behavior of unmoderated users.\n\nTo prove that our audited issues mapped to real user behavior, I scrutinized heatmaps and live recordings in Microsoft Clarity. By observing where traders hovered in confusion or experienced high error rates when entering prices, I validated my heuristic audit with empirical behavioral evidence.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780210537/04_wkvu58.png"
+      },
+      {
+        "title": "Phase 1: Synthesis & Decision Point",
+        "subtitle": "",
+        "body": "After synthesizing findings from the UX Assessment, stakeholder interviews, competitive benchmarking, and behavioral analytics, I presented the results to the Product Manager. While several usability issues and hypotheses emerged, it remained unclear which problems had the greatest impact on engagement and whether fixing them would meaningfully change user behavior.\n\nBecause the Spot product required significant engineering effort, implementing solutions before validating their importance would have been costly. We therefore decided to validate the findings through additional research before moving into development.\n\nSince the core question was why users were disengaging, I shifted the research strategy toward qualitative methods. Usability testing was selected as the next step because direct observation offered the fastest way to understand how active traders interacted with the product and where friction affected task completion.\n\nTo document the new objectives, participant criteria, and methods, the project entered a second research phase and returned to the Definition stage with a new research plan.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780269171/DB_ii8kdk.png"
+      },
+      {
+        "title": "Phase 2: Definition — Method Mapping & Plan",
+        "subtitle": "Research Plan Phase 2",
+        "body": "08 — Structuring the Phase 2 research plan.\n\nWith the decision made to move into usability testing, a new research plan was needed to document the updated objectives, participant criteria, methods, and timeline. This plan served as the alignment artifact before execution of Phase 2 began, ensuring the PM and team had full visibility into the next steps.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780269324/RP2_gftsyp.png"
+      },
+      {
+        "title": "Phase 2: Development — Usability Testing Execution Plan",
+        "subtitle": "",
+        "body": "09 — Planning the usability testing execution.\n\nTo conduct the usability tests, we followed a structured set of steps covering preparation, facilitation, and analysis.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780269944/execution_digram_cxkkch.png"
+      },
+      {
+        "title": "Phase 2: Development — User Segmentation & Recruiting",
+        "subtitle": "",
+        "body": "10 — Sourcing a representative participant panel through behavioral data.\n\nWe requested three months of user activity data from the data team — covering user IDs, platform usage per trade, order types, and successful transaction volume. To keep segmentation precise without over-complicating the sample, we used two variables: platform type (mobile vs. desktop) and product knowledge level (beginner vs. advanced). This produced three prioritized segments: Mobile Beginners, Desktop Traders (beginners and advanced merged due to low count), and Mobile Advanced Traders.\n\nEach segment had 1,000+ eligible users, but we only needed 5–6 per segment. Estimating a 1–2% conversion funnel from SMS to confirmed participant, we sent ~300 invitations per segment — roughly 1,000 total. To sample representatively from each 1,000+ pool, we sorted users by total successful transaction volume, divided them into three tiers (high, medium, low), and randomly selected ~100 from each tier before sending invitations. Backup participants were recruited for each segment to cover no-shows.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780270078/target_user_pool_zo4w6t.png"
+      },
+      {
+        "title": "Phase 2: Development — Logistics & Session Preparation",
+        "subtitle": "A section of the screener sent to target users",
+        "body": "11 — Designing the testing infrastructure for remote moderated sessions.\n\nSince Bit24 users were distributed across Iran — many in smaller cities — in-person testing would have introduced geographic bias. We chose remote moderated testing via Google Meet (unblocked in Iran) and paired it with a CRM team member as note-taker and a finance team contact to handle incentive transfers at the start of each session.\n\nPreparation included: an SMS screener doubling as an invitation (covering user background, recent Spot activity, and scheduling), a consent and expectations form, Google Meet onboarding tutorial videos sent via email, and a Discussion Guide in three parts — session conduct notes, a facilitator welcome script, and a structured task list derived from Phase 1 hypotheses.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780270214/screener_yfsguk.png"
+      },
+      {
+        "title": "Phase 2: Development — Pilot Testing & Execution",
+        "subtitle": "",
+        "body": "12 — Validating the process before running live sessions.\n\nBefore meeting external participants, I ran a pilot session with an internal colleague to stress-test task lengths, screen-sharing flows, and logging tools. The simulation surfaced several adjustments needed in the task list before going live. I then facilitated 5 sessions with Mobile Beginners and 4 with Desktop Traders — 9 total. After each session, brief debrief conversations with the PM helped track emerging patterns and keep the research aligned with product priorities. After 9 sessions, we reached result saturation and deferred the Mobile Advanced segment to a future research cycle.",
+        "image": ""
+      },
+      {
+        "title": "Phase 2: Delivery — Analysis & KPI Dashboard",
+        "subtitle": "A snapshot of key findings from the analysis",
+        "body": "13 — Auditing session recordings against predefined usability metrics.\n\nBefore running sessions, I defined four KPIs upfront to ensure analysis would be structured and comparable across participants:\n- **Error Rate** — identifying blocking, major, and minor friction points\n- **Task Completion Rate** — flagging flows where users consistently failed or struggled\n- **Time on Task** — surfacing steps that took longer than expected\n- **Task Ease Score** — measuring perceived difficulty on a 5-point scale\n\nEvery session recording was reviewed and logged in a centralized spreadsheet — capturing task text, user segment, participant quotes, error types and severity, completion status, time spent, ease score, and the path taken to complete each task. Qualitative observations were collected in a separate file. Post-analysis, feedback was exchanged with designers and the PM, and decisions were documented for implementation.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780270773/findings_tyisqx.png"
+      },
+      {
+        "title": "Phase 2: Delivery — Cross-Functional Presentation",
+        "subtitle": "A snapshot of the KPI results presented to stakeholders",
+        "body": "14 — Presenting findings and aligning stakeholders on redesign priorities.\n\nFindings were presented to the CEO, Head of Product, PM, designers, and engineers. The presentation covered the research process end-to-end and closed with KPI dashboards visualizing error rates, task completion, time-on-task, and ease scores across all sessions. Post-presentation, review comments were exchanged with designers and the PM, and decisions were documented to feed directly into the redesign sprint.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780271145/kpis_xvrpf6.png"
       }
     ],
     "status": "Published",
     "role": "Lead UX Researcher & Product Designer",
     "heroSubtitle": "Diagnosed interactive complexity and optimized the order execution experience for professional traders. Conducted detailed heuristic evaluations, analyzed Microsoft Clarity session heatmaps, and moderated usability testing across user segments to drive key design updates, resulting in a 20% reduction in support requests.",
-    "roleResponsibilities": "- **End-to-End Program Lead**: Spearheaded a phased investigative UX research and product evaluation program to identify and remove engagement blockers.\n- **Quantitative Session Auditing**: Analyzed over 50 unmoderated user sessions and heatmaps in Microsoft Clarity to pinpoint click hesitation, scroll-backs, and UI deadlocks.\n- **Stakeholder Immersion & Context**: Structured and facilitated interviews with the CEO, Spot Product Manager, Support Lead, and Crypto Domain Experts to index unlogged customer issues.\n- **Usability Testing Pipe Design**: Formulated a scalable recruiting framework, designing SMS screeners, sampling structures, and Google Meet guidelines to moderate 9 target-user sessions.\n- **Operational KPI Tracking**: Implemented a usability KPI registry capturing Task Completion, Interface Error rates, Time-on-Task, and Subjective Ease scores.\n- **Interactive Redesign Delivery**: Collaborated with design and engineering teams to transform qualitative findings into high-fidelity order-book UI prototypes.",
+    "roleResponsibilities": "- Led a two-phase UX research program to identify and remove engagement blockers in the Spot trading interface\n\n- Analyzed 50+ unmoderated session recordings and heatmaps in Microsoft Clarity to pinpoint click hesitation, scroll-backs, and UI deadlocks\n\n- Conducted stakeholder interviews with the CEO, PM, Support Lead, and domain experts to surface unlogged user complaints\n\n- Designed a recruiting framework — SMS screeners, sampling structure, and moderation scripts — to run 9 remote usability sessions\n\n- Tracked usability KPIs: task completion rate, error rate, time-on-task, and subjective ease score\n\n- Collaborated with design and engineering to translate findings into high-fidelity order-book UI recommendations",
     "thinking": [
       {
         "content": "Most usability issues occurred during periods of heightened market volatility. Introducing a clear confirmation step overlaying real-time market slippage warnings gave beginners the reassurance they needed, reducing extreme error rates by 24% without degrading speed for power users.",
@@ -272,20 +321,16 @@ export const PROJECTS: Project[] = [
     "problemImages": [],
     "problemSections": [
       {
-        "body": "Six months after launch, data dashboards showed active visits to the Spot trading route but disappointing conversion rates. The severe gap between page audience and completed trade volumes suggested massive interactive friction. Because professional order-book trading interfaces are inherently complex and technically expensive to develop, shipping design adjustments based on mere speculation would have introduced immense business risk. We needed diagnostic certainty to understand if traders were abandoning due to UI layout confusion, fear of severe trading errors, or competitive parity gaps.",
-        "title": "A high-traffic, low-conversion engagement paradox"
+        "title": "A high-traffic, low-conversion engagement paradox",
+        "body": "Six months after launch, the Spot interface had visitors but not completed trades. The product was too complex to ship design changes based on speculation — we needed to know whether users were dropping off due to UI confusion, fear of trading errors, or competitive gaps."
       },
       {
-        "body": "To identify initial friction hypotheses, I ran an in-depth heuristic evaluation of the end-to-end order flow, highlighting major cognitive gaps. To validate these heuristics against real user actions, I integrated Microsoft Clarity. Analyzing heatmaps and over 50 session recordings revealed severe behavioral issues: users were experiencing click hesitation, repetitive scroll retracing, and high error rates when executing limit orders. Crucially, stakeholder interviews with the CEO, PM, and Support Lead surfaced a high volume of unlogged helpdesk complaints, suggesting users were intimidated by the existing UI layout and poor color contrast in data representations.",
-        "title": "What qualitative heuristics and Microsoft Clarity exposed"
-      },
-      {
-        "body": "While our initial quantitative audits and behavioral heatmaps identified *where* friction happened, they could not explain *why* users were confused by the order books, nor could they validate which design fixes would move the needle. Given the high engineering cost of rebuilding active trading terminals, I proposed a second research phase: a rigorous remote-moderated usability study to capture real-world trading thoughts under high-volatility scenarios.",
-        "title": "The necessity of evaluative usability validation"
+        "title": "What heuristics and Clarity exposed",
+        "body": "A heuristic walkthrough surfaced major cognitive gaps in the order flow. Clarity validated them: 50+ session recordings showed click hesitation, scroll retracing, and high error rates on limit orders. Stakeholder interviews added a critical layer — the support lead revealed a high volume of unlogged complaints about layout confusion and poor color contrast."
       }
     ],
-    "backgroundText": "Bit24 is a leading cryptocurrency exchange platform that offers high-speed financial tools, including instant trading, dual investments, crypto-collateralized loans, and professional order-book trading. Despite generating high page traffic, the newly released professional 'Spot Trading' interface suffered from extremely low engagement and disappointing completed trade volumes.\n\nTo bridge the gap between traffic and conversions, I led a specialized, two-phase product research initiative as Lead UX Researcher. Our objective was to move from assumptions to empirical validation by applying behavioral analytics, qualitative usability heuristics, and remote moderated session testing to systematically rebuild the trading interface.",
-    "backgroundImage": "",
+    "backgroundText": "Bit24 is a cryptocurrency exchange platform offering instant trading, dual investments, crypto-backed loans, and professional order-book trading. Six months after launching the Spot trading interface, the product had traffic but not the trading volume the business needed. I led a two-phase research initiative as the UX researcher — moving from behavioral analytics and heuristic audits in Phase 1 to remote moderated usability testing in Phase 2 — to diagnose what was driving users away and deliver actionable design recommendations.",
+    "backgroundImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780268527/mobile_view_ehf5zt.png",
     "overview": "Diagnosing low engagement and high interactive error rates in professional Spot trading using unmoderated Clarity analytics, structured heuristics, and remote-moderated user usability tests to guide layout redesigns.",
     "problem": "Users found the trading interface intimidating and experience-dense, resulting in high cognitive anxiety, high limit order error rates, and constant support queries.",
     "heroMockup": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779723838/spot_mockup_v8-optimized_lpg8tv.png",
@@ -293,34 +338,34 @@ export const PROJECTS: Project[] = [
     "solution": "An optimized trading terminal prioritizing visual grouping, accessible contrast, and contextual confirmation layers, cutting direct UX-related support issues by 20%.",
     "impactSections": [
       {
-        "body": "While our main goal was to increase transaction volume, raw transaction counts are heavily influenced by chaotic external elements like cryptocurrency market volatility, trading campaigns, and macroeconomics. To isolate the direct impact of our UX adjustments, I collaborated with the CRM support engineers to define a tighter proxy metric: monthly UX-related support complaints for the Spot application.\n\nI established a weekly CRM review pipeline. After launching the redesigned Spot interface—which featured a higher-contrast, progressive disclosure order book with visual feedback on pending orders—direct user complaints regarding order execution and trading layout confusion **dropped by approximately 20%** (reducing average cases from 15 per month down to 10-12 cases). This decrease offered concrete evidence of a friction-free trading UX. Furthermore, the initiative established Bit24's first scalable usability framework, standardizing recruiting pipelines, incentive routes, and discussion guides for subsequent product teams.",
-        "title": "From vague engagement concerns to a measurable drop in UX complaints"
+        "title": "From vague engagement concerns to a measurable drop in UX complaints",
+        "body": "The initial success metric — number of completed trades — was too broad to isolate UX impact. Crypto market conditions, macroeconomics, marketing campaigns, and technical issues all influence trade volume independently. To measure what our work actually moved, I collaborated with the CRM team to define a tighter proxy: monthly UX-related support complaints for the Spot product.\n\nI set up weekly CRM review sessions to track UX issues across products. After the redesigned Spot interface launched, average monthly UX complaints dropped by approximately 20% — from up to 15 issues per month down to 10–12. This reduction provided concrete evidence that the research translated into a meaningfully better experience, even without a perfectly controlled success metric. The project also established Bit24's first standardized usability testing framework — reusable recruiting pipelines, incentive structures, and discussion guides adopted across subsequent product teams."
       }
     ],
     "order": 2,
     "description": "Diagnosing low engagement through usability testing to cut support complaints by 20%",
     "timeline": "8 Months • 2022",
-    "outcome": "- **20% Decrease in Monthly UX Support Tickets**: Substantially reduced helpdesk queries and execution errors regarding Spot order-book configuration.\n- **9 High-Fidelity Moderated Research Sessions**: Reached complete structural saturation across Desktop and Mobile Beginner user cohorts, validating critical behavioral hypotheses.\n- **First Standardized Usability Framework**: Delivered reusable screening templates, incentive structures, and moderation scripts adopted across subsequent product lines.\n- **Strategic KPI Implementation**: Established the team's first interactive dashboard mapping Time-on-Task and Subjective Ease scores directly to engineering sprints.\n- **Decision-Support Integration**: Validated and integrated a high-contrast 'Frictionless Confirmation' state, reducing high-volatility trading error rates by 24%.",
+    "outcome": "- ~20% reduction in monthly UX-related support complaints following redesign\n\n- Ran 9 moderated remote usability sessions across desktop and mobile beginner segments, reaching result saturation\n\n- Established Bit24's first standardized usability testing framework — reusable screening templates, incentive structures, and moderation scripts\n\n- Validated a high-contrast confirmation pattern that reduced high-volatility trading error rates by 24%",
     "figmaLink": "",
     "takeawayText": "",
     "takeawaySections": [
       {
-        "body": "This project taught me a critical lesson regarding performance metrics: always define UX-specific proxies early rather than relying entirely on trailing business goals. The initial KPI of 'active transaction volume' was too broad and heavily skewed by sudden market shifts. Triangulating and cooperating with the CRM team to extract support ticket logs allowed us to prove direct value and demonstrate *why* user-centric design iterations drive down business operational budgets.",
-        "title": "Define clear UX proxy metrics before you begin, not after"
+        "title": "Define UX proxy metrics before you start, not after",
+        "body": "The metric I inherited — number of successful trades — was too distant from UX to measure my work's impact. I only realized this near the end. Going forward, I'd work with the PM at the very start to define a metric that's both directly influenced by UX improvements and measurable throughout the process, not just at the end."
       },
       {
-        "body": "During live usability sessions, some traders became distracted or diverged into general market speculations, pushing some calls beyond 40 minutes and introducing fatigue. In future cycles, I would construct significantly tighter task scopes and practice firmer moderation boundaries to optimize time, keep momentum, and protect user endurance and data quality.",
-        "title": "Design lean, tightly gated research timelines to avoid participant fatigue"
+        "title": "Design tighter sessions to protect data quality",
+        "body": "Two things slowed down the usability sessions: participants going off-topic mid-session, and sessions running past 40 minutes causing fatigue. Leaner task design and firmer facilitation boundaries would have protected both data quality and participant endurance."
       },
       {
-        "body": "We prioritized usability issues using our small internal squad's qualitative feedback. While highly effective, implementing a subsequent survey sent to a broader, randomized trader audience would have provided statistical confidence and validated our rankings across a wider population. I've built this sequential quantitative validation step into Bit24's standard research manual.",
-        "title": "Validate priorities quantitatively to ensure robust scale decisions"
+        "title": "Validate priorities with data, not just intuition",
+        "body": "After the tests, issues were prioritized based on our team's qualitative judgment. That worked, but a follow-up survey sent to a larger sample of target users would have added statistical confidence — and might have surfaced issues the 9-person test missed. I'd build that step into the next research cycle."
       }
     ],
     "impactStats": [],
     "title": "Bit24 Spot Trading",
     "category": "Fintech / User Research",
-    "backgroundTitle": "A trading product with traffic but no traction — diagnosing low engagement in Bit24's Spot feature",
+    "backgroundTitle": "A trading product with traffic but no traction",
     "ctaEnabled": true,
     "ctaLabel": "SPOT LANDING PAGE",
     "ctaLink": "https://bit24.cash/trade/usdt_irt?type=spot"
@@ -328,7 +373,7 @@ export const PROJECTS: Project[] = [
   {
     "id": "gg10",
     "outcome": "- Delivered a complete, developer-ready product design in under 5 months as the sole designer\n\n- Built a 480+ component design system on Material Design 3, enabling scalable and consistent UI development\n\n- Established full visual identity — logo, iconography, typography, dark-mode color system — tailored to a teenage gaming audience\n\n- Reduced developer ambiguity through structured documentation, enabling faster and more accurate implementation",
-    "figmaLink": "https://www.figma.com/design/RnyozvrlnFgOY9FIoGfu9Y/GG10--A-Game-Engagement-Platform?node-id=11-1833&t=VdVTx03n3VMdHmeM-1",
+    "figmaLink": "https://www.figma.com/design/bs75B2120hgmEewWcvqQkZ/GG10--A-Game-Engagement-Platform?m=auto&t=AM9kstCYDr3n6Pa5-6",
     "takeawayText": "The biggest lesson from GG10 was that a well-organized Figma file is not a nice-to-have — it's part of the product. When you're the only designer and you're handing off to developers who need to move fast, disorganized layers, inconsistent naming, and ad hoc components become blockers. The discipline of atomic design and systematic file structure directly affected how quickly developers could work and how accurately they could implement.\n",
     "solution": "We built a centralized hub using Material 3 principles that simplifies registration, provides real-time bracket updates, and fosters community engagement.",
     "description": "Designed a dark-mode gaming platform end-to-end — 100+ screens, 480+ components, sole designer\n",
