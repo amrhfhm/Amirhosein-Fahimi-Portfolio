@@ -210,6 +210,18 @@ export default function CaseStudyKYC() {
             <div style={{ width: '100%', position: 'relative' }}>
               <div style={{ width: '100%' }}>
                 <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>APPROACH</span>
+                {project.id === 'bit24-kyc' && (
+                  <div style={{ flexDirection: 'column', display: 'flex', gap: '20px', width: '100%', alignItems: 'center', marginTop: '48px' }}>
+                    <img 
+                      src="https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780325067/kyc_end_pqifge.png" 
+                      alt="End-to-end research workflow for Bit24 KYC — from discovery to delivery" 
+                      style={{ width: '100%', height: 'auto', borderRadius: '8px' }} 
+                    />
+                    <span style={{ color: '#656161', fontSize: '14px', fontWeight: '300', fontFamily: 'Inter', textAlign: 'center' }}>
+                      End-to-end research workflow for Bit24 KYC — from discovery to delivery
+                    </span>
+                  </div>
+                )}
                 {(() => {
                   const isTwoLevel = project.id === 'bit24-spot';
                   if (isTwoLevel) {

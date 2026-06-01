@@ -45,6 +45,7 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     "id": "bit24-kyc",
+    "findingsToSolutionsImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780338904/kyc_before_after_gk7tlz.png",
     "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779552368/04_ykz366.jpg",
     "problemTitle": "",
     "problemText": "",
@@ -52,16 +53,16 @@ export const PROJECTS: Project[] = [
     "updatedAt": "2026-05-27T18:48:31Z",
     "problemSections": [
       {
-        "title": "Unidentified drop-offs leaving acquisition in the dark",
-        "body": "At Bit24, User Registration and KYC serve as the singular entry gateway for user acquisition. However, the business noted a substantial and unexpected abandonment rate within the onboarding funnel, creating a direct operational threat to active trader growth and marketing ROI. The product squad suspected general 'complexity' as the primary design driver, but lacked the quantitative data and behavioral telemetry to pinpoint where or why users dropped off deep within the flow. In a compliance-gated cryptocurrency market like Iran, balancing legal identity verification with frictionless digital onboarding is critical for commercial success. Making speculative interface changes was too risky, requiring a structured, research-backed strategy to audit the onboarding leakage."
+        "title": "A critical funnel with unknown failure points",
+        "body": "The business was experiencing significant abandonment throughout the registration and KYC flow, but lacked the visibility needed to understand where users were dropping off or why. Teams suspected the process was overly complex, yet no reliable behavioral data existed to validate that assumption."
       },
       {
-        "title": "Diagnosing the funnel through GA4 obstacles",
-        "body": "To identify where the drop-off was occurring, I mapped and analyzed the six-step onboarding funnel in Google Analytics (GA4). This investigation had to bypass two major engineering constraints: a third-party KYC service embedded in the flow that lacked custom event tracking, and a duplicate URL issue where multiple distinct steps shared the same suffixes. By isolating specific custom query parameters and implementing scroll-depth triggers, we uncovered two major insights:\n\n1. **Step 2 Drop-off (OTP Verification)**: High apparent drop-off was actually existing users routing back into the login path (expected core behavior) combined with mistargeted advertising campaigns. We immediately partnered with the marketing team to optimize channel targeting.\n2. **Step 5 Drop-off (Personal Info Form)**: This was the highest true dropout point in the funnel. Users faced an immediate 'cognitive wall' upon landing on the lengthy 20+ field form in Step 4, causing instant fatigue and platform abandonment before any fields were filled."
+        "title": "What the funnel analysis revealed",
+        "body": "To locate the source of the drop-offs, I mapped the six-step onboarding flow in Google Analytics 4. Because part of the KYC process relied on third-party services and duplicated URL structures, I designed a custom tracking approach using query parameters and additional behavioral signals.\n\nThe analysis uncovered two key findings:\n\n* The apparent drop-off during OTP verification was largely driven by existing users returning to login flows and traffic from poorly targeted marketing campaigns.\n* The highest genuine abandonment occurred when users encountered the lengthy personal information form, creating immediate cognitive overload before meaningful progress had been made."
       },
       {
-        "title": "Uncovering product constraints through stakeholder interviews",
-        "body": "To comprehend why the configuration had been designed this way, I conducted semi-structured interviews with the CEO, PM, Design Lead, and Business Analyst. These conversations revealed that the high data density was shaped by strict compliance protocols, and the final verification steps relied heavily on third-party manual video reviews. This manual queue suffered from high error rates and long processing delays, running directly counter to Bit24's value proposition of a fast, smart trading onboarding flow."
+        "title": "What stakeholder interviews uncovered",
+        "body": "Interviews with leadership and product stakeholders revealed that much of the complexity stemmed from regulatory requirements and manual verification processes. While these constraints were necessary from a compliance perspective, they introduced friction that conflicted with Bit24's goal of delivering a fast and seamless onboarding experience."
       }
     ],
     "problemImages": [],
@@ -79,8 +80,8 @@ export const PROJECTS: Project[] = [
         "title": "The Step 5 Transformation"
       }
     ],
-    "backgroundImage": "",
-    "backgroundText": "Bit24 is a leading cryptocurrency exchange platform where Know Your Customer (KYC) identity compliance is the mandatory gateway for every user. Because trade enablement relies entirely on successful verification, the onboarding funnel's throughput is the ultimate multiplier for active user growth and business revenues.\n\nI operated as the sole UX Researcher on a cross-functional squad comprising the KYC product manager, design lead, business analyst, and lead engineer. Our business goal was to audit, diagnose, and optimize the live registration and KYC funnel to eliminate acquisition leakage. Over four months, I led a structured, four-phase research program (Discovery, Definition, Development, Delivery) to convert hypotheses into actionable, high-conversion design solutions.",
+    "backgroundImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780324760/KYC_MOBILE_VIEW_qxwvic.png",
+    "backgroundText": "Bit24 is a cryptocurrency exchange platform where every user must complete identity verification before accessing trading features. Because KYC sits at the center of user acquisition, any friction in the onboarding journey directly impacts activation, growth, and marketing efficiency.\n\nAs the UX Researcher, I worked alongside the Product Manager, Design Lead, Business Analyst, and Engineering team to investigate why users were abandoning the registration process. Over four months, I led a structured research program combining analytics, stakeholder discovery, usability evaluation, and competitive analysis to identify the root causes of funnel leakage and develop evidence-based improvements.",
     "heroMockup": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779721063/kyc_mockup_v6_x6estl.png",
     "createdAt": "2026-05-13T08:48:54.609Z",
     "problem": "Low registration conversion and high onboarding drop-off driven by deep cognitive friction, regulatory field bloat, and severe analytics tracking blind spots.",
@@ -89,45 +90,45 @@ export const PROJECTS: Project[] = [
     "approachSteps": [
       {
         "title": "01 — Discovery: Reframe the Problem",
-        "subtitle": "Interrogating existing assumptions and clarifying business context.",
+        "subtitle": "Initial scoping questions for the KYC head of auth — covering problem scope, available data, market context, and early hypotheses",
         "body": "Rather than accepting the initial product brief at face value, I prepared a structured stakeholder interview guide targeting the KYC Product Manager. This conversation was critical to unearthing historical design decisions, known support issues, and scoping the core technical constraints of our third-party integrations, reframing our research questions from simple 'UI fixes' to deep systemic conversion issues.",
-        "image": ""
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780325275/kyc_int_awd4bi.png"
       },
       {
-        "title": "02 — Discovery: Stakeholder Interviews",
+        "title": "02 — Definition: Build a Research Roadmap",
+        "subtitle": "The Research Plan",
+        "body": "I translated the refined hypotheses into a comprehensive Research Plan outlining research questions, target user participants, and selected methodologies (funnel analytics, heuristic evaluation, competitor benchmarking). This plan acted as our team's north star, justifying *why* we combine quantitative and qualitative inputs to validate onboarding friction.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780330430/kyc_rp_hmkjgk.png"
+      },
+      {
+        "title": "03 — Development: Executing the Research Plan",
+        "subtitle": "",
+        "body": "With the research plan approved, we moved into execution. The objective was to validate the hypotheses generated during Discovery through a combination of complementary research methods. We began with stakeholder interviews to uncover organizational assumptions, then expanded into heuristic evaluations, competitor benchmarking, and funnel analytics. Each method addressed a different layer of the problem, allowing us to triangulate findings before moving into solution design.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780331046/RML_v1_nla9g0.png"
+      },
+      {
+        "title": "04 — Discovery: Stakeholder Interviews",
         "subtitle": "Aligning cross-functional priorities across legal, business, and tech.",
         "body": "I conducted semi-structured interviews with the CEO, PM, Design Lead, and Business Analyst. By mapping out the divergent internal views on why users abandoned, I aligned the cross-functional squad on common goals and hypotheses, and highlighted how legal constraints on mandatory fields had inadvertently bloated the user's cognitive load.",
-        "image": ""
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780332903/kyc_int_ss_qauoek.png"
       },
       {
-        "title": "03 — Definition: Build a Research Roadmap",
-        "subtitle": "Structuring a multi-method methodology to validate friction.",
-        "body": "I translated the refined hypotheses into a comprehensive Research Plan outlining research questions, target user participants, and selected methodologies (funnel analytics, heuristic evaluation, competitor benchmarking). This plan acted as our team's north star, justifying *why* we combine quantitative and qualitative inputs to validate onboarding friction.",
-        "image": ""
-      },
-      {
-        "title": "04 — Definition: Comprehensive UX Audit",
-        "subtitle": "Analyzing the existing interface through a usability heuristics lens.",
-        "body": "I audited the live onboarding flow against usability heuristic principles. The audit documented key usability failures, including: a total lack of back-button navigation trapping users in screens, poor real-time feedback on the password requirements page, and high-density input blocks in the personal details form that loaded without explaining *why* sensitive birth or ID data was needed.",
-        "image": ""
-      },
-      {
-        "title": "05 — Definition: Competitor Benchmarking",
-        "subtitle": "Mapping industry conventions for identity verification flows.",
-        "body": "I benchmarked both domestic fintech competitors and global cryptocurrency giants to identify industry standard patterns for KYC. This research showed that top-performing apps utilized progressive disclosure (chunking forms into small, conversational steps), real-time input verification, and illustrative guides instead of long-text descriptions.",
+        "title": "05 — Development: UX Audit & Competitive Benchmarking",
+        "subtitle": "",
+        "body": "I combined a heuristic evaluation of the onboarding flow with competitive benchmarking across domestic and international platforms. The review highlighted navigation dead-ends, weak system feedback, and dense information requests, while competitor analysis revealed common patterns such as progressive disclosure, real-time validation, and clearer onboarding guidance. Together, these methods established both the usability gaps and the industry standards needed to evaluate them.",
         "image": ""
       },
       {
         "title": "06 — Development: Funnel Analysis & Tracking",
-        "subtitle": "Exposing quantitative drop-off rates and validating friction.",
-        "body": "By setting up a customized six-step funnel in Google Analytics (GA4), I tracked step-by-step conversion and abandonment. I bypassed tracking limitations on the third-party KYC site by integrating virtual pageviews and query parameter triggers. The data validated our qualitative hypotheses: Step 5 (Personal Info form) was the single biggest leak, while Step 2's drop-offs were inflated by existing account login redirections.",
-        "image": ""
+        "subtitle": "",
+        "body": "To identify where users abandoned the registration journey, I built a six-step conversion funnel in Google Analytics 4. This process introduced two major analytical challenges. First, part of the smart verification flow was handled by a third-party provider, limiting direct event tracking. Second, several onboarding steps shared overlapping URL structures, reducing reporting accuracy.\n\nTo improve measurement reliability, I consolidated duplicated URLs within the funnel definition and worked with the Product Manager to document the tracking limitations for future analytics infrastructure improvements. Beyond the high-level funnel, I also mapped the detailed registration paths for both mobile and desktop experiences, allowing us to analyze conversion rates at a more granular level.\n\nThe analysis revealed two critical findings. The apparent drop-off at OTP verification was largely caused by existing users returning through login flows and traffic from poorly targeted acquisition campaigns. The largest genuine abandonment occurred when users encountered the lengthy personal information form, creating immediate cognitive overload before meaningful progress had been made.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780334979/chuuuuuuuuuurn_dstbnk.png"
       },
       {
         "title": "07 — Delivery: Synthesis & Stakeholder Alignment",
-        "subtitle": "Consolidating findings and providing concrete UX redesign recommendations.",
+        "subtitle": "The User Journey Map presented to stakeholders",
         "body": "I synthesized the behavioral, usability, and analytics data into an actionable, evidence-backed presentation. I presented other-industry comparisons showing the power of progressive form wizards, developed user personas with custom Empathy Maps to foster teammate buy-in, and delivered annotated wireframes detailed with explicit design rationales.",
-        "image": ""
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780335589/ujm_v1_j2a99i.png"
       }
     ],
     "role": "UX Researcher",
@@ -149,7 +150,7 @@ export const PROJECTS: Project[] = [
         "title": "Perceived vs. Actual Input Effort"
       }
     ],
-    "roleResponsibilities": "- **Quantitative Funnel Engineering**: Designed and implemented a custom tracking pipeline in Google Analytics 4 (GA4) and Microsoft Clarity, architecting specific query-parameter workarounds to map drop-off points across third-party compliance iframes.\n- **Qualitative Usability Diagnostics**: Conducted rigorous heuristic evaluations against industry usability principles, uncovering critical system feedback and navigation flaws across the live flow.\n- **Cross-Functional Stakeholder Alignment**: Led semi-structured discovery interviews with the CEO, PM, Design Lead, and Business Analyst to untangle legal requirements from product friction.\n- **Competitive Benchmarking**: Analyzed domestic fintech competitors and global cryptocurrency giants to establish industry-standard patterns for conversion-optimized KYC registration.\n- **End-to-End Design Delivery**: Synthesized behavioral, usability, and analytics data into an actionable implementation roadmap with wireframe annotations and progressive disclosure specs.",
+    "roleResponsibilities": "- Led a four-phase UX research program to identify and reduce friction across Bit24's registration and KYC funnel\n\n- Built a custom GA4 measurement framework to analyze drop-offs across six onboarding steps, including third-party KYC dependencies\n\n- Conducted stakeholder interviews with the CEO, PM, Design Lead, and Business Analyst to separate compliance requirements from UX issues\n\n- Performed heuristic evaluations and competitive audits to identify usability gaps and benchmark industry onboarding patterns\n\n- Synthesized analytics, behavioral, and qualitative findings into prioritized design recommendations and implementation-ready specifications",
     "impactStats": [],
     "takeawaySections": [
       {
@@ -163,9 +164,10 @@ export const PROJECTS: Project[] = [
     ],
     "title": "BIT24 KYC & REGISTRATION",
     "category": "Fintech / User Research",
-    "backgroundTitle": "Fixing the leaking funnel at the heart of Bit24's user acquisition",
+    "backgroundTitle": "Fixing the funnel behind user acquisition",
     "solution": "A research-driven optimization that addressed marketing alignment, analytics visibility, and cognitive load in complex forms, leading to a 15% conversion lift and a 30% reduction in support requests.",
     "order": 3,
+    "impactImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780335609/funnel_v_final_kgyp0d.png",
     "impactSections": [
       {
         "title": "From a leaky funnel to a measurable conversion lift",
@@ -175,7 +177,7 @@ export const PROJECTS: Project[] = [
     "timeline": "4 Months • 2023",
     "description": "Turning a leaky onboarding funnel into a 15% conversion lift",
     "figmaLink": "",
-    "outcome": "- **15% Overall Registration Conversion Lift**: Reached the primary business objective, boosting successful registration and KYC completion rates.\n- **30% Lift in Step 5 Form Completion**: Mitigated form fatigue and cognitive limits by restructuring inputs into progressive disclosure steps.\n- **30% Customer Support Reduction**: Successfully minimized user error complaints and help requests regarding registration and password setup.\n- **Alignment of Marketing Intent**: Identified and removed mistargeted campaigns, optimizing marketing ROI and pre-onboarding communication.\n- **Data Foundation Established**: Created a robust GA4 tracking blueprint to eliminate analytical blindspots across external iframe services.",
+    "outcome": "- 15% increase in registration-to-KYC conversion rate after implementation\n\n- 30% improvement in personal information form completion by reducing cognitive load and restructuring inputs\n\n- 30% reduction in registration-related support complaints and user-reported onboarding issues\n\n- Identified mistargeted acquisition campaigns and helped improve marketing traffic quality\n\n- Established Bit24's first reliable onboarding measurement framework for ongoing funnel analysis",
     "takeawayText": "",
     "ctaEnabled": true,
     "ctaLabel": "KYC LANDING PAGE",
@@ -278,7 +280,7 @@ export const PROJECTS: Project[] = [
         "title": "Phase 2: Delivery — Cross-Functional Presentation",
         "subtitle": "A snapshot of the KPI results presented to stakeholders",
         "body": "14 — Presenting findings and aligning stakeholders on redesign priorities.\n\nFindings were presented to the CEO, Head of Product, PM, designers, and engineers. The presentation covered the research process end-to-end and closed with KPI dashboards visualizing error rates, task completion, time-on-task, and ease scores across all sessions. Post-presentation, review comments were exchanged with designers and the PM, and decisions were documented to feed directly into the redesign sprint.",
-        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780271145/kpis_xvrpf6.png"
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780323801/kpis_v1_wljf0j.png"
       }
     ],
     "status": "Published",

@@ -309,7 +309,7 @@ export default function CaseStudySpot() {
             </div>
             <div style={{ marginTop: '48px', width: '100%' }}>
               <img 
-                src="https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780316285/spot_before_after_sckgem.png" 
+                src="https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780323771/spot_before_after_v1_mdxrzm.png" 
                 alt="From Findings to Solutions - Spot Trading Redesign" 
                 style={{ width: '100%', height: 'auto', borderRadius: '8px' }} 
               />
