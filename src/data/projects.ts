@@ -45,7 +45,7 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     "id": "bit24-kyc",
-    "findingsToSolutionsImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780338904/kyc_before_after_gk7tlz.png",
+    "findingsToSolutionsImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780405152/new_one_hc81gb.png",
     "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779552368/04_ykz366.jpg",
     "problemTitle": "",
     "problemText": "",
@@ -58,11 +58,7 @@ export const PROJECTS: Project[] = [
       },
       {
         "title": "What the funnel analysis revealed",
-        "body": "To locate the source of the drop-offs, I mapped the six-step onboarding flow in Google Analytics 4. Because part of the KYC process relied on third-party services and duplicated URL structures, I designed a custom tracking approach using query parameters and additional behavioral signals.\n\nThe analysis uncovered two key findings:\n\n* The apparent drop-off during OTP verification was largely driven by existing users returning to login flows and traffic from poorly targeted marketing campaigns.\n* The highest genuine abandonment occurred when users encountered the lengthy personal information form, creating immediate cognitive overload before meaningful progress had been made."
-      },
-      {
-        "title": "What stakeholder interviews uncovered",
-        "body": "Interviews with leadership and product stakeholders revealed that much of the complexity stemmed from regulatory requirements and manual verification processes. While these constraints were necessary from a compliance perspective, they introduced friction that conflicted with Bit24's goal of delivering a fast and seamless onboarding experience."
+        "body": "To locate the source of the drop-offs, I mapped the six-step onboarding flow in Google Analytics 4. Because part of the KYC process relied on third-party services, I designed a custom tracking approach using query parameters and additional behavioral signals.\n\nThe analysis uncovered two key findings:\n\n* **OTP Verification Drop-off:** The apparent drop-off during OTP verification was largely driven by existing users returning to login flows and traffic from poorly targeted marketing campaigns.\n* **Personal Information Form Drop-off:** The highest genuine abandonment occurred when users encountered the lengthy personal information form, creating immediate cognitive overload before meaningful progress had been made."
       }
     ],
     "problemImages": [],
@@ -81,7 +77,7 @@ export const PROJECTS: Project[] = [
       }
     ],
     "backgroundImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780324760/KYC_MOBILE_VIEW_qxwvic.png",
-    "backgroundText": "Bit24 is a cryptocurrency exchange platform where every user must complete identity verification before accessing trading features. Because KYC sits at the center of user acquisition, any friction in the onboarding journey directly impacts activation, growth, and marketing efficiency.\n\nAs the UX Researcher, I worked alongside the Product Manager, Design Lead, Business Analyst, and Engineering team to investigate why users were abandoning the registration process. Over four months, I led a structured research program combining analytics, stakeholder discovery, usability evaluation, and competitive analysis to identify the root causes of funnel leakage and develop evidence-based improvements.",
+    "backgroundText": "Bit24 is a cryptocurrency exchange requiring identity verification for onboarding. Because KYC sits at the center of user acquisition, any funnel friction directly impacts activation and growth. As UX Researcher, I partnered with product, design, and engineering to investigate why users abandon registration and to design evidence-based solutions that optimize conversion.",
     "heroMockup": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1779721063/kyc_mockup_v6_x6estl.png",
     "createdAt": "2026-05-13T08:48:54.609Z",
     "problem": "Low registration conversion and high onboarding drop-off driven by deep cognitive friction, regulatory field bloat, and severe analytics tracking blind spots.",
@@ -91,19 +87,19 @@ export const PROJECTS: Project[] = [
       {
         "title": "01 — Discovery: Reframe the Problem",
         "subtitle": "Initial scoping questions for the KYC head of auth — covering problem scope, available data, market context, and early hypotheses",
-        "body": "Rather than accepting the initial product brief at face value, I prepared a structured stakeholder interview guide targeting the KYC Product Manager. This conversation was critical to unearthing historical design decisions, known support issues, and scoping the core technical constraints of our third-party integrations, reframing our research questions from simple 'UI fixes' to deep systemic conversion issues.",
+        "body": "Rather than accepting the initial product brief at face value, **I prepared a structured stakeholder interview guide targeting the KYC Head of Authentication.** This conversation was critical to unearthing historical design decisions, known support issues, and scoping the core technical constraints of our third-party integrations, reframing our research questions from simple 'UI fixes' to deep systemic conversion issues.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780325275/kyc_int_awd4bi.png"
       },
       {
         "title": "02 — Definition: Build a Research Roadmap",
         "subtitle": "The Research Plan",
-        "body": "I translated the refined hypotheses into a comprehensive Research Plan outlining research questions, target user participants, and selected methodologies (funnel analytics, heuristic evaluation, competitor benchmarking). This plan acted as our team's north star, justifying *why* we combine quantitative and qualitative inputs to validate onboarding friction.",
+        "body": "I translated the refined hypotheses into a comprehensive Research Plan outlining research questions, target user participants, and selected methodologies. This plan acted as our team's north star, justifying *why* we combine quantitative and qualitative inputs to validate onboarding friction.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780330430/kyc_rp_hmkjgk.png"
       },
       {
         "title": "03 — Development: Executing the Research Plan",
         "subtitle": "",
-        "body": "With the research plan approved, we moved into execution. The objective was to validate the hypotheses generated during Discovery through a combination of complementary research methods. We began with stakeholder interviews to uncover organizational assumptions, then expanded into heuristic evaluations, competitor benchmarking, and funnel analytics. Each method addressed a different layer of the problem, allowing us to triangulate findings before moving into solution design.",
+        "body": "With the research plan approved, we moved into execution. The objective was to validate the hypotheses generated during Discovery through a combination of complementary research methods. **We began with stakeholder interviews to uncover organizational assumptions, then expanded into heuristic evaluations, competitor benchmarking, and funnel analytics.** Each method addressed a different layer of the problem, allowing us to triangulate findings before moving into solution design.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780331046/RML_v1_nla9g0.png"
       },
       {
@@ -121,13 +117,13 @@ export const PROJECTS: Project[] = [
       {
         "title": "06 — Development: Funnel Analysis & Tracking",
         "subtitle": "",
-        "body": "To identify where users abandoned the registration journey, I built a six-step conversion funnel in Google Analytics 4. This process introduced two major analytical challenges. First, part of the smart verification flow was handled by a third-party provider, limiting direct event tracking. Second, several onboarding steps shared overlapping URL structures, reducing reporting accuracy.\n\nTo improve measurement reliability, I consolidated duplicated URLs within the funnel definition and worked with the Product Manager to document the tracking limitations for future analytics infrastructure improvements. Beyond the high-level funnel, I also mapped the detailed registration paths for both mobile and desktop experiences, allowing us to analyze conversion rates at a more granular level.\n\nThe analysis revealed two critical findings. The apparent drop-off at OTP verification was largely caused by existing users returning through login flows and traffic from poorly targeted acquisition campaigns. The largest genuine abandonment occurred when users encountered the lengthy personal information form, creating immediate cognitive overload before meaningful progress had been made.",
+        "body": "I built a **six-step conversion funnel in Google Analytics 4** to identify drop-offs. To resolve **third-party tracking limitations** and overlapping URL structures, I consolidated route patterns to make measurement reliable. I also mapped detailed paths for both **mobile and desktop journeys**.\n\nThe funnel analysis revealed **two critical findings**:\n1. **OTP drop-offs** were inflated by returning users logging in and mistargeted marketing traffic.\n2. The **highest genuine leakage** occurred at the lengthy personal information form, causing instant cognitive overload.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780334979/chuuuuuuuuuurn_dstbnk.png"
       },
       {
         "title": "07 — Delivery: Synthesis & Stakeholder Alignment",
         "subtitle": "The User Journey Map presented to stakeholders",
-        "body": "I synthesized the behavioral, usability, and analytics data into an actionable, evidence-backed presentation. I presented other-industry comparisons showing the power of progressive form wizards, developed user personas with custom Empathy Maps to foster teammate buy-in, and delivered annotated wireframes detailed with explicit design rationales.",
+        "body": "I brought all our findings together into a clear, actionable **research synthesis** and presented it directly to stakeholders. To help the team align and build user empathy, I created user personas and detailed **Empathy Maps**. Ready for the next phase, I also delivered high-impact **wireframes** backed by a strong **design rationale** showing exactly why these layout changes would simplify the onboarding flow.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780335589/ujm_v1_j2a99i.png"
       }
     ],
@@ -150,16 +146,16 @@ export const PROJECTS: Project[] = [
         "title": "Perceived vs. Actual Input Effort"
       }
     ],
-    "roleResponsibilities": "- Led a four-phase UX research program to identify and reduce friction across Bit24's registration and KYC funnel\n\n- Built a custom GA4 measurement framework to analyze drop-offs across six onboarding steps, including third-party KYC dependencies\n\n- Conducted stakeholder interviews with the CEO, PM, Design Lead, and Business Analyst to separate compliance requirements from UX issues\n\n- Performed heuristic evaluations and competitive audits to identify usability gaps and benchmark industry onboarding patterns\n\n- Synthesized analytics, behavioral, and qualitative findings into prioritized design recommendations and implementation-ready specifications",
+    "roleResponsibilities": "- Led a four-phase UX research program to identify and reduce friction across Bit24's registration and KYC funnel\n\n- Built custom GA4 tracking to analyze onboarding drop-offs, including third-party KYC dependencies\n\n- Conducted interviews with core stakeholders to separate compliance requirements from UX issues\n\n- Performed heuristic evaluations and competitive audits to identify usability gaps and benchmark industry onboarding patterns\n\n- Synthesized multi-method research into prioritized design recommendations and dev-ready specs",
     "impactStats": [],
     "takeawaySections": [
       {
         "title": "Infrastructure constraints are research opportunities, not barriers",
-        "body": "This project emphasized the critical lesson that UX scholars must remain resilient and creative when running analytical tracking on imperfect data structures. When confronted with missing event hooks on third-party verification frames and duplicate screen URLs, I could have deferred the funnel analysis entirely. Instead, I developed custom query-parameter tracking queries to bypass the URL limits, using standard scroll-depth events and qualitative insights to triangulate where drop-off happened.\n\nThis experience taught me that part of our mandate as researchers is not only reviewing the quantitative metrics that exist, but designing and advocating for the proper data structures that *should* exist. I successfully collaborated with the product lead to establish a comprehensive data-tracking roadmap, paving a transparent path for all user lifecycle research at Bit24."
+        "body": "This project showed that **UX researchers must find creative tracking solutions when dealing with imperfect technical setups.** Instead of deferring my funnel analysis when faced with missing event hooks inside third-party iframe overlays, I developed custom query-parameter tracking to triangulate completion points.\n\nOur job isn't just to work with the analytics that exist, but to **actively design and set up the tracking infrastructure the team needs for long-term user insight.**"
       },
       {
         "title": "Friction is psychological, not just physical",
-        "body": "I observed that users did not abandon Step 5 simply because there were 'many fields' to type. They abandoned because those fields were presented all at once, triggering an instant feeling of exhaustion and insecurity. Transforming the physical inputs into a progressive flow with inline 'why we ask' tags showed that managing cognitive load and user expectations is often more powerful than just cutting fields."
+        "body": "Users didn't abandon the registration form just because it had too many fields. They abandoned because all fields were presented at once, causing instant fatigue.\n\nTransforming the form into a progressive flow showed that **managing cognitive load and user expectations is often more powerful than simply cut-down fields.**"
       }
     ],
     "title": "BIT24 KYC & REGISTRATION",
@@ -171,13 +167,13 @@ export const PROJECTS: Project[] = [
     "impactSections": [
       {
         "title": "From a leaky funnel to a measurable conversion lift",
-        "body": "The research-backed design recommendations were implemented in a comprehensive UI overhaul: we created a simplified introductory screen with explicit multi-step progress indicators, added clear back navigation, integrated real-time password validation, and split the bloated personal details form into a conversational progressive disclosing wizard with inline 'why we need this' explainers.\n\nFour months following the deployment, quantitative metrics showed highly successful outcomes:\n\n- **15% Overall Registration Conversion Lift**: Reached the primary business objective, boosting successful registration and KYC completion rates.\n- **30% Lift in Step 5 Form Completion**: Mitigated form fatigue and cognitive limits by restructuring inputs into progressive disclosure steps.\n- **30% Customer Support Reduction**: Successfully minimized user error complaints and help requests regarding registration and password setup.\n- **Alignment of Marketing Intent**: Identified and removed mistargeted campaigns, optimizing marketing ROI and pre-onboarding communication.\n- **Data Foundation Established**: Created a robust GA4 tracking blueprint to eliminate analytical blindspots across external iframe services.\n- **Strategic Tech Decisions**: Empowered by the research evidence, the product steering committee approved migration plans toward Farashenasa and UAID automated services, eliminating the manual review queue entirely."
+        "body": "The optimization of the identity verification and compliance funnel translated into immediate, scan-friendly UX milestones:\n\n- **~30% completion rate lift in the registration form** by restructuring fields into progressive disclosure steps\n- **Reduced form fatigue and interactive confusion** through cleaner password validation and contextual cues\n- **Elimination of marketing attribution errors** by calling out and weeding out mistargeted ad campaigns\n- **A new GA4 verification tracking model** that closed legacy measurement blindspots across iframe frames\n- **Strategic migration roadmap setup** that got executive buy-in for future automated verification solutions"
       }
     ],
     "timeline": "4 Months • 2023",
     "description": "Turning a leaky onboarding funnel into a 15% conversion lift",
     "figmaLink": "",
-    "outcome": "- 15% increase in registration-to-KYC conversion rate after implementation\n\n- 30% improvement in personal information form completion by reducing cognitive load and restructuring inputs\n\n- 30% reduction in registration-related support complaints and user-reported onboarding issues\n\n- Identified mistargeted acquisition campaigns and helped improve marketing traffic quality\n\n- Established Bit24's first reliable onboarding measurement framework for ongoing funnel analysis",
+    "outcome": "- ~30% improvement in Step 5 conversion — the previously highest drop-off point in the funnel\n\n- Reduced form friction by minimizing mandatory fields and adding contextual explanations\n\n- Surfaced mistargeted ad campaigns that were artificially inflating drop-off at Step 2\n\n- Identified data infrastructure gaps and established a tracking roadmap for future phases\n\n- Recommended transition to a more capable identity verification service to eliminate manual video review",
     "takeawayText": "",
     "ctaEnabled": true,
     "ctaLabel": "KYC LANDING PAGE",

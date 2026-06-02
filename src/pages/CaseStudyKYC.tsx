@@ -194,8 +194,17 @@ export default function CaseStudyKYC() {
                 <div key={index} style={{ marginTop: index === 0 ? '0' : '32px' }}>
                   <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700' }}>{section.title}<br/></span>
                   <br/>
-                  <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400' }}>
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body}</ReactMarkdown>
+                  <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', lineHeight: '1.6' }} className="prose prose-sm max-w-none text-[#656161]">
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        ul: ({ children }) => <ul className="list-disc list-outside pl-4 space-y-3 mt-4 mb-4">{children}</ul>,
+                        li: ({ children }) => <li className="mb-2 text-[16px] text-[#656161] leading-relaxed">{children}</li>,
+                        p: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>
+                      }}
+                    >
+                      {section.body}
+                    </ReactMarkdown>
                   </div>
                 </div>
               ))}
@@ -341,10 +350,8 @@ export default function CaseStudyKYC() {
           <div style={{ width: '100%' }}>
             <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>FROM FINDINGS TO SOLUTIONS</span>
             <br/><br/>
-            <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>Selected design interventions developed from the research findings and prioritized for implementation.</span>
-            <br/><br/>
             <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word', lineHeight: '1.6' }}>
-              Following the research phase, the findings were translated into a series of design improvements targeting the highest-impact usability issues. The examples below highlight a selection of the changes introduced to simplify critical workflows, reduce friction, and improve task completion confidence.
+              Following the presentation of research findings to stakeholders, cross-functional feedback was incorporated into the proposed improvements. The required wireframes, annotations, and supporting documentation were handed off to the development team, and high-impact recommendations were prioritized within the product backlog. The examples below illustrate design changes directly driven by the research described throughout this case study.
             </div>
             {project.findingsToSolutionsImage && (
               <div style={{ marginTop: '48px', width: '100%' }}>
@@ -370,8 +377,17 @@ export default function CaseStudyKYC() {
                 <div key={index}>
                   <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>{section.title}<br/></span>
                   <br />
-                  <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body}</ReactMarkdown>
+                  <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word', lineHeight: '1.6' }} className="prose prose-sm max-w-none text-[#656161]">
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        ul: ({ children }) => <ul className="list-disc list-outside pl-4 space-y-3 mt-4 mb-4">{children}</ul>,
+                        li: ({ children }) => <li className="mb-2 text-[16px] text-[#656161] leading-relaxed">{children}</li>,
+                        p: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>
+                      }}
+                    >
+                      {section.body}
+                    </ReactMarkdown>
                   </div>
                 </div>
               ))}
@@ -388,10 +404,12 @@ export default function CaseStudyKYC() {
         <section className="px-12 max-w-[1280px] mx-auto" style={{ paddingTop: '64px', paddingBottom: '120px', paddingLeft: '48px', paddingRight: '48px' }}>
           <div style={{ width: '100%' }}>
             <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>TAKEAWAY</span>
+            <br/>
+            <br/>
             <div style={{ marginTop: '0' }}>
               {project.takeawaySections.map((section, index) => (
-                <div key={index} style={{ marginTop: index === 0 ? '0' : '48px' }}>
-                  <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', display: 'block', marginBottom: '12px' }}>{section.title}</span>
+                <div key={index} style={{ marginTop: index === 0 ? '0' : '40px' }}>
+                  <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', display: 'block', marginBottom: '16px' }}>{section.title}</span>
                   <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400' }}>
                     <ReactMarkdown 
                       remarkPlugins={[remarkGfm]}
