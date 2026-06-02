@@ -103,7 +103,7 @@ export default function CaseStudySpot() {
                     <img
                       src={project.heroMockup}
                       alt="Mockup"
-                      className="w-[115%] -ml-[7.5%] sm:w-full sm:ml-0 lg:w-[155%] xl:w-[165%] max-w-none h-auto drop-shadow-2xl lg:-ml-8"
+                      className="w-[135%] -ml-[17.5%] sm:w-full sm:ml-0 lg:w-[155%] xl:w-[165%] max-w-none h-auto drop-shadow-2xl lg:-ml-8"
                       referrerPolicy="no-referrer"
                     />
                   )}
@@ -320,8 +320,17 @@ export default function CaseStudySpot() {
                 <div key={index}>
                   <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>{section.title}<br/></span>
                   <br />
-                  <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word' }}>
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{section.body}</ReactMarkdown>
+                  <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word', lineHeight: '1.6' }} className="prose prose-sm max-w-none text-[#656161]">
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        ul: ({ children }) => <ul className="list-disc list-outside pl-4 space-y-3 mt-4 mb-4">{children}</ul>,
+                        li: ({ children }) => <li className="mb-2 text-[16px] text-[#656161] leading-relaxed">{children}</li>,
+                        p: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>
+                      }}
+                    >
+                      {section.body}
+                    </ReactMarkdown>
                   </div>
                 </div>
               ))}

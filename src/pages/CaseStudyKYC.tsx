@@ -103,7 +103,7 @@ export default function CaseStudyKYC() {
                     <img
                       src={project.heroMockup}
                       alt="Mockup"
-                      className="w-[115%] -ml-[7.5%] sm:w-full sm:ml-0 lg:w-[175%] xl:w-[190%] max-w-none h-auto drop-shadow-2xl lg:-ml-12 xl:-ml-16"
+                      className="w-[135%] -ml-[17.5%] sm:w-full sm:ml-0 lg:w-[175%] xl:w-[190%] max-w-none h-auto drop-shadow-2xl lg:-ml-12 xl:-ml-16"
                       referrerPolicy="no-referrer"
                     />
                   )}
