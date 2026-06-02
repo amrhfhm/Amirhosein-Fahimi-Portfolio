@@ -195,7 +195,7 @@ export const PROJECTS: Project[] = [
       {
         "title": "Phase 1: Discovery — Scoping & Framing",
         "subtitle": "Initial scoping questions for the Spot PM — covering problem scope, available data, market context, and early hypotheses",
-        "body": "01 — Clarifying technical boundaries and business intent.\n\nI structured detailed scoping interviews with the Spot Product Manager to uncover basic technical constraints and define the operational boundaries of the trading engine. This was essential to avoid pursuing unrealistic layout ideas and to ensure our research hypotheses directly tracked actionable engineering scope, saving business resources and establishing clear success parameters.",
+        "body": "01 — Clarifying technical boundaries and business intent.\n\nI structured detailed scoping **interviews with the Spot Product Manager to uncover basic technical constraints and define the operational boundaries** of the trading engine. This was essential to avoid pursuing unrealistic layout ideas and to ensure our research hypotheses directly tracked actionable engineering scope, saving business resources and establishing clear success parameters.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780209411/PM_INTERVIEW_jjgtrk.png"
       },
       {
@@ -205,7 +205,7 @@ export const PROJECTS: Project[] = [
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780209584/RP1_hbelcm.png"
       },
       {
-        "title": "Phase 1: Development — Executing Research & Synthesizing Findings",
+        "title": "Phase 1: Development — Executing Research",
         "subtitle": "",
         "body": "03 — Running the UX Assessment.\n\nAs outlined in the research plan, we began the execution phase with a specialized UX Assessment of the product.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780210019/UX_Assessment_dow9g9.png"
@@ -213,31 +213,31 @@ export const PROJECTS: Project[] = [
       {
         "title": "Phase 1: Development — Heuristic Walkthrough",
         "subtitle": "Heuristic evaluation of the live Spot terminal — 15+ friction points mapped against Nielsen's principles",
-        "body": "04 — Auditing the live order terminal against established principles.\n\nI performed a rigorous usability walkthrough of the live Spot terminal. I evaluated each step against Jakob Nielsen's Usability Heuristics, which was crucial for identifying surface-level flaws without bias. The audit cataloged over 15 high-severity friction points — including poor input validation and visual grouping gaps — into a prioritized review log.",
-        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780210510/01_yqlzww.png"
+        "body": "04 — Auditing the live order terminal against established principles.\n\nI performed a rigorous usability walkthrough of the live Spot terminal. I evaluated each step against Jakob Nielsen's Usability Heuristics, which was crucial for identifying surface-level flaws without bias. **The audit cataloged over 15 high-severity friction points** — including poor input validation and visual grouping gaps — into a prioritized review log.",
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780391657/heu_n64ycr.png"
       },
       {
         "title": "Phase 1: Development — Competitive Benchmarking",
         "subtitle": "Competitor analysis — domestic and global crypto terminals benchmarked",
-        "body": "05 — Benchmarking industry-standard professional layouts.\n\nI benchmarked domestic crypto terminals and leading global products. This was necessary to map the mental expectations that active traders held when using order books. The benchmarking revealed a standard model for separating color cues and trade confirmations, showing that our existing single-confirm structure violated safety expectations.",
+        "body": "05 — Benchmarking industry-standard professional layouts.\n\nI benchmarked domestic crypto terminals and leading global products. This was necessary to map the mental expectations that active traders held.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780210519/02_bgzplq.png"
       },
       {
         "title": "Phase 1: Development — Stakeholder Discovery",
-        "subtitle": "Stakeholder interviews — unlogged complaints and competitive threats surfaced from five organizational heads",
-        "body": "06 — Harvesting unlogged customer complaints from business heads.\n\nI interviewed five core organizational heads — including the CEO, Lead Support Engineer, Head of Product Design, PM, and Crypto Domain Experts. This process allowed us to harvest unlogged support tickets and competitive threats. For example, the support lead revealed that a major portion of helpdesk calls were from confused beginners unable to configure limit-order thresholds, which reoriented my focus toward input simplification.",
+        "subtitle": "These are only a small sample of the questions and responses collected throughout the stakeholder interviews.",
+        "body": "06 — Harvesting unlogged customer complaints from business heads.\n\n**I interviewed five core organizational heads** — including the CEO, Support Lead, Head of Product Design, PM, and One of Crypto Domain Experts. This process allowed us to harvest unlogged support tickets and competitive threats. For example, the support lead revealed that a major portion of helpdesk calls were from confused beginners unable to configure limit-order thresholds, which reoriented my focus toward input simplification.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780210528/03_zktdbq.png"
       },
       {
         "title": "Phase 1: Development — Behavioral Analytics",
         "subtitle": "Microsoft Clarity heatmaps and session recordings — behavioral evidence validating the heuristic audit findings",
-        "body": "07 — Reviewing digital trace behavior of unmoderated users.\n\nTo prove that our audited issues mapped to real user behavior, I scrutinized heatmaps and live recordings in Microsoft Clarity. By observing where traders hovered in confusion or experienced high error rates when entering prices, I validated my heuristic audit with empirical behavioral evidence.",
+        "body": "07 — Reviewing digital trace behavior of unmoderated users.\n\nTo prove that our audited issues mapped to real user behavior, I analyzed heatmaps and live recordings in Microsoft Clarity. By observing where traders hovered in confusion or experienced high error rates when entering prices, I validated my heuristic audit with empirical behavioral evidence.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780210537/04_wkvu58.png"
       },
       {
         "title": "Phase 1: Synthesis & Decision Point",
         "subtitle": "",
-        "body": "After synthesizing findings from the UX Assessment, stakeholder interviews, competitive benchmarking, and behavioral analytics, I presented the results to the Product Manager. While several usability issues and hypotheses emerged, it remained unclear which problems had the greatest impact on engagement and whether fixing them would meaningfully change user behavior.\n\nBecause the Spot product required significant engineering effort, implementing solutions before validating their importance would have been costly. We therefore decided to validate the findings through additional research before moving into development.\n\nSince the core question was why users were disengaging, I shifted the research strategy toward qualitative methods. Usability testing was selected as the next step because direct observation offered the fastest way to understand how active traders interacted with the product and where friction affected task completion.\n\nTo document the new objectives, participant criteria, and methods, the project entered a second research phase and returned to the Definition stage with a new research plan.",
+        "body": "While initial insights highlighted key trading problems, designing answers for a complex order terminal without empirical proof introduced high engineering risk. **We decided to execute moderated usability testing because direct observation was the only way to validate how active traders configured orders and where critical friction stopped execution.** Shifting to qualitative testing helped us align phase two objectives and map out our updated research goals.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780269171/DB_ii8kdk.png"
       },
       {
@@ -255,38 +255,38 @@ export const PROJECTS: Project[] = [
       {
         "title": "Phase 2: Development — User Segmentation & Recruiting",
         "subtitle": "",
-        "body": "10 — Sourcing a representative participant panel through behavioral data.\n\nWe requested three months of user activity data from the data team — covering user IDs, platform usage per trade, order types, and successful transaction volume. To keep segmentation precise without over-complicating the sample, we used two variables: platform type (mobile vs. desktop) and product knowledge level (beginner vs. advanced). This produced three prioritized segments: Mobile Beginners, Desktop Traders (beginners and advanced merged due to low count), and Mobile Advanced Traders.\n\nEach segment had 1,000+ eligible users, but we only needed 5–6 per segment. Estimating a 1–2% conversion funnel from SMS to confirmed participant, we sent ~300 invitations per segment — roughly 1,000 total. To sample representatively from each 1,000+ pool, we sorted users by total successful transaction volume, divided them into three tiers (high, medium, low), and randomly selected ~100 from each tier before sending invitations. Backup participants were recruited for each segment to cover no-shows.",
+        "body": "10 — Sourcing a representative participant panel through behavioral data.\n\nWe requested three months of user activity data to segment our user base. To keep sampling precise, **we used two variables: product knowledge level (novice vs. advanced) and platform usage (mobile vs. desktop).** This yielded key segments: Mobile Novices, Desktop Traders, and Mobile Advanced Traders.\n\nOut of 1,000+ eligible users per segment, we recruited 5–6 participants each. **We sampled representatively by sorting users into transactional volume tiers (high, medium, low) and randomly inviting users** via SMS screener, maintaining backup slots to protect session schedules.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780270078/target_user_pool_zo4w6t.png"
       },
       {
         "title": "Phase 2: Development — Logistics & Session Preparation",
         "subtitle": "A section of the screener sent to target users",
-        "body": "11 — Designing the testing infrastructure for remote moderated sessions.\n\nSince Bit24 users were distributed across Iran — many in smaller cities — in-person testing would have introduced geographic bias. We chose remote moderated testing via Google Meet (unblocked in Iran) and paired it with a CRM team member as note-taker and a finance team contact to handle incentive transfers at the start of each session.\n\nPreparation included: an SMS screener doubling as an invitation (covering user background, recent Spot activity, and scheduling), a consent and expectations form, Google Meet onboarding tutorial videos sent via email, and a Discussion Guide in three parts — session conduct notes, a facilitator welcome script, and a structured task list derived from Phase 1 hypotheses.",
+        "body": "11 — Designing the testing infrastructure for remote moderated sessions.\n\nTo prevent geographic bias across Iran, **we conducted remote moderated sessions via Google Meet.** We paired the facilitator with a CRM note-taker and finance team contact.\n\nOur testing package included: **an SMS recruitment screener and invitation**, consent and expectations forms, Google Meet onboarding tutorial materials sent via email, and **a structured Discussion Guide outline** (including facilitator welcome script and target task list based on Phase 1 hypotheses).",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780270214/screener_yfsguk.png"
       },
       {
         "title": "Phase 2: Development — Pilot Testing & Execution",
         "subtitle": "",
-        "body": "12 — Validating the process before running live sessions.\n\nBefore meeting external participants, I ran a pilot session with an internal colleague to stress-test task lengths, screen-sharing flows, and logging tools. The simulation surfaced several adjustments needed in the task list before going live. I then facilitated 5 sessions with Mobile Beginners and 4 with Desktop Traders — 9 total. After each session, brief debrief conversations with the PM helped track emerging patterns and keep the research aligned with product priorities. After 9 sessions, we reached result saturation and deferred the Mobile Advanced segment to a future research cycle.",
+        "body": "12 — Validating the process before running live sessions.\n\n**We ran an internal pilot session** to refine our task list, test screen-sharing flows, and calibrate logging tools. I then facilitated **9 remote moderated sessions** (5 with Mobile Novices, 4 with Desktop Traders), conducting brief post-session debriefs with the PM.\n\nAfter 9 sessions, **we achieved research saturation and deferred the Mobile Advanced segment** to protect engineering timelines and focus on immediate high-friction issues.",
         "image": ""
       },
       {
         "title": "Phase 2: Delivery — Analysis & KPI Dashboard",
         "subtitle": "A snapshot of key findings from the analysis",
         "body": "13 — Auditing session recordings against predefined usability metrics.\n\nBefore running sessions, I defined four KPIs upfront to ensure analysis would be structured and comparable across participants:\n- **Error Rate** — identifying blocking, major, and minor friction points\n- **Task Completion Rate** — flagging flows where users consistently failed or struggled\n- **Time on Task** — surfacing steps that took longer than expected\n- **Task Ease Score** — measuring perceived difficulty on a 5-point scale\n\nEvery session recording was reviewed and logged in a centralized spreadsheet — capturing task text, user segment, participant quotes, error types and severity, completion status, time spent, ease score, and the path taken to complete each task. Qualitative observations were collected in a separate file. Post-analysis, feedback was exchanged with designers and the PM, and decisions were documented for implementation.",
-        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780270773/findings_tyisqx.png"
+        "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780392992/usa_gjujcs.png"
       },
       {
         "title": "Phase 2: Delivery — Cross-Functional Presentation",
         "subtitle": "A snapshot of the KPI results presented to stakeholders",
-        "body": "14 — Presenting findings and aligning stakeholders on redesign priorities.\n\nFindings were presented to the CEO, Head of Product, PM, designers, and engineers. The presentation covered the research process end-to-end and closed with KPI dashboards visualizing error rates, task completion, time-on-task, and ease scores across all sessions. Post-presentation, review comments were exchanged with designers and the PM, and decisions were documented to feed directly into the redesign sprint.",
+        "body": "14 — Presenting findings and aligning stakeholders on redesign priorities.\n\nFindings were presented to the CEO, Head of Product, PM, designers, and engineers. **The presentation covered the research process end-to-end and closed with KPI dashboards visualizing** error rates, task completion, time-on-task, and ease scores across all sessions. Post-presentation, review comments were exchanged with designers and the PM, and decisions were documented to feed directly into the redesign sprint.",
         "image": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780323801/kpis_v1_wljf0j.png"
       }
     ],
     "status": "Published",
     "role": "Lead UX Researcher & Product Designer",
     "heroSubtitle": "Diagnosed interactive complexity and optimized the order execution experience for professional traders. Conducted detailed heuristic evaluations, analyzed Microsoft Clarity session heatmaps, and moderated usability testing across user segments to drive key design updates, resulting in a 20% reduction in support requests.",
-    "roleResponsibilities": "- Led a two-phase UX research program to identify and remove engagement blockers in the Spot trading interface\n\n- Analyzed 50+ unmoderated session recordings and heatmaps in Microsoft Clarity to pinpoint click hesitation, scroll-backs, and UI deadlocks\n\n- Conducted stakeholder interviews with the CEO, PM, Support Lead, and domain experts to surface unlogged user complaints\n\n- Designed a recruiting framework — SMS screeners, sampling structure, and moderation scripts — to run 9 remote usability sessions\n\n- Tracked usability KPIs: task completion rate, error rate, time-on-task, and subjective ease score\n\n- Collaborated with design and engineering to translate findings into high-fidelity order-book UI recommendations",
+    "roleResponsibilities": "- Led a two-phase UX research program to identify and remove engagement blockers in the Spot trading interface\n\n- Analyzed 50+ Microsoft Clarity recordings and heatmaps to identify click hesitation, scroll-backs, and UI deadlocks\n\n- Conducted stakeholder interviews with the CEO, PM, Support Lead, and domain experts to surface unlogged user complaints\n\n- Designed a recruiting framework — SMS screeners, sampling, and moderation scripts — for 9 remote usability sessions\n\n- Tracked usability KPIs: task completion rate, error rate, time-on-task, and subjective ease score\n\n- Collaborated with design and engineering to translate findings into high-fidelity UI recommendations",
     "thinking": [
       {
         "content": "Most usability issues occurred during periods of heightened market volatility. Introducing a clear confirmation step overlaying real-time market slippage warnings gave beginners the reassurance they needed, reducing extreme error rates by 24% without degrading speed for power users.",
@@ -324,14 +324,14 @@ export const PROJECTS: Project[] = [
     "problemSections": [
       {
         "title": "A high-traffic, low-conversion engagement paradox",
-        "body": "Six months after launch, the Spot interface had visitors but not completed trades. The product was too complex to ship design changes based on speculation — we needed to know whether users were dropping off due to UI confusion, fear of trading errors, or competitive gaps."
+        "body": "**Six months after launch, the Spot interface had visitors but not completed trades.** The product was too complex to ship design changes based on speculation — we needed to know whether users were dropping off due to UI confusion, fear of trading errors, or competitive gaps."
       },
       {
         "title": "What heuristics and Clarity exposed",
         "body": "A heuristic walkthrough surfaced major cognitive gaps in the order flow. Clarity validated them: 50+ session recordings showed click hesitation, scroll retracing, and high error rates on limit orders. Stakeholder interviews added a critical layer — the support lead revealed a high volume of unlogged complaints about layout confusion and poor color contrast."
       }
     ],
-    "backgroundText": "Bit24 is a cryptocurrency exchange platform offering instant trading, dual investments, crypto-backed loans, and professional order-book trading. Six months after launching the Spot trading interface, the product had traffic but not the trading volume the business needed. I led a two-phase research initiative as the UX researcher — moving from behavioral analytics and heuristic audits in Phase 1 to remote moderated usability testing in Phase 2 — to diagnose what was driving users away and deliver actionable design recommendations.",
+    "backgroundText": "Bit24 is a cryptocurrency exchange platform offering instant trading, dual investments, crypto-backed loans, and professional trading. Six months after launching the Spot trading interface, the product had traffic but not the trading volume the business needed. I led a two-phase research initiative as the UX researcher — moving from behavioral analytics and heuristic audits in Phase 1 to remote moderated usability testing in Phase 2 — to diagnose what was driving users away and deliver actionable design recommendations.",
     "backgroundImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780268527/mobile_view_ehf5zt.png",
     "overview": "Diagnosing low engagement and high interactive error rates in professional Spot trading using unmoderated Clarity analytics, structured heuristics, and remote-moderated user usability tests to guide layout redesigns.",
     "problem": "Users found the trading interface intimidating and experience-dense, resulting in high cognitive anxiety, high limit order error rates, and constant support queries.",
@@ -341,13 +341,13 @@ export const PROJECTS: Project[] = [
     "impactSections": [
       {
         "title": "From vague engagement concerns to a measurable drop in UX complaints",
-        "body": "The initial success metric — number of completed trades — was too broad to isolate UX impact. Crypto market conditions, macroeconomics, marketing campaigns, and technical issues all influence trade volume independently. To measure what our work actually moved, I collaborated with the CRM team to define a tighter proxy: monthly UX-related support complaints for the Spot product.\n\nI set up weekly CRM review sessions to track UX issues across products. After the redesigned Spot interface launched, average monthly UX complaints dropped by approximately 20% — from up to 15 issues per month down to 10–12. This reduction provided concrete evidence that the research translated into a meaningfully better experience, even without a perfectly controlled success metric. The project also established Bit24's first standardized usability testing framework — reusable recruiting pipelines, incentive structures, and discussion guides adopted across subsequent product teams."
+        "body": "The optimization of the trading terminal translated into immediate, measurable UX milestones:\n\n- **~20% reduction in monthly UX-related support complaints** following the Spot terminal redeployment\n- **Establishment of Bit24's first standardized usability testing framework**, ensuring rigorous pre-release research\n- **Reusable recruiting process** based on precise tier-based SMS segmentation\n- **Reusable incentive structures** coordinate smoothly with cross-functional finance teams\n- **Reusable discussion guides** and testing scripts adopted by subsequent product teams\n- **Improved visibility into UX issues** via structured weekly CRM review and feedback sessions"
       }
     ],
     "order": 2,
     "description": "Diagnosing low engagement through usability testing to cut support complaints by 20%",
     "timeline": "8 Months • 2022",
-    "outcome": "- ~20% reduction in monthly UX-related support complaints following redesign\n\n- Ran 9 moderated remote usability sessions across desktop and mobile beginner segments, reaching result saturation\n\n- Established Bit24's first standardized usability testing framework — reusable screening templates, incentive structures, and moderation scripts\n\n- Validated a high-contrast confirmation pattern that reduced high-volatility trading error rates by 24%",
+    "outcome": "- ~20% reduction in monthly UX-related support complaints following redesign\n\n- Ran 9 moderated remote usability sessions across desktop and mobile beginner segments, reaching result saturation\n\n- Established Bit24's first standardized usability testing framework — reusable screening templates, incentive structures, and moderation scripts",
     "figmaLink": "",
     "takeawayText": "",
     "takeawaySections": [

@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { BackToTop } from "../components/BackToTop";
 import { PROJECTS } from "../data/projects";
+import { MobileLightbox } from "../components/MobileLightbox";
 
 export default function CaseStudyKYC() {
   const project = PROJECTS.find((p) => p.id === "bit24-kyc");
@@ -102,7 +103,7 @@ export default function CaseStudyKYC() {
                     <img
                       src={project.heroMockup}
                       alt="Mockup"
-                      className="w-full lg:w-[175%] xl:w-[190%] max-w-none h-auto drop-shadow-2xl lg:-ml-12 xl:-ml-16"
+                      className="w-[115%] -ml-[7.5%] sm:w-full sm:ml-0 lg:w-[175%] xl:w-[190%] max-w-none h-auto drop-shadow-2xl lg:-ml-12 xl:-ml-16"
                       referrerPolicy="no-referrer"
                     />
                   )}
@@ -429,6 +430,7 @@ export default function CaseStudyKYC() {
         </footer>
       )}
       <BackToTop />
+      <MobileLightbox />
     </div>
   );
 }

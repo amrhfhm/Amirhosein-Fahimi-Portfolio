@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { BackToTop } from "../components/BackToTop";
 import { PROJECTS } from "../data/projects";
+import { MobileLightbox } from "../components/MobileLightbox";
 
 export default function CaseStudyGG10() {
   const project = PROJECTS.find((p) => p.id === "gg10");
@@ -390,6 +391,7 @@ export default function CaseStudyGG10() {
         </footer>
       )}
       <BackToTop />
+      <MobileLightbox />
     </div>
   );
 }

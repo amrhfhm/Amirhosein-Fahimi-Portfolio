@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { BackToTop } from "../components/BackToTop";
 import { PROJECTS } from "../data/projects";
+import { MobileLightbox } from "../components/MobileLightbox";
 
 export default function CaseStudy() {
   const { id } = useParams();
@@ -107,7 +108,7 @@ export default function CaseStudy() {
                     <img
                       src={project.heroMockup}
                       alt="Mockup"
-                      className="w-full lg:w-[155%] xl:w-[165%] max-w-none h-auto drop-shadow-2xl lg:-ml-8"
+                      className="w-[115%] -ml-[7.5%] sm:w-full sm:ml-0 lg:w-[155%] xl:w-[165%] max-w-none h-auto drop-shadow-2xl lg:-ml-8"
                       referrerPolicy="no-referrer"
                     />
                   )}
@@ -399,6 +400,7 @@ export default function CaseStudy() {
         </footer>
       )}
       <BackToTop />
+      <MobileLightbox />
     </div>
   );
 }

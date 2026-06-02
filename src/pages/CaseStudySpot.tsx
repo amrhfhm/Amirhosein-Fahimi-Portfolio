@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { BackToTop } from "../components/BackToTop";
 import { PROJECTS } from "../data/projects";
+import { MobileLightbox } from "../components/MobileLightbox";
 
 export default function CaseStudySpot() {
   const project = PROJECTS.find((p) => p.id === "bit24-spot");
@@ -102,7 +103,7 @@ export default function CaseStudySpot() {
                     <img
                       src={project.heroMockup}
                       alt="Mockup"
-                      className="w-full lg:w-[155%] xl:w-[165%] max-w-none h-auto drop-shadow-2xl lg:-ml-8"
+                      className="w-[115%] -ml-[7.5%] sm:w-full sm:ml-0 lg:w-[155%] xl:w-[165%] max-w-none h-auto drop-shadow-2xl lg:-ml-8"
                       referrerPolicy="no-referrer"
                     />
                   )}
@@ -241,17 +242,9 @@ export default function CaseStudySpot() {
 
                                   const textContent = getStringText(children).trim();
 
-                                  const targetStrings = [
-                                    "01 — Clarifying technical boundaries and business intent.",
-                                    "02 — Structuring a multi-step research framework to evaluate friction.",
-                                    "03 — Running the UX Assessment.",
-                                    "04 — Auditing the live order terminal against established principles.",
-                                    "05 — Benchmarking industry-standard professional layouts.",
-                                    "06 — Harvesting unlogged customer complaints from business heads.",
-                                    "07 — Reviewing digital trace behavior of unmoderated users."
-                                  ];
+                                  const isNumberedStep = /^(0[1-9]|1[0-4])\s*—/.test(textContent);
 
-                                  if (targetStrings.includes(textContent)) {
+                                  if (isNumberedStep) {
                                     return (
                                       <p style={{ fontFamily: 'Inter', fontSize: '18px', color: '#242424', fontWeight: '700' }}>
                                         {children}
@@ -302,10 +295,8 @@ export default function CaseStudySpot() {
           <div style={{ width: '100%' }}>
             <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>FROM FINDINGS TO SOLUTIONS</span>
             <br/><br/>
-            <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word' }}>Selected design interventions developed from the research findings and prioritized for implementation.</span>
-            <br/><br/>
             <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word', lineHeight: '1.6' }}>
-              Following the research phase, the findings were translated into a series of design improvements targeting the highest-impact usability issues. The examples below highlight a selection of the changes introduced to simplify critical workflows, reduce friction, and improve task completion confidence.
+              Following the presentation of research findings to stakeholders, cross-functional feedback was thoroughly incorporated into our design adjustments. The necessary wireframes and interaction documentation were handed off to the dev team, prioritizing high-impact optimizations directly into the product backlog. Implemented incrementally over time, the designs below represent changes directly driven by the research described throughout this case study.
             </div>
             <div style={{ marginTop: '48px', width: '100%' }}>
               <img 
@@ -347,10 +338,12 @@ export default function CaseStudySpot() {
         <section className="px-12 max-w-[1280px] mx-auto" style={{ paddingTop: '64px', paddingBottom: '120px', paddingLeft: '48px', paddingRight: '48px' }}>
           <div style={{ width: '100%' }}>
             <span style={{ color: '#1A1A1A', fontSize: '28px', fontFamily: 'Inter', fontWeight: '800', wordWrap: 'break-word' }}>TAKEAWAY</span>
+            <br/>
+            <br/>
             <div style={{ marginTop: '0' }}>
               {project.takeawaySections.map((section, index) => (
-                <div key={index} style={{ marginTop: index === 0 ? '0' : '48px' }}>
-                  <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', display: 'block', marginBottom: '12px' }}>{section.title}</span>
+                <div key={index} style={{ marginTop: index === 0 ? '0' : '40px' }}>
+                  <span style={{ color: '#242424', fontSize: '18px', fontFamily: 'Inter', fontWeight: '700', display: 'block', marginBottom: '16px' }}>{section.title}</span>
                   <div style={{ color: '#656161', fontSize: '16px', fontFamily: 'Inter', fontWeight: '400' }}>
                     <ReactMarkdown 
                       remarkPlugins={[remarkGfm]}
@@ -389,6 +382,7 @@ export default function CaseStudySpot() {
         </footer>
       )}
       <BackToTop />
+      <MobileLightbox />
     </div>
   );
 }
