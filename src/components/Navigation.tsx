@@ -71,7 +71,7 @@ export default function Navigation() {
         <a href="/#work" onClick={(e) => handleNavClick(e, 'work')} className="hover:text-black transition-all">Projects</a>
         <a href="/#testimonials" onClick={(e) => handleNavClick(e, 'testimonials')} className="hover:text-black transition-all">Testimonials</a>
         <a href="/#contact" onClick={(e) => handleNavClick(e, 'contact')} className="hover:text-black transition-all">Contact</a>
-        <a href="https://drive.google.com/file/d/1hHXWz3g4N3qNtl_Q5TY_JNWnGtuwmGMp/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-all">Resume</a>
+        <a href="https://drive.google.com/file/d/1D2dZOB6SFPoUs2YVF5I1XjJq_UHJXosE/view?usp=drive_link" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-all">Resume</a>
       </motion.div>
 
       {/* Mobile menu indicator */}
@@ -116,7 +116,7 @@ export default function Navigation() {
                 { label: "Projects", href: "/#work", id: "work" },
                 { label: "Testimonials", href: "/#testimonials", id: "testimonials" },
                 { label: "Contact", href: "/#contact", id: "contact" },
-                { label: "Resume", href: "https://drive.google.com/file/d/1hHXWz3g4N3qNtl_Q5TY_JNWnGtuwmGMp/view?usp=sharing" }
+                { label: "Resume", href: "https://drive.google.com/file/d/1D2dZOB6SFPoUs2YVF5I1XjJq_UHJXosE/view?usp=drive_link" }
               ].map((item, i) => (
                 item.href.startsWith('http') ? (
                   <a
