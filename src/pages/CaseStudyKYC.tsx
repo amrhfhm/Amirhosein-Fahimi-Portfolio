@@ -297,7 +297,7 @@ export default function CaseStudyKYC() {
                     );
                   } else {
                     return (
-                      <div style={{ flexDirection: 'column', display: 'flex', gap: '150px', marginTop: '50px', width: '100%' }}>
+                      <div style={{ flexDirection: 'column', display: 'flex', gap: '150px', marginTop: '150px', width: '100%' }}>
                         {project.approachSteps.map((step, index) => (
                           <div key={index} style={{ flexDirection: 'column', display: 'flex', gap: '32px', width: '100%' }}>
                             <div>

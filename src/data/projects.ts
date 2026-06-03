@@ -166,14 +166,14 @@ export const PROJECTS: Project[] = [
     "impactImage": "https://res.cloudinary.com/dujb86o8g/image/upload/f_auto,q_auto/v1780335609/funnel_v_final_kgyp0d.png",
     "impactSections": [
       {
-        "title": "From a leaky funnel to a measurable conversion lift",
-        "body": "The optimization of the identity verification and compliance funnel translated into immediate, scan-friendly UX milestones:\n\n- **~30% completion rate lift in the registration form** by restructuring fields into progressive disclosure steps\n- **Reduced form fatigue and interactive confusion** through cleaner password validation and contextual cues\n- **Elimination of marketing attribution errors** by calling out and weeding out mistargeted ad campaigns\n- **A new GA4 verification tracking model** that closed legacy measurement blindspots across iframe frames\n- **Strategic migration roadmap setup** that got executive buy-in for future automated verification solutions"
+        "title": "From a leaky onboarding funnel to a measurable conversion lift",
+        "body": "The generic tracking in GA4 made it hard to tell if user leakage was due to UX friction or bad marketing traffic. By auditing the infrastructure and filtering out mistargeted ad campaigns, I isolated the core UX issues. Post-launch, the overall onboarding completion rate jumped from 18.5% to 45.9%, driven by a conversion lift at the highest bottleneck (Step 5). This success also secured executive buy-in for a long-term shift toward automated verification."
       }
     ],
     "timeline": "4 Months • 2023",
     "description": "Turning a leaky onboarding funnel into a 15% conversion lift",
     "figmaLink": "",
-    "outcome": "- ~30% improvement in Step 5 conversion — the previously highest drop-off point in the funnel\n\n- Reduced form friction by minimizing mandatory fields and adding contextual explanations\n\n- Surfaced mistargeted ad campaigns that were artificially inflating drop-off at Step 2\n\n- Identified data infrastructure gaps and established a tracking roadmap for future phases\n\n- Recommended transition to a more capable identity verification service to eliminate manual video review",
+    "outcome": "- Mapped the end-to-end KYC onboarding funnel in GA4 to diagnose and visualize real-time user drop-off points across the conversion journey.\n\n- Conducted mixed-method research specifically targeting Step 5 (the highest drop-off point), uncovering severe form friction, confusing validation cues, and interaction fatigue.\n\n- Identified legacy tracking blindspots during the funnel audit, establishing a robust GA4 infrastructure roadmap to fix broken iframe measurements.\n\n- Collaborated with the Marketing team to analyze acquisition traffic, successfully surfacing and weeding out mistargeted ad campaigns that were inflating early-funnel drop-offs.",
     "takeawayText": "",
     "ctaEnabled": true,
     "ctaLabel": "KYC LANDING PAGE",
@@ -337,13 +337,13 @@ export const PROJECTS: Project[] = [
     "impactSections": [
       {
         "title": "From vague engagement concerns to a measurable drop in UX complaints",
-        "body": "The optimization of the trading terminal translated into immediate, measurable UX milestones:\n\n- **~20% reduction in monthly UX-related support complaints** following the Spot terminal redeployment\n- **Establishment of Bit24's first standardized usability testing framework**, ensuring rigorous pre-release research\n- **Reusable recruiting process** based on precise tier-based SMS segmentation\n- **Reusable incentive structures** coordinate smoothly with cross-functional finance teams\n- **Reusable discussion guides** and testing scripts adopted by subsequent product teams\n- **Improved visibility into UX issues** via structured weekly CRM review and feedback sessions"
+        "body": "The initial success metric — number of completed trades — was too broad to isolate UX impact. To measure what our work actually moved, I collaborated with the CRM team to define a tighter proxy: monthly UX-related support complaints for the Spot product.\n\nAfter the redesigned interface launched, average monthly UX complaints dropped by approximately **20%** — from up to 15 issues per month down to 10–12. The project also established Bit24's **first standardized usability testing framework** — reusable recruiting pipelines, incentive structures, and discussion guides adopted across subsequent product teams."
       }
     ],
     "order": 2,
     "description": "Diagnosing low engagement through usability testing to cut support complaints by 20%",
     "timeline": "8 Months • 2022",
-    "outcome": "- ~20% reduction in monthly UX-related support complaints following redesign\n\n- Ran 9 moderated remote usability sessions across desktop and mobile beginner segments, reaching result saturation\n\n- Established Bit24's first standardized usability testing framework — reusable screening templates, incentive structures, and moderation scripts",
+    "outcome": "- Ran 9 moderated remote usability sessions across desktop and mobile beginner segments, reaching result saturation\n- Delivered research-driven design recommendations that reduced Spot monthly support reports by over 20%\n- Established Bit24's first reusable usability testing framework for future research cycles",
     "figmaLink": "",
     "takeawayText": "",
     "takeawaySections": [
