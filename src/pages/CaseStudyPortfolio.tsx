@@ -97,7 +97,7 @@ export default function CaseStudyPortfolio() {
                  initial={{ opacity: 0, x: 20 }}
                  animate={{ opacity: 1, x: 0 }}
                  transition={{ duration: 1, delay: 0.2 }}
-                 className="relative flex justify-center lg:justify-start w-full max-w-none"
+                 className="relative hidden lg:flex justify-center lg:justify-start w-full max-w-none"
               >
                   {typeof project.heroMockup === 'string' && (
                     <img
