@@ -103,7 +103,7 @@ export default function CaseStudySpot() {
                     <img
                       src={project.heroMockup}
                       alt="Mockup"
-                      className="w-[135%] -ml-[17.5%] sm:w-full sm:ml-0 lg:w-[155%] xl:w-[165%] max-w-none h-auto drop-shadow-2xl lg:-ml-8"
+                      className="w-full sm:w-full sm:ml-0 lg:w-[155%] xl:w-[165%] max-w-none h-auto drop-shadow-2xl lg:-ml-8"
                       referrerPolicy="no-referrer"
                     />
                   )}

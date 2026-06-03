@@ -61,7 +61,7 @@ export default function CaseStudyKYC() {
               <div className={`inline-block px-3 py-1 rounded-full text-[12px] font-bold tracking-widest ${getAccent(project.category)} mb-6`}>
                 {project.category.toUpperCase()}
               </div>
-              <h1 className="text-4xl sm:text-6xl lg:text-[60px] font-display font-medium tracking-tighter leading-tight text-[#242424] mb-8 text-balance break-words">
+              <h1 className="text-[60px] font-display font-medium tracking-tighter leading-tight text-[#242424] mb-8 text-balance break-words">
                 {project.title}
               </h1>
               {project.heroSubtitle && (
@@ -103,7 +103,7 @@ export default function CaseStudyKYC() {
                     <img
                       src={project.heroMockup}
                       alt="Mockup"
-                      className="w-[135%] -ml-[17.5%] sm:w-full sm:ml-0 lg:w-[175%] xl:w-[190%] max-w-none h-auto drop-shadow-2xl lg:-ml-12 xl:-ml-16"
+                      className="w-full sm:w-full sm:ml-0 lg:w-[175%] xl:w-[190%] max-w-none h-auto drop-shadow-2xl lg:-ml-12 xl:-ml-16"
                       referrerPolicy="no-referrer"
                     />
                   )}
