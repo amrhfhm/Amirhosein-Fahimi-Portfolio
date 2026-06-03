@@ -42,7 +42,7 @@ export default function CaseStudyKYC() {
       <div className="noise-bg" />
 
       {/* Hero Section */}
-      <section className="py-24 md:py-32 px-12 max-w-[1280px] mx-auto">
+      <section className="py-24 md:py-32 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1280px] mx-auto">
         <motion.div
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
@@ -61,7 +61,7 @@ export default function CaseStudyKYC() {
               <div className={`inline-block px-3 py-1 rounded-full text-[12px] font-bold tracking-widest ${getAccent(project.category)} mb-6`}>
                 {project.category.toUpperCase()}
               </div>
-              <h1 className="text-[60px] font-display font-medium tracking-tighter leading-tight text-[#242424] mb-8">
+              <h1 className="text-4xl sm:text-6xl lg:text-[60px] font-display font-medium tracking-tighter leading-tight text-[#242424] mb-8 text-balance break-words">
                 {project.title}
               </h1>
               {project.heroSubtitle && (

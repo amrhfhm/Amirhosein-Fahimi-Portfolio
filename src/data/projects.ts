@@ -171,7 +171,7 @@ export const PROJECTS: Project[] = [
       }
     ],
     "timeline": "4 Months • 2023",
-    "description": "Turning a leaky onboarding funnel into a 15% conversion lift",
+    "description": "Optimized a leaky onboarding funnel to drive a 30% conversion lift at its worst drop-off point",
     "figmaLink": "",
     "outcome": "- Mapped the end-to-end KYC onboarding funnel in GA4 to diagnose and visualize real-time user drop-off points across the conversion journey.\n\n- Conducted mixed-method research specifically targeting Step 5 (the highest drop-off point), uncovering severe form friction, confusing validation cues, and interaction fatigue.\n\n- Identified legacy tracking blindspots during the funnel audit, establishing a robust GA4 infrastructure roadmap to fix broken iframe measurements.\n\n- Collaborated with the Marketing team to analyze acquisition traffic, successfully surfacing and weeding out mistargeted ad campaigns that were inflating early-funnel drop-offs.",
     "takeawayText": "",
@@ -341,7 +341,7 @@ export const PROJECTS: Project[] = [
       }
     ],
     "order": 2,
-    "description": "Diagnosing low engagement through usability testing to cut support complaints by 20%",
+    "description": "Diagnosed low engagement through usability testing and redesigned the UI to reduce Spot's monthly support reports by 20%",
     "timeline": "8 Months • 2022",
     "outcome": "- Ran 9 moderated remote usability sessions across desktop and mobile beginner segments, reaching result saturation\n- Delivered research-driven design recommendations that reduced Spot monthly support reports by over 20%\n- Established Bit24's first reusable usability testing framework for future research cycles",
     "figmaLink": "",
