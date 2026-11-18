@@ -1,0 +1,107 @@
+---
+import { projects } from '../data/projects';
+const featured = projects.find((p) => p.featured)!;
+const rest = projects.filter((p) => !p.featured);
+---
+<section class="section" id="projects" aria-labelledby="projects-title">
+  <div class="container">
+    <h2 class="section-title" id="projects-title">Projects</h2>
+
+    <article class="featured">
+      <div class="featured-head">
+        <div>
+          <p class="eyebrow meta">Featured · {featured.org} · {featured.year}</p>
+          <h3>{featured.title}</h3>
+          <p class="summary">{featured.summary}</p>
+        </div>
+        <a class="btn btn-primary" href={`/work/${featured.slug}`}>
+          Open case study
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="screens">
+        {featured.decisions?.map((d, i) => (
+          <figure class="screen">
+            <div class="screen-img" role="img" aria-label="Screen to come">Screen {i + 1}</div>
+            <figcaption>
+              <span class="num">0{i + 1}</span>
+              <span>{d}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </article>
+
+    <div class="grid">
+      {rest.map((p) => (
+        <a class="card" href={`/work/${p.slug}`}>
+          <div class="cover">
+            {p.cover
+              ? <img src={p.cover} alt="" loading="lazy" decoding="async" width="1400" height="875" />
+              : <span>Cover to come</span>}
+          </div>
+          <div class="card-body">
+            <p class="eyebrow meta">{p.org} · {p.year}</p>
+            <h3>{p.title}</h3>
+            <p class="tag">{p.tag}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .meta { margin: 0 0 12px; color: var(--accent-text); }
+  .featured {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: clamp(24px, 3.5vw, 44px);
+  }
+  .featured-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; }
+  .featured h3 { margin: 0; font-size: clamp(26px, 3vw, 36px); line-height: 1.12; letter-spacing: -0.025em; font-weight: 600; max-width: 680px; }
+  .summary { margin: 14px 0 0; color: var(--muted); max-width: 620px; }
+  .btn-primary { background: var(--text); color: var(--bg); }
+
+  .screens { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 40px; }
+  .screen { margin: 0; }
+  .screen-img {
+    aspect-ratio: 9 / 17; border-radius: var(--radius-screen);
+    background: var(--placeholder); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 13px;
+  }
+  figcaption { display: flex; gap: 10px; margin-top: 16px; font-size: 15px; line-height: 1.5; }
+  .num {
+    flex: none; height: 24px; padding: 0 8px; border-radius: 7px;
+    background: var(--accent-soft); color: var(--accent-text);
+    font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+    display: inline-flex; align-items: center;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 24px; }
+  .card {
+    display: block; text-decoration: none;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 24px; padding: 14px;
+    transition: border-color .2s ease;
+  }
+  .card:hover { border-color: var(--muted); }
+  .cover {
+    aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden;
+    background: var(--placeholder);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 13px;
+  }
+  .cover img { width: 100%; height: 100%; object-fit: cover; }
+  .card-body { padding: 20px 8px 8px; }
+  .card h3 { margin: 0; font-size: 20px; line-height: 1.3; letter-spacing: -0.015em; font-weight: 600; }
+  .tag { margin: 8px 0 0; font-size: 14px; color: var(--muted); }
+
+  @media (max-width: 860px) {
+    .screens { grid-template-columns: 1fr; }
+    .screen-img { aspect-ratio: 4 / 3; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import { projects } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+---
+<Base title={`${project.title} · Amirhosein Fahimi`} description={project.summary}>
+  <div class="container">
+    <nav class="top" aria-label="Case study">
+      <a href="/#projects">← All projects</a>
+      <ThemeToggle />
+    </nav>
+    <main class="page">
+      <p class="eyebrow meta">{project.org} · {project.year}</p>
+      <h1>{project.title}</h1>
+      <p class="summary">{project.summary}</p>
+      <p class="soon">The full case study is being written. It will be here soon.</p>
+    </main>
+  </div>
+</Base>
+
+<style>
+  .top { display: flex; justify-content: space-between; align-items: center; padding-block: 20px; }
+  .top a { text-decoration: none; color: var(--muted); }
+  .page { padding-block: 64px 120px; max-width: 820px; }
+  .meta { margin: 0 0 14px; color: var(--accent-text); }
+  h1 { margin: 0; font-size: clamp(36px, 5vw, 56px); line-height: 1.06; letter-spacing: -0.035em; font-weight: 600; }
+  .summary { margin: 24px 0 0; font-size: 19px; color: var(--muted); }
+  .soon { margin-top: 48px; padding: 20px; border: 1px dashed var(--border); border-radius: 16px; color: var(--muted); }
+</style>

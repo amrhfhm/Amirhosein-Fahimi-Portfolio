@@ -1,0 +1,25 @@
+---
+import { site } from '../data/site';
+---
+<footer class="section contact" id="contact" aria-labelledby="contact-title">
+  <div class="container">
+    <p class="eyebrow label">Contact</p>
+    <h2 id="contact-title">Hiring for a product role?<br />Let's talk.</h2>
+    <div class="links">
+      <a class="btn btn-primary" href={`mailto:${site.email}`}>{site.email}</a>
+      <a class="btn btn-ghost" href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn btn-ghost" href={site.resume} target="_blank" rel="noopener">Resume</a>
+    </div>
+    <p class="fine">© {new Date().getFullYear()} {site.name}</p>
+  </div>
+</footer>
+
+<style>
+  .contact { border-top: 1px solid var(--border); }
+  .label { margin: 0 0 16px; color: var(--accent-text); }
+  h2 { margin: 0; font-size: clamp(36px, 5vw, 60px); line-height: 1.05; letter-spacing: -0.035em; font-weight: 600; }
+  .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+  .btn-primary { background: var(--text); color: var(--bg); }
+  .btn-ghost { border: 1px solid var(--border); }
+  .fine { margin: 72px 0 0; font-size: 14px; color: var(--muted); }
+</style>

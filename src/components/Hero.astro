@@ -1,0 +1,122 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { site, stats } from '../data/site';
+---
+<header class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <nav class="nav container" aria-label="Main">
+    <a href="#top" class="brand">{site.name}</a>
+    <div class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+      <a href={site.resume} target="_blank" rel="noopener">Resume</a>
+      <ThemeToggle />
+    </div>
+  </nav>
+
+  <div class="hero-body container">
+    <p class="availability">
+      <span class="dot" aria-hidden="true"></span>
+      {site.availability}
+    </p>
+    <p class="eyebrow role">Senior product designer · Fintech</p>
+    <h1>Complex rules,<br />simple products.</h1>
+    <p class="lede">
+      I design where banks, regulation and money set the rules. I frame the problem, make the call, and show what we traded away.
+    </p>
+    <div class="ctas">
+      <a class="btn btn-primary" href="/work/xpay-money-movement">
+        See featured case study
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn-ghost" href={site.resume} target="_blank" rel="noopener">Resume</a>
+    </div>
+  </div>
+
+  <div class="stats container">
+    {stats.map((s) => (
+      <a class="stat" href={s.href}>
+        <span class="stat-value">{s.value}</span>
+        <span class="stat-label">{s.label}</span>
+        <span class="stat-source">{s.source} →</span>
+      </a>
+    ))}
+  </div>
+</header>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    min-height: min(100svh, 940px);
+    display: flex;
+    flex-direction: column;
+    background: #0C0C0D;
+    color: #EDEDEB;
+    --toggle-border: #2E2E31;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(90deg, rgba(12,12,13,.96) 0%, rgba(12,12,13,.86) 45%, rgba(12,12,13,.4) 100%),
+      linear-gradient(180deg, rgba(12,12,13,0) 55%, #0C0C0D 100%),
+      radial-gradient(1200px 600px at 85% 30%, #26262A 0%, #0C0C0D 70%);
+  }
+  .nav {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding-block: 20px;
+  }
+  .brand { font-weight: 600; font-size: 17px; text-decoration: none; }
+  .nav-links { display: flex; align-items: center; gap: 24px; font-size: 15px; }
+  .nav-links a { text-decoration: none; color: #B8B8B3; }
+  .nav-links a:hover { color: #FFFFFF; }
+
+  .hero-body { padding-top: clamp(40px, 8vh, 88px); }
+  .hero-body > * { max-width: 780px; }
+  .availability {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin: 0;
+    min-height: 32px; padding: 0 14px;
+    border-radius: 999px; border: 1px solid #2E2E31;
+    background: rgba(22,22,23,.7);
+    font-size: 13px; color: #C9C9C4;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 999px; background: #3DD68C; }
+  .role { margin: 32px 0 14px; color: #FF8F66; }
+  h1 {
+    margin: 0;
+    font-weight: 600;
+    font-size: clamp(48px, 7vw, 84px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .lede { margin: 28px 0 0; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55; color: #C9C9C4; max-width: 600px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+  .btn-primary { background: #EDEDEB; color: #0C0C0D; }
+  .btn-ghost { border: 1px solid #3A3A3E; color: #EDEDEB; }
+
+  .stats {
+    margin-top: auto;
+    padding-top: 64px;
+    padding-bottom: 48px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .stat {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 28px 24px 0 0;
+    border-top: 1px solid #232326;
+    text-decoration: none;
+  }
+  .stat-value { font-weight: 600; font-size: clamp(36px, 4vw, 48px); letter-spacing: -0.03em; line-height: 1; }
+  .stat-label { font-size: 15px; color: #C9C9C4; }
+  .stat-source { font-family: var(--font-mono); font-size: 12px; color: #8A8A86; transition: color .2s; }
+  .stat:hover .stat-source { color: #FF8F66; }
+
+  @media (max-width: 860px) {
+    .nav-links a:not(:last-of-type) { display: none; }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 8px; }
+  }
+</style>

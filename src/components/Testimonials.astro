@@ -1,0 +1,33 @@
+---
+import testimonials from '../data/testimonials.json';
+---
+<section class="section" id="testimonials" aria-labelledby="testimonials-title">
+  <div class="container">
+    <h2 class="section-title" id="testimonials-title">What people I worked with say</h2>
+    <div class="list">
+      {testimonials.map((t) => (
+        <figure class="item">
+          <blockquote>{t.quote}</blockquote>
+          <figcaption>
+            <span class="name">{t.name}</span>
+            <span class="eyebrow role">{t.role}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .item {
+    margin: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 28px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-card); padding: 28px;
+  }
+  blockquote { margin: 0; font-size: 16px; line-height: 1.65; }
+  figcaption { display: flex; flex-direction: column; gap: 4px; }
+  .name { font-weight: 600; font-size: 15px; }
+  .role { font-size: 11px; color: var(--muted); }
+  @media (max-width: 960px) { .list { grid-template-columns: 1fr; } }
+</style>

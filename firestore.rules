@@ -1,28 +1,28 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Explicitly allow read for all collections used by the app
+    // Mirror of the rules published in the Firebase console on 2026-11-18.
+    // The redesigned site does not use Firebase; these rules only protect the old data.
     match /projects/{projectId} {
       allow get, list: if true;
-      allow create, update, delete: if true;
+      allow create, update, delete: if false;
     }
 
     match /testimonials/{testimonialId} {
       allow get, list: if true;
-      allow create, update, delete: if true;
+      allow create, update, delete: if false;
     }
 
     match /settings/{settingId} {
       allow get, list: if true;
-      allow create, update, delete: if true;
+      allow create, update, delete: if false;
     }
 
     match /analytics/{eventId} {
-      allow create: if true;
-      allow get, list, update, delete: if true; // In production this would be admin only
+      allow create: if request.resource.data.size() <= 10;
+      allow get, list, update, delete: if false;
     }
-    
-    // Default deny for everything else
+
     match /{document=**} {
       allow read, write: if false;
     }
