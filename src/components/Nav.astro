@@ -1,0 +1,74 @@
+---
+import { Icon } from 'astro-icon/components';
+import ThemeToggle from './ThemeToggle.astro';
+import { site } from '../data/site';
+
+interface Props { home?: boolean }
+const { home = true } = Astro.props;
+const base = home ? '' : '/';
+---
+<div class="nav-wrap">
+  <nav class="nav glass" aria-label="Main" data-nav>
+    <a href={home ? '#top' : '/'} class="brand">
+      <span class="mark" aria-hidden="true">AF</span>
+      <span class="brand-name">{site.name}</span>
+    </a>
+    <div class="links">
+      <a class="hide-sm" href={`${base}#projects`}>Projects</a>
+      <a class="hide-sm" href={`${base}#testimonials`}>Testimonials</a>
+      <a class="hide-sm" href={`${base}#contact`}>Contact</a>
+      <a class="resume" href={site.resume} target="_blank" rel="noopener">
+        Resume <Icon name="lucide:arrow-up-right" aria-hidden="true" />
+      </a>
+      <ThemeToggle />
+    </div>
+  </nav>
+</div>
+
+<style>
+  .nav-wrap {
+    position: fixed; top: 14px; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: center;
+    padding-inline: 14px;
+    pointer-events: none;
+  }
+  .nav {
+    pointer-events: auto;
+    width: 100%; max-width: 1200px;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding: 8px 8px 8px 10px;
+    border-radius: 999px;
+    color: var(--glass-text);
+    transition: background-color .3s ease, box-shadow .3s ease, max-width .4s cubic-bezier(.2,.8,.2,1);
+  }
+  :global(.scrolled) .nav { max-width: 980px; }
+
+  .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; font-size: 15px; }
+  .mark {
+    width: 32px; height: 32px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--glass-text); color: var(--glass-mark-text);
+    font-size: 12px; font-weight: 600; letter-spacing: -0.02em;
+  }
+  .links { display: flex; align-items: center; gap: 4px; font-size: 14px; }
+  .links a {
+    display: inline-flex; align-items: center; gap: 4px;
+    min-height: 40px; padding: 0 14px; border-radius: 999px;
+    text-decoration: none; color: var(--glass-muted);
+    transition: color .2s ease, background-color .2s ease;
+  }
+  .links a:hover { color: var(--glass-text); background: var(--glass-hover); }
+  .links a [data-icon] { width: 15px; height: 15px; }
+  .resume { color: var(--glass-text) !important; }
+
+  @media (max-width: 760px) {
+    .hide-sm { display: none !important; }
+    .brand-name { display: none; }
+  }
+</style>
+
+<script>
+  const onScroll = () => document.documentElement.classList.toggle('scrolled', window.scrollY > 40);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>

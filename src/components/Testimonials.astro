@@ -1,16 +1,22 @@
 ---
+import { Icon } from 'astro-icon/components';
 import testimonials from '../data/testimonials.json';
 ---
 <section class="section" id="testimonials" aria-labelledby="testimonials-title">
   <div class="container">
-    <h2 class="section-title" id="testimonials-title">What people I worked with say</h2>
+    <p class="eyebrow kicker" data-reveal><Icon name="lucide:message-square-quote" aria-hidden="true" /> Testimonials</p>
+    <h2 class="section-title" id="testimonials-title" data-reveal>What people I worked with say</h2>
     <div class="list">
-      {testimonials.map((t) => (
-        <figure class="item">
+      {testimonials.map((t, i) => (
+        <figure class="item" data-reveal style={`transition-delay:${i * 90}ms`}>
+          <Icon name="lucide:quote" class="q" aria-hidden="true" />
           <blockquote>{t.quote}</blockquote>
           <figcaption>
-            <span class="name">{t.name}</span>
-            <span class="eyebrow role">{t.role}</span>
+            <span class="avatar" aria-hidden="true">{t.name.split(' ').map((n) => n[0]).join('')}</span>
+            <span class="who">
+              <span class="name">{t.name}</span>
+              <span class="eyebrow role">{t.role}</span>
+            </span>
           </figcaption>
         </figure>
       ))}
@@ -19,14 +25,24 @@ import testimonials from '../data/testimonials.json';
 </section>
 
 <style>
+  .kicker { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 12px; color: var(--muted); }
+  .kicker [data-icon] { width: 15px; height: 15px; }
   .list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
   .item {
-    margin: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 28px;
+    margin: 0; display: flex; flex-direction: column; gap: 20px;
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius-card); padding: 28px;
   }
-  blockquote { margin: 0; font-size: 16px; line-height: 1.65; }
-  figcaption { display: flex; flex-direction: column; gap: 4px; }
+  .q { width: 26px; height: 26px; color: var(--accent); }
+  blockquote { margin: 0; flex: 1; font-size: 16px; line-height: 1.65; }
+  figcaption { display: flex; align-items: center; gap: 12px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 999px; flex: none;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--accent-soft); color: var(--accent-text);
+    font-size: 13px; font-weight: 600;
+  }
+  .who { display: flex; flex-direction: column; gap: 2px; }
   .name { font-weight: 600; font-size: 15px; }
   .role { font-size: 11px; color: var(--muted); }
   @media (max-width: 960px) { .list { grid-template-columns: 1fr; } }
